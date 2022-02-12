@@ -50,7 +50,19 @@ interface token {
  */
 public class Tokenizer implements token {
 
-    private final String src;
+    private static Tokenizer instance;
+
+    private Tokenizer() {
+
+    }
+
+    public static Tokenizer getInstance() {
+        if (Tokenizer.instance == null)
+            Tokenizer.instance = new Tokenizer();
+        return Tokenizer.instance;
+    }
+
+    private String src;
     private String next;
     private int pos;
 
@@ -60,7 +72,7 @@ public class Tokenizer implements token {
      * @param src the input stream
      * @throws TokenizeErrorException if an unidentified token type has been found
      */
-    public Tokenizer(String src) throws TokenizeErrorException {
+    public void initialize(String src) throws TokenizeErrorException {
         this.src = src;
         pos = 0;
         computeNext();
