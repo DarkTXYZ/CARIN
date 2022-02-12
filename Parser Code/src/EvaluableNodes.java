@@ -6,10 +6,6 @@ interface Evaluable {
     int eval();
 }
 
-interface Executable {
-    void execute();
-}
-
 class Number implements Evaluable {
     int value;
 
