@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public interface Unit {
 
     /**
@@ -11,4 +13,10 @@ public interface Unit {
      * @param direction the direction that the unit shoot
      */
     void shoot(String direction);
+
+    String getGeneticCode();
+
+    Map<String,Integer> getBindings();
+
+    void execute();
 }
