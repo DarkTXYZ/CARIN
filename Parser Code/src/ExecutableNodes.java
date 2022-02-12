@@ -3,6 +3,9 @@ import java.util.List;
 import java.util.Map;
 
 interface Executable {
+    /**
+     * Execute the Executable node
+     */
     void execute();
 }
 
