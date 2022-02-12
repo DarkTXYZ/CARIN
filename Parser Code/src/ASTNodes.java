@@ -3,11 +3,11 @@ import java.util.Objects;
 import java.util.Random;
 
 interface Evaluable {
-    /**
-     * Calculate and return the evaluation values of the Evaluable node.
-     * @return the evaluation values
-     */
     int eval();
+}
+
+interface Executable {
+    void execute();
 }
 
 class Number implements Evaluable {
