@@ -5,6 +5,7 @@ import java.util.Random;
 interface Evaluable {
     /**
      * Evaluate and return the Evaluable node
+     *
      * @return the evaluation value
      */
     int eval();

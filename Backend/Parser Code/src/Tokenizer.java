@@ -51,6 +51,9 @@ interface token {
 public class Tokenizer implements token {
 
     private static Tokenizer instance;
+    private String src;
+    private String next;
+    private int pos;
 
     private Tokenizer() {
 
@@ -61,10 +64,6 @@ public class Tokenizer implements token {
             Tokenizer.instance = new Tokenizer();
         return Tokenizer.instance;
     }
-
-    private String src;
-    private String next;
-    private int pos;
 
     /**
      * Construct a tokenizer of the specified input stream
@@ -106,7 +105,7 @@ public class Tokenizer implements token {
 
     private boolean isAlphaNumeric(char c) {
         return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
-                || (c >= 'A' && c <= 'Z');
+                || (c >= 'A' && c <= 'Z') || c == '_';
     }
 
     public boolean hasNext() {

@@ -15,7 +15,17 @@ public class GeneticEvaluator implements Evaluator {
 
     // Singleton
     private static GeneticEvaluator instance;
-
+    // GeneticEvaluator field
+    private final String[] reservedWordList = {"antibody", "down", "downleft", "downright",
+            "else", "if", "left", "move", "nearby", "right",
+            "shoot", "then", "up", "upleft", "upright", "virus", "while"};
+    private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
+    private final String[] directionWordList = {"up", "left", "right", "down",
+            "upleft", "upright", "downleft", "downright"};
+    private final Set<String> directionWords = new HashSet<>(List.of(directionWordList));
+    private final Tokenizer tkz;
+    private Map<String, Integer> bindings;
+    private Unit unit;
     private GeneticEvaluator() {
         this.tkz = Tokenizer.getInstance();
     }
@@ -25,19 +35,6 @@ public class GeneticEvaluator implements Evaluator {
             GeneticEvaluator.instance = new GeneticEvaluator();
         return GeneticEvaluator.instance;
     }
-
-    // GeneticEvaluator field
-    private final String[] reservedWordList = {"antibody", "down", "downleft", "downright",
-            "else", "if", "left", "move", "nearby", "right",
-            "shoot", "then", "up", "upleft", "upright", "virus", "while"};
-    private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
-    private final String[] directionWordList = {"up", "left", "right", "down",
-            "upleft", "upright", "downleft", "downright"};
-    private final Set<String> directionWords = new HashSet<>(List.of(directionWordList));
-
-    private final Tokenizer tkz;
-    private Map<String, Integer> bindings;
-    private Unit unit;
 
     @Override
     public Executable evaluate(Unit unit) throws TokenizeErrorException, SyntaxErrorException {

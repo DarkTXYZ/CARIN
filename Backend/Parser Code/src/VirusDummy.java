@@ -1,10 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class VirusDummy implements Unit{
+public class VirusDummy implements Unit {
 
     String geneticCode;
-    Map<String,Integer> bindings;
+    Map<String, Integer> bindings;
     Executable program;
 
     public VirusDummy(String src) {
