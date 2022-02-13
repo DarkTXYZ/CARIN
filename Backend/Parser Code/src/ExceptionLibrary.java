@@ -9,6 +9,3 @@ class TokenizeErrorException extends Exception {
         super(message);
     }
 }
-
-public class ExceptionLibrary {
-}
