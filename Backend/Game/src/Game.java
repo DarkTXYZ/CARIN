@@ -9,8 +9,16 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
+
     static int m = 4,n = 4;
     static Unit[][] field= new Unit[m][n];
+
+    static int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
+            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
+            , atbdMoveCost;
+    static double virusSpawnRate;
+
+
     GeneticEvaluator g  = GeneticEvaluator.getInstance();
     Shop shop = Shop.getInstance();
     static List<Unit> order = new ArrayList<>();
@@ -89,55 +97,55 @@ public class Game {
         try(FileReader fr = new FileReader(inFile);
             Scanner s = new Scanner(fr)){
             System.out.println("--------1--------");
-            int m = s.nextInt();
-            int n = s.nextInt();
+            m = s.nextInt();
+            n = s.nextInt();
             if( m <= 0 || n <= 0){ throw new IOException(); }
             System.out.println("m : " + m);
             System.out.println("n : " + n);
             System.out.println("--------2--------");
             System.out.print("Virus spawn rate : ");
-            double virusSpawnRate = s.nextDouble();
+            virusSpawnRate = s.nextDouble();
             if ( virusSpawnRate <= 0 || virusSpawnRate > 1 ){ throw new IOException(); }
             System.out.println(virusSpawnRate);
             System.out.println("--------3--------");
             System.out.print("Initial antibody credits : ");
-            int initialATBDCredits = s.nextInt();
+            initialATBDCredits = s.nextInt();
             if ( initialATBDCredits <= 0 ){ throw new IOException(); }
             System.out.println(initialATBDCredits);
             System.out.print("ATBD placement cost : ");
-            int atbdPlacementCost = s.nextInt();
+            atbdPlacementCost = s.nextInt();
             if ( atbdPlacementCost > initialATBDCredits ){ throw new IOException(); }
             System.out.println(atbdPlacementCost);
             System.out.println("--------4--------");
             System.out.print("Initial Virus Health : ");
-            int initVirusHP = s.nextInt();
+            initVirusHP = s.nextInt();
             if( initVirusHP <= 0 ){ throw new IOException(); }
             System.out.println(initVirusHP);
             System.out.print("Initial ATBD Health : ");
-            int initATBDHP = s.nextInt();
+            initATBDHP = s.nextInt();
             if( initATBDHP <= 0 ){ throw new IOException(); }
             System.out.println(initATBDHP);
             System.out.println("--------5--------");
             System.out.print("Virus Attack Damage : ");
-            int initVirusATK = s.nextInt();
+            initVirusATK = s.nextInt();
             if( initVirusATK <= 0 ){ throw new IOException(); }
             System.out.println(initVirusATK);
             System.out.print("Virus Lifesteal : ");
-            int initVirusLifeSteal = s.nextInt();
+            initVirusLifeSteal = s.nextInt();
             if( initVirusLifeSteal <= 0 ){ throw new IOException(); }
             System.out.println(initVirusLifeSteal);
             System.out.println("--------6--------");
             System.out.print("Antibody Attack Damage : ");
-            int initATBDATK = s.nextInt();
+            initATBDATK = s.nextInt();
             if( initATBDATK <= 0 ){ throw new IOException(); }
             System.out.println(initATBDATK);
             System.out.print("Antibody Lifesteal : ");
-            int initATBDLifeSteal = s.nextInt();
+            initATBDLifeSteal = s.nextInt();
             if( initATBDLifeSteal <= 0 ){ throw new IOException(); }
             System.out.println(initATBDLifeSteal);
             System.out.println("--------7--------");
             System.out.print("Antibody Move Cost : ");
-            int atbdMoveCost = s.nextInt();
+            atbdMoveCost = s.nextInt();
             if( atbdMoveCost <= 0 || atbdMoveCost > initialATBDCredits ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
         }catch (FileNotFoundException e){
