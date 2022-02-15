@@ -1,0 +1,324 @@
+*   commit 340786150311dda4296a8f54222edd3330cacac1
+|\  Merge: a54b6dd fe7d709
+| | Author: aumrcn <aumkung20728@gmail.com>
+| | Date:   Tue Feb 15 17:57:21 2022 +0700
+| | 
+| |     Merge branch 'OBranch' of https://github.com/DarkTXYZ/ProjectOOP into OBranch
+| |   
+| *   commit fe7d7095bd7792f7e006ce769b6d53973dbc4d7b
+| |\  Merge: 68c29fe b6a94d3
+| | | Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+| | | Date:   Tue Feb 15 17:47:59 2022 +0700
+| | | 
+| | |     Merge branch 'OBranch' of https://github.com/DarkTXYZ/ProjectOOP into OBranch
+| | | 
+| * | commit 68c29feff6efcdb6201854805c750858db8f4ce7
+| | | Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+| | | Date:   Tue Feb 15 17:47:25 2022 +0700
+| | | 
+| | |     spwan test
+| | | 
+* | | commit a54b6dd9cb1f0b5f769a837821adae948e836940
+| |/  Author: aumrcn <aumkung20728@gmail.com>
+|/|   Date:   Tue Feb 15 17:56:12 2022 +0700
+| |   
+| |       Config Reader Finished
+| | 
+* | commit b6a94d3375fce55d55cf1e849e01938353c1aa35
+|/  Author: aumrcn <aumkung20728@gmail.com>
+|   Date:   Tue Feb 15 17:41:36 2022 +0700
+|   
+|       config file added & tested
+|   
+*   commit a8c8a0f50e7fdb49d7d7d5c6b1b81505bc913b3c
+|\  Merge: 4697961 23e14a8
+| | Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+| | Date:   Tue Feb 15 17:32:58 2022 +0700
+| | 
+| |     Merge branch 'OBranch' of https://github.com/DarkTXYZ/ProjectOOP into OBranch
+| | 
+| * commit 23e14a8a1364c449bd771ecb059a092963ca0b52
+| | Author: aumrcn <aumkung20728@gmail.com>
+| | Date:   Tue Feb 15 16:51:59 2022 +0700
+| | 
+| |     File Reader Added
+| | 
+* | commit 4697961c817056fdddb1f2c97a50af21d6fb6172
+|/  Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+|   Date:   Tue Feb 15 17:30:36 2022 +0700
+|   
+|       Game method
+|   
+| * commit 1e4dd434bee61c93e20507ed03c3668334783fe0
+| | Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| | Date:   Tue Feb 15 15:23:24 2022 +0700
+| | 
+| |     reset files
+| |     
+| | *   commit fa6ed035f11f6287982d66661c9b08fc853bcd1f
+| | |\  Merge: db67cab ab372ad
+| |_|/  Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+|/| |   Date:   Tue Feb 15 15:18:56 2022 +0700
+| | |   
+| | |       Merge pull request #2 from DarkTXYZ/OBranch
+| | |       
+| | |       add some class
+| | | 
+* | | commit ab372ad90894dba18ae168a75070e725a01a376a
+| | | Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+| | | Date:   Tue Feb 15 15:17:14 2022 +0700
+| | | 
+| | |     add some class
+| | | 
+| | * commit db67cab1da0b55e34ed2b30e5d02a642bc92f271
+| |/| Merge: 05d34b2 6b46643
+| |/  Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+|/|   Date:   Tue Feb 15 15:12:08 2022 +0700
+| |   
+| |       Merge pull request #1 from DarkTXYZ/OBranch
+| |       
+| |       testpackage
+| | 
+* | commit 6b46643a00ce036d88ede5cff12b749d8d40dd9a
+|/  Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+|   Date:   Tue Feb 15 15:11:16 2022 +0700
+|   
+|       testpackage
+| 
+* commit 05d34b2bfcbd7ecb7769a40686cf8379fdbe6e7d
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Tue Feb 15 14:57:41 2022 +0700
+| 
+|     create jar for parser classes
+| 
+* commit df6b31f5288010287025d0881d7e516a25127296
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:53:44 2022 +0700
+| 
+|     output product
+| 
+* commit 031e2b7dda63c7ecc564d3e2f3e0bffdbfb02b76
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:53:21 2022 +0700
+| 
+|     Create TokenizerTest.java
+| 
+* commit 8b0791ba1b4fbf21432f4edc81b089305c76b3ed
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:53:16 2022 +0700
+| 
+|     add Javadoc for unit interface
+| 
+* commit 9130464be43abddaf79534cb690ac204ff35aad9
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:52:55 2022 +0700
+| 
+|     format document
+| 
+* commit ad121acc041059f438bbc0b3aed9a03cdb2e1e81
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:08:26 2022 +0700
+| 
+|     testing directory
+| 
+* commit f2ec693e1913b7aa55157f22486e581ecc2e95ba
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 14 01:01:02 2022 +0700
+| 
+|     update directory
+| 
+* commit ce1ba0ecf125e76741171430107e90bf809c7b34
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 23:55:38 2022 +0700
+| 
+|     testing some unit with GeneticEvaluator
+| 
+* commit 1a9ceb4ce41e8c14c42ea49c22876beadbcbaa10
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 23:55:16 2022 +0700
+| 
+|     parseExecutable implementation
+| 
+* commit c5f1308a939beaecace7bfdb76708231fdfa9992
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 23:54:47 2022 +0700
+| 
+|     make tokenizer singleton
+| 
+* commit 150f5910d36d18e29660f6e59b31bcadd06358a2
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 23:54:26 2022 +0700
+| 
+|     output product
+| 
+* commit e42bf0fe8bbe1ecb6bcf65d3b5403de35778b011
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 23:54:08 2022 +0700
+| 
+|     create virus dummy
+| 
+* commit 6fa262026d18165036445e191c85a2035531eb48
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 22:52:14 2022 +0700
+| 
+|     parseExpression implementation
+| 
+* commit df6e65e551e893cab41ae05a933b5c8c262f6062
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:31:20 2022 +0700
+| 
+|     output product
+| 
+* commit 96b094a22a43b6367ecb1b59b5c7eff63f4166d3
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:31:05 2022 +0700
+| 
+|     create GeneticEvaluator and make it singleton
+| 
+* commit 42e24e0b8f07bf1b7e018301eec4cbf1f774ebc7
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:14:55 2022 +0700
+| 
+|     Add Javadoc interface
+| 
+* commit 0764f3d248f15713f1a4b064b29b677366470e7e
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:11:28 2022 +0700
+| 
+|     create Executable Nodes
+| 
+* commit 8a2ef81486fd038c8921b10a3022959bc52f18c8
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:11:18 2022 +0700
+| 
+|     create Evaluable Nodes
+| 
+* commit df02a8f18f4c5b596aef7c5206e6ba7539adb262
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 17:08:39 2022 +0700
+| 
+|     Revert "Create Evaluable Nodes"
+|     
+|     This reverts commit 53a4bcd7197fffa1025410b59d4703df8633a4bf.
+| 
+* commit e4e21a27714e2bc3583b59827f49c950bd93b90d
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 16:54:38 2022 +0700
+| 
+|     create dummy unit for testing SensorExpression
+| 
+* commit 53a4bcd7197fffa1025410b59d4703df8633a4bf
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Sat Feb 12 16:53:52 2022 +0700
+| 
+|     Create Evaluable Nodes
+|   
+*   commit 48a1a79e2d9839a077006c837488db2a8fb080ed
+|\  Merge: fce243c 1a5baaf
+| | Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| | Date:   Sat Feb 12 01:40:07 2022 +0700
+| | 
+| |     Merge branch 'main' of https://github.com/DarkTXYZ/ProjectOOP
+| | 
+| * commit 1a5baaf100f8bdf167d52785a7ba8220758e2818
+| | Author: DarkTXYZ <47694361+DarkTXYZ@users.noreply.github.com>
+| | Date:   Fri Feb 11 10:54:31 2022 +0700
+| | 
+| |     Create README.md
+| | 
+* | commit fce243cc1164a76addf66f54f6706c41de1b857f
+|/  Author: DarkTXYZ <pawaretmontfort@gmail.com>
+|   Date:   Sat Feb 12 01:39:56 2022 +0700
+|   
+|       create Evaluable classes
+| 
+* commit 01c412ec97fcb6ccf3290f8b6583aa5687e6c777
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Fri Feb 11 10:13:17 2022 +0700
+| 
+|     Create TokenizeErrorException
+| 
+* commit 5201a338ebdeb99b907dcb4235f338d07a8d20c4
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Fri Feb 11 10:12:58 2022 +0700
+| 
+|     Create Javadoc for Tokenizer
+| 
+* commit 14b53d40b6f1caebe2c08f1c1899c24c22c0e5a4
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Fri Feb 11 09:15:42 2022 +0700
+| 
+|     Create Tokenizer and Exception class
+|   
+*   commit 819320c4396589dff007710d3b00cc60ea7047de
+|\  Merge: f7a39cc b558739
+| | Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| | Date:   Fri Feb 11 09:09:43 2022 +0700
+| | 
+| |     Merge branch 'main' of https://github.com/DarkTXYZ/ProjectOOP
+| | 
+| * commit b558739ab6ec39561036e878669c07c058121f85
+| | Author: aumrcn <aumkung20728@gmail.com>
+| | Date:   Tue Feb 8 23:15:22 2022 +0700
+| | 
+| |     OOP is so EZ
+| | 
+| * commit 677e26f72cbc07492a38f2997de48a410931c9c1
+| | Author: aumrcn <aumkung20728@gmail.com>
+| | Date:   Tue Feb 8 23:13:17 2022 +0700
+| | 
+| |     aumrcn initial commit
+| | 
+* | commit f7a39cc8199977b8cff7f9a10cef5ad4d92dbc80
+|/  Author: DarkTXYZ <pawaretmontfort@gmail.com>
+|   Date:   Fri Feb 11 09:09:32 2022 +0700
+|   
+|       Create Design Overview Document.pdf
+| 
+* commit 3670ddac4bbf6c1d3992ba0324a53147bee2340b
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Mon Feb 7 00:17:10 2022 +0700
+| 
+|     initialize github
+| 
+* commit aa33f667ea4706c41ac44e022617d46a51ba4cb1
+| Author: majespectre00 <76035408+majespectre00@users.noreply.github.com>
+| Date:   Sun Feb 6 00:40:56 2022 +0700
+| 
+|     Update README.md
+| 
+* commit f444847f6ce1eaa355c5d3da0505fff2c81170ac
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Thu Feb 3 17:13:39 2022 +0700
+| 
+|     update directory
+| 
+* commit 9328c621ad80d9e69c51cb359ca8103270ea8e4c
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Thu Feb 3 17:12:39 2022 +0700
+| 
+|     Create Class Draft.png
+| 
+* commit 94a3ebf6fc7b7ed1a0348d861e1726834b258e36
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Thu Feb 3 17:11:42 2022 +0700
+| 
+|     initial 2
+| 
+* commit b6237b56d5efe442dbce201f4c41fc77058a805b
+| Author: DarkTXYZ <pawaretmontfort@gmail.com>
+| Date:   Thu Feb 3 17:09:55 2022 +0700
+| 
+|     initial
+| 
+* commit ef9f2d91197e774351c77072e236935874eb3c4c
+| Author: DarkTXYZ <47694361+DarkTXYZ@users.noreply.github.com>
+| Date:   Thu Feb 3 15:27:45 2022 +0700
+| 
+|     Update README.md
+| 
+* commit 0b63751cef250b5dabcfeb919f27fc33cf8b104e
+  Author: DarkTXYZ <47694361+DarkTXYZ@users.noreply.github.com>
+  Date:   Thu Feb 3 15:22:53 2022 +0700
+  
+      Initial commit
