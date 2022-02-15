@@ -11,4 +11,9 @@ public interface Unit {
     /** dat hurt        ouch*/
     void takingDamage(Unit attacker);
     int getAtk();
+    int getHp();
+    String getGene();
+    /** test method */
+    void attack(Unit a);
+    Pair<Integer,Integer> getPosition();
 }
