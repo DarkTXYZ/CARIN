@@ -18,6 +18,7 @@ public class Game {
     static List<Unit> order = new ArrayList<>();
     Pair<Integer,Integer> Objective;
     int virusLimit;
+    public Game(){}
 
 
 
@@ -49,6 +50,16 @@ public class Game {
         order.add(v);
         field[x][y] = v;
 
+    }
+    public static void visulaize(){
+        System.out.println("-------------------------------");
+        for(int i =0; i<m;i++){
+            for (int j= 0;j<m;i++){
+                System.out.print("|"+field[i][j].getGene()+"|");
+            }
+            System.out.print("\n");
+        }
+        System.out.println("-------------------------------");
     }
 
     public void spawnVirus(){}
@@ -132,14 +143,30 @@ public class Game {
         }catch (IOException e){
             e.printStackTrace();
         }
+        Game g = new Game();
             Unit s = new Virus(70,"yas");
+            Pair<Integer,Integer> z = new Pair<>(0,0);
+            g.spawn(s,z);
+
             Unit ss = new Virus();
+            Pair<Integer,Integer> x = new Pair<>(1,0);
+            g.spawn(ss,x);
+
             Unit a = new ATBD();
+            Pair<Integer,Integer> c = new Pair<>(2,0);
+            g.spawn(a,c);
+
             Unit b = new ATBD();
+            Pair<Integer,Integer> v = new Pair<>(3,0);
+            g.spawn(b,v);
+            Game.visulaize();
+
             s.attack(a);
             ss.attack(b);
             b.destruct();
             a.destruct();
+
+            Game.visulaize();
     }
 
 }
