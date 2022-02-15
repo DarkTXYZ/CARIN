@@ -1,7 +1,6 @@
 import java.util.Map;
 
 public interface Unit {
-
     /**
      * Move unit to the input direction one space
      *
