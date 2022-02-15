@@ -16,4 +16,5 @@ public interface Unit {
     /** test method */
     void attack(Unit a);
     Pair<Integer,Integer> getPosition();
+    void setPos(Pair<Integer,Integer> pos);
 }

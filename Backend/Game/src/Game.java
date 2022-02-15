@@ -5,11 +5,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
-    static int m = 3,n = 3;
-    static  Unit[][] field= new Unit[m][n];
+    static int m = 4,n = 4;
+    static Unit[][] field= new Unit[m][n];
     GeneticEvaluator g  = GeneticEvaluator.getInstance();
     Shop shop = Shop.getInstance();
     static List<Unit> order = new ArrayList<>();
@@ -18,15 +19,17 @@ public class Game {
     public Game(){}
 
 
-
+    //this method should init unit
     public void spawn(Unit unit, Pair<Integer,Integer> position){
       int x = position.fst(); int y = position.snd();
       if(x>m || y>n) {
          System.out.println("out of range");
           return;
       }
-      if(field[x][y] != null) {
+      if(Objects.equals(field[x][y],null)) {
+          unit.setPos(position);
           field[x][y] = unit;
+
           order.add(unit);
       }
 
@@ -51,7 +54,9 @@ public class Game {
     public static void visulaize(){
         System.out.println("-------------------------------");
         for(int i =0; i<m;i++){
-            for (int j= 0;j<m;i++){
+            for (int j= 0;j<n;j++){
+                if(Objects.equals(field[i][j],null)) {
+                }else
                 System.out.print("|"+field[i][j].getGene()+"|");
             }
             System.out.print("\n");

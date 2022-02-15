@@ -54,4 +54,8 @@ public class Virus implements Unit{
     public Pair<Integer,Integer> getPosition(){
         return position;
     }
+
+    public void setPos(Pair<Integer,Integer> pos){
+        position = pos;
+    }
 }
