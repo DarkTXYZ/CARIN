@@ -78,12 +78,7 @@ public class Game {
 
 
 
-    protected static final String inFile = "configfile.in";
-//    int m,n; // field size = m*n
-//    Unit[][] field= new Unit[m][n]; // field size in array
-//    int state; // current stage of the game
-
-
+    protected static final String inFile = "src/configfile.in";
 
     public static void main(String[] args) {
         try(FileReader fr = new FileReader(inFile);
@@ -92,13 +87,13 @@ public class Game {
             int m = s.nextInt();
             int n = s.nextInt();
             if( m <= 0 || n <= 0){ throw new IOException(); }
-            System.out.println("m : ");
-            System.out.println("n : ");
+            System.out.println("m : " + m);
+            System.out.println("n : " + n);
             System.out.println("--------2--------");
             System.out.print("Virus spawn rate : ");
             double virusSpawnRate = s.nextDouble();
             if ( virusSpawnRate <= 0 || virusSpawnRate > 1 ){ throw new IOException(); }
-            System.out.print(virusSpawnRate);
+            System.out.println(virusSpawnRate);
             System.out.println("--------3--------");
             System.out.print("Initial antibody credits : ");
             int initialATBDCredits = s.nextInt();
