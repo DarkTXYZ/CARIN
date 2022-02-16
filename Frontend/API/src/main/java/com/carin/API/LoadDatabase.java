@@ -6,28 +6,29 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Configuration
 class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(EmployeeRepository employeeRepository, OrderRepository orderRepository) {
+    CommandLineRunner initDatabase(EmployeeRepository repository) {
+
+        List<Integer> a = new LinkedList<>();
+        a.add(1);
+        a.add(2);
+
+        List<Integer> b = new LinkedList<>();
+        b.add(2);
+        b.add(3);
 
         return args -> {
-            employeeRepository.save(new Employee("Bilbo", "Baggins", "burglar"));
-            employeeRepository.save(new Employee("Frodo", "Baggins", "thief"));
-
-            employeeRepository.findAll().forEach(employee -> log.info("Preloaded " + employee));
-
-
-            orderRepository.save(new Order("MacBook Pro", Status.COMPLETED));
-            orderRepository.save(new Order("iPhone", Status.IN_PROGRESS));
-
-            orderRepository.findAll().forEach(order -> {
-                log.info("Preloaded " + order);
-            });
-
+            log.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar" , a)));
+            log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief" , b)));
         };
+
     }
 }
