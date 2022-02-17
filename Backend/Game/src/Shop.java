@@ -18,8 +18,12 @@ public class Shop {
         return Shop.instance;
     }
 
+
     private void updateCurrency(){
         currency ++;
+    }
+    public void modCurrency(int mod){
+        currency+=mod;
     }
 
 }

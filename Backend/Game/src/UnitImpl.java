@@ -9,6 +9,7 @@ public abstract class UnitImpl implements Unit{
     int Atk;
     int lifeSteal;
     int cost;
+    int killgain;
     String geneticCode;
     Unit previousAttacker;
     //program
@@ -22,23 +23,8 @@ public abstract class UnitImpl implements Unit{
 
     public abstract void destruct();
 
-    public void setHp(int mod){
-        Hp+=mod;
-    }
-    public void setAttack(int mod){
-        Atk+=mod;
-    }
 
-    public int getHp(){
-        return Hp;
-    }
-    public int getAtk(){
-        return Atk;
-    }
-    public int getMaxHp() { return maxHp; }
-    public int getLifeSteal() { return lifeSteal; }
-    public  String getGene(){return geneticCode;}
-
+    //move direction need impl
     @Override
     public void move(Pair<Integer, Integer> destination) {
         try {
@@ -56,15 +42,31 @@ public abstract class UnitImpl implements Unit{
     public void takingDamage(Unit attacker){
         previousAttacker = attacker;
         Hp-=attacker.getAtk();
-    }
-    public int getCost(){
-        return cost;
+        if(Hp<=0) {
+            Hp = 0;
+            this.destruct();
+        }
     }
 
-    public Pair<Integer,Integer> getPosition(){
-        return position;
+
+
+    public void setPos(Pair<Integer,Integer> pos){position = pos;}
+    public void setAttack(int mod){Atk+=mod;}
+
+    @Override
+    public void setHP(int mod) {
+        Hp+=mod;
+        if(Hp>maxHp) Hp = maxHp;
+        if(Hp<0) Hp = 0;
     }
-    public void setPos(Pair<Integer,Integer> pos){
-        position = pos;
-    }
+
+    public int getHp(){return Hp;}
+    public int getAtk(){return Atk;}
+    public int getMaxHp() { return maxHp; }
+    public int getLifeSteal() { return lifeSteal;}
+    public int getCost(){return cost;}
+    public int getKillgain() {return killgain;}
+
+    public Pair<Integer,Integer> getPosition(){return position;}
+    public String getGene(){return geneticCode;}
 }

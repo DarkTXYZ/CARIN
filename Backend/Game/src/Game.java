@@ -21,9 +21,16 @@ public class Game {
     static List<Unit> order = new ArrayList<>();
     static List<Unit> virusOrder = new ArrayList<>();
     static List<Unit> atbdOrder = new ArrayList<>();
-    static Pair<Integer,Integer> Objective;
+    static Objective Objective;
     static int virusLimit;
 
+    public static void initObjective(int maxElim){
+        Objective = new Objective(0,maxElim);
+    }
+    //tell if we win
+    public static void notifyReachElim(){
+        System.out.println("All viruses have been eliminated");
+    }
 
     public static void addATBD(Unit a,Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
@@ -69,6 +76,7 @@ public class Game {
         int oldx = u.getPosition().fst(); int oldy = u.getPosition().snd();
         if(Objects.equals(field[x][y],null)){
             Unit temp = field[oldx][oldy];
+            temp.setPos(destination);
             field[x][y] = temp;
             field[oldx][oldy] = null;
         }else{
@@ -84,7 +92,8 @@ public class Game {
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        unit = null;
+        shop.modCurrency(2);
+        Objective.modfst(1);
     }
     public static void visualize(){
         System.out.println("-------------------------------");
@@ -160,7 +169,6 @@ public class Game {
     public void updateShop(){
         shop.updateStatus();
     }
-
 
     /*
         createNewVirus(atk , hp , lifesteal , gene , pos){
