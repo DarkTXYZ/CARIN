@@ -12,6 +12,8 @@ public interface Unit {
     void takingDamage(Unit attacker);
     int getAtk();
     int getHp();
+    int getMaxHp();
+    int getLifeSteal();
     String getGene();
     /** test method */
     void attack(Unit a);

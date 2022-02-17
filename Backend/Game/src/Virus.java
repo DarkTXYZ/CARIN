@@ -15,9 +15,10 @@ public class Virus extends UnitImpl{
     }
     public Virus(Unit template){
         Hp = template.getHp();
+        maxHp = template.getMaxHp();
         Atk = template.getAtk();
         geneticCode = template.getGene();
-        maxHp = template.
+        lifeSteal = template.getLifeSteal();
     }
 
     @Override

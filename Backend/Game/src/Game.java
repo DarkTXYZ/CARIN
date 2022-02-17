@@ -162,9 +162,16 @@ public class Game {
     }
 
 
-
-
-
+    /*
+        createNewVirus(atk , hp , lifesteal , gene , pos){
+            Unit temp = new Virus(as;ldkas;ldkasldaks;);
+            addvirus();
+            temp = null;
+            1. field[][]
+            2. order
+            3. virusordere
+        }
+    */
 
     protected static final String inFile = "src/configfile.in";
 
@@ -230,19 +237,19 @@ public class Game {
             e.printStackTrace();
         }
         Game g = new Game();
-            Unit v1 = new Virus(70,"iamv1");
+            Unit v1 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "kuay");
             Pair<Integer,Integer> z = new Pair<>(0,0);
             g.addVirus(v1,z);
 
-            Unit v2 = new Virus(70,"iamv2");
+            Unit v2 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "sud");
             Pair<Integer,Integer> x = new Pair<>(1,0);
             g.addVirus(v2,x);
 
-            Unit a1 = new ATBD();
+            Unit a1 = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "eiei");
             Pair<Integer,Integer> c = new Pair<>(2,2);
             g.addATBD(a1,c);
 
-            Unit b = new ATBD();
+            Unit b = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "weebo");
             Pair<Integer,Integer> v = new Pair<>(3,3);
             g.addATBD(b,v);
             Game.visualize();
@@ -262,6 +269,8 @@ public class Game {
             v2.move(des1);
             v2.move(des2);
         System.out.println("after move");
+            visualize();
+            field[des1.fst()][des1.snd()].destruct();
             visualize();
     }
 
