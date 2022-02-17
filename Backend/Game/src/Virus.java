@@ -4,7 +4,7 @@ public class Virus extends UnitImpl{
 
     public Virus(){
         System.out.println("Virus created");
-        geneticCode = "dfaultvirus";
+        geneticCode = "dfaaa";
     }
     public Virus(int atk,String gene){
         this.Atk = atk;
@@ -20,7 +20,7 @@ public class Virus extends UnitImpl{
 
     @Override
     public void destruct() {
-
+        Game.destroyVirus(this);
     }
-    
+
 }

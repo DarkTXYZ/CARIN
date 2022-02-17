@@ -16,64 +16,84 @@ public class Game {
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
             , atbdMoveCost;
     static double virusSpawnRate;
-
-
-    GeneticEvaluator g  = GeneticEvaluator.getInstance();
-    Shop shop = Shop.getInstance();
+    static Shop shop = Shop.getInstance();
+    static GeneticEvaluator g  = GeneticEvaluator.getInstance();
     static List<Unit> order = new ArrayList<>();
-    static List<Virus> virusOrder = new ArrayList<>();
-    static List<ATBD> atbdOrder = new ArrayList<>();
-    Pair<Integer,Integer> Objective;
-    int virusLimit;
-    public Game(){}
+    static List<Unit> virusOrder = new ArrayList<>();
+    static List<Unit> atbdOrder = new ArrayList<>();
+    static Pair<Integer,Integer> Objective;
+    static int virusLimit;
 
 
+    public static void addATBD(Unit a,Pair<Integer,Integer> position){
+        int x = position.fst(); int y = position.snd();
+        if(x>m || y>n) {
+            System.out.println("out of range");
+            return;
+        }
+        if(Objects.equals(field[x][y],null)) {
+            add(a,position);
+            atbdOrder.add(a);
+        }else System.out.println("can't add; This tile already has a unit");
+
+    }
+    public static void addVirus(Unit v,Pair<Integer,Integer> position){
+        int x = position.fst(); int y = position.snd();
+        if(x>m || y>n) {
+            System.out.println("out of range");
+            return;
+        }
+        if(Objects.equals(field[x][y],null)) {
+            add(v,position);
+            virusOrder.add(v);
+        }else System.out.println("can't add; This tile already has a unit");
+
+    }
     //this method should init unit
     public static void add(Unit unit, Pair<Integer,Integer> position){
-      int x = position.fst(); int y = position.snd();
-      if(x>m || y>n) {
-         System.out.println("out of range");
-          return;
-      }
-      if(Objects.equals(field[x][y],null)) {
+        int x = position.fst(); int y = position.snd();
           unit.setPos(position);
           field[x][y] = unit;
-
           order.add(unit);
-      }
-
-      else System.out.println("This tile already has a unit");
     }
 
     public static void remove(Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         order.remove(field[x][y]);
+        virusOrder.remove(field[x][y]);
+        atbdOrder.remove(field[x][y]);
         field[x][y] = null;
     }
     public static void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        order.remove(unit);
         Unit v = new Virus(spawn);
-        add(v,pos);
+        addVirus(v,pos);
+    }
+    public static void destroyVirus(Unit unit){
+        Pair<Integer,Integer> pos = unit.getPosition();
+        remove(pos);
     }
     public static void visualize(){
         System.out.println("-------------------------------");
         for(int i =0; i<m;i++){
             for (int j= 0;j<n;j++){
                 if(Objects.equals(field[i][j],null)) {
-                    System.out.print("|empty|");
+                    System.out.print("|  e  |");
                 }else
-                System.out.print("|"+field[i][j].getGene()+"|");
+                    System.out.print("|"+field[i][j].getGene()+"|");
             }
             System.out.print("\n");
         }
+        System.out.println("list order"+order.toString());
+        System.out.println("virus order" +virusOrder.toString());
+        System.out.println("atbd order"+atbdOrder.toString());
         System.out.println("-------------------------------");
     }
 
     public void spawnVirus(){}
 
-    public Virus getVirusFromPos(Pair<Integer,Integer> pos){
+    public Unit getVirusFromPos(Pair<Integer,Integer> pos){
         for(int i = 0 ; i < virusOrder.size() ; ++i){
             if(pos == virusOrder.get(i).getPosition()){
                 return virusOrder.get(i);
@@ -82,7 +102,7 @@ public class Game {
         return  null;
     }
 
-    public Virus senseClosestVirus(ATBD unit){
+    public Unit senseClosestVirus(ATBD unit){
         Pair<Integer,Integer> ans = new Pair<>(0,0);
         double minDistance = 0;
         for(int i = 0 ; i < order.size() ; ++i){
@@ -97,7 +117,7 @@ public class Game {
         return getVirusFromPos(ans);
     }
 
-    public ATBD getATBDFromPos(Pair<Integer,Integer> pos){
+    public Unit getATBDFromPos(Pair<Integer,Integer> pos){
         for(int i = 0 ; i < atbdOrder.size() ; ++i){
             if(pos == atbdOrder.get(i).getPosition()){
                 return atbdOrder.get(i);
@@ -106,7 +126,7 @@ public class Game {
         return  null;
     }
     
-    public ATBD senseClosestATBD(Unit unit){
+    public Unit senseClosestATBD(Unit unit){
         Pair<Integer,Integer> ans = new Pair<>(0,0);
         double minDistance = 0;
         for(int i = 0 ; i < order.size() ; ++i){
@@ -198,28 +218,28 @@ public class Game {
             e.printStackTrace();
         }
         Game g = new Game();
-            Unit s = new Virus(70,"yas");
+            Unit s = new Virus(70,"yasss");
             Pair<Integer,Integer> z = new Pair<>(0,0);
-            g.add(s,z);
+            g.addVirus(s,z);
 
             Unit ss = new Virus();
             Pair<Integer,Integer> x = new Pair<>(1,0);
-            g.add(ss,x);
+            g.addVirus(ss,x);
 
             Unit a = new ATBD();
             Pair<Integer,Integer> c = new Pair<>(2,2);
-            g.add(a,c);
+            g.addATBD(a,c);
 
             Unit b = new ATBD();
             Pair<Integer,Integer> v = new Pair<>(3,3);
-            g.add(b,v);
+            g.addATBD(b,v);
             Game.visualize();
 
             s.attack(a);
             ss.attack(b);
             b.destruct();
             a.destruct();
-
+            s.destruct();
             Game.visualize();
     }
 

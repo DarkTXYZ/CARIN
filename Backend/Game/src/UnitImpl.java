@@ -10,7 +10,7 @@ public abstract class UnitImpl implements Unit{
     String geneticCode;
     Unit previousAttacker;
     //program
-     protected UnitImpl(){System.out.println("unit created");}
+    protected UnitImpl(){System.out.println("unit created");}
     protected UnitImpl(String geneticCode){
         this.geneticCode = geneticCode;
     }
