@@ -5,7 +5,9 @@ public abstract class UnitImpl implements Unit{
     Pair<Integer,Integer> position;
 
     int Hp;
+    int maxHp;
     int Atk;
+    int lifeSteal;
     int cost;
     String geneticCode;
     Unit previousAttacker;
@@ -30,10 +32,11 @@ public abstract class UnitImpl implements Unit{
     public int getHp(){
         return Hp;
     }
-
     public int getAtk(){
         return Atk;
     }
+    public int getMaxHp() { return maxHp; }
+    public int getLifeSteal() { return lifeSteal; }
     public  String getGene(){return geneticCode;}
 
     @Override
