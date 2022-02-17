@@ -36,6 +36,15 @@ public abstract class UnitImpl implements Unit{
     }
     public  String getGene(){return geneticCode;}
 
+    @Override
+    public void move(Pair<Integer, Integer> position) {
+
+    }
+
+    @Override
+    public void shoot(String direction) {
+
+    }
 
     public void takingDamage(Unit attacker){
         previousAttacker = attacker;

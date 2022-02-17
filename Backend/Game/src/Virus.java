@@ -22,4 +22,5 @@ public class Virus extends UnitImpl{
     public void destruct() {
 
     }
+    
 }
