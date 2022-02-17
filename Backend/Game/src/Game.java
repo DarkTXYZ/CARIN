@@ -22,6 +22,8 @@ public class Game {
     GeneticEvaluator g  = GeneticEvaluator.getInstance();
     Shop shop = Shop.getInstance();
     static List<Unit> order = new ArrayList<>();
+    static List<Virus> virusOrder = new ArrayList<>();
+    static List<ATBD> atbdOrder = new ArrayList<>();
     Pair<Integer,Integer> Objective;
     int virusLimit;
     public Game(){}
@@ -74,9 +76,53 @@ public class Game {
 
     public void spawnVirus(){}
 
+    public Virus getVirusFromPos(Pair<Integer,Integer> pos){
+        for(int i = 0 ; i < virusOrder.size() ; ++i){
+            if(pos == virusOrder.get(i).getPosition()){
+                return virusOrder.get(i);
+            }
+        }
+        return  null;
+    }
 
-    public void senseClosestVirus(Unit unit){}
-    public void senseClosestATBD(Unit unit){}
+    public Virus senseClosestVirus(ATBD unit){
+        Pair<Integer,Integer> ans = new Pair<>(0,0);
+        double minDistance = 0;
+        for(int i = 0 ; i < order.size() ; ++i){
+            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
+            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
+            minDistance = Math.min(minDistance , calPosition);
+            if(calPosition == 0) continue;
+            if(minDistance > calPosition){
+                ans = order.get(i).getPosition();
+            }
+        }
+        return getVirusFromPos(ans);
+    }
+
+    public ATBD getATBDFromPos(Pair<Integer,Integer> pos){
+        for(int i = 0 ; i < atbdOrder.size() ; ++i){
+            if(pos == atbdOrder.get(i).getPosition()){
+                return atbdOrder.get(i);
+            }
+        }
+        return  null;
+    }
+    
+    public ATBD senseClosestATBD(Unit unit){
+        Pair<Integer,Integer> ans = new Pair<>(0,0);
+        double minDistance = 0;
+        for(int i = 0 ; i < order.size() ; ++i){
+            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
+            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
+            minDistance = Math.min(minDistance , calPosition);
+            if(calPosition == 0) continue;
+            if(minDistance > calPosition){
+                ans = order.get(i).getPosition();
+            }
+        }
+        return  getATBDFromPos(ans);
+    }
     public void senseNearby(Unit unit, String direction){}
 
     public void update(){
