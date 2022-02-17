@@ -2,13 +2,8 @@ package com.carin.API;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 class EmployeeController {
@@ -19,36 +14,40 @@ class EmployeeController {
         this.repository = repository;
     }
 
-
     // Aggregate root
     // tag::get-aggregate-root[]
+    @CrossOrigin
     @GetMapping("/employees")
     List<Employee> all() {
         return repository.findAll();
     }
     // end::get-aggregate-root[]
-
+    @CrossOrigin
     @PostMapping("/employees")
     Employee newEmployee(@RequestBody Employee newEmployee) {
         return repository.save(newEmployee);
     }
 
     // Single item
-
+    @CrossOrigin
     @GetMapping("/employees/{id}")
     Employee one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
-
+    @CrossOrigin
     @PutMapping("/employees/{id}")
     Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
         return repository.findById(id)
                 .map(employee -> {
-                    employee.setName(newEmployee.getName());
-                    employee.setRole(newEmployee.getRole());
+                    if(newEmployee.getName() != null)
+                        employee.setName(newEmployee.getName());
+                    if(newEmployee.getRole() != null)
+                        employee.setRole(newEmployee.getRole());
+                    if(newEmployee.getNums() != null)
+                        employee.setNums(newEmployee.getNums());
                     return repository.save(employee);
                 })
                 .orElseGet(() -> {
@@ -56,7 +55,7 @@ class EmployeeController {
                     return repository.save(newEmployee);
                 });
     }
-
+    @CrossOrigin
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
         repository.deleteById(id);

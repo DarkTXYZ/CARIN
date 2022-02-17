@@ -6,8 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 class LoadDatabase {
@@ -25,9 +27,13 @@ class LoadDatabase {
         b.add(2);
         b.add(3);
 
+        Map<String, Integer> mapped = new HashMap<>();
+        mapped.put("abc",19);
+        mapped.put("sss",29);
+
         return args -> {
-            log.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar" , a)));
-            log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief" , b)));
+            log.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar" , a,mapped)));
+            log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief" , b,mapped)));
         };
 
     }

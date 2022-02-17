@@ -1,6 +1,7 @@
 package com.carin.API;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.*;
@@ -17,12 +18,19 @@ class Employee {
     @Column(name = "nums") // 3
     private List<Integer> nums;
 
+    @ElementCollection
+    @MapKeyColumn(name="name")
+    @Column(name="value")
+    @CollectionTable(name="example_attributes", joinColumns=@JoinColumn(name="example_id"))
+    Map<String , Integer> mapped;
+
     Employee() {}
 
-    Employee(String name, String role , List<Integer> nums) {
+    Employee(String name, String role , List<Integer> nums , Map<String , Integer> mapped) {
         this.nums = nums;
         this.name = name;
         this.role = role;
+        this.mapped = mapped;
     }
 
     public Long getId() {
@@ -37,6 +45,12 @@ class Employee {
         return this.role;
     }
 
+    public Map<String, Integer> getMapped() { return mapped; }
+
+    public List<Integer> getNums() {
+        return nums;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,6 +61,12 @@ class Employee {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setMapped(Map<String,Integer> mapped) {this.mapped = mapped;}
+
+    public void setNums(List<Integer> nums) {
+        this.nums = nums;
     }
 
     @Override
@@ -71,11 +91,5 @@ class Employee {
                 ", nums=" +'\'' + nums + '\'';
     }
 
-    public List<Integer> getNums() {
-        return nums;
-    }
 
-    public void setNums(List<Integer> nums) {
-        this.nums = nums;
-    }
 }

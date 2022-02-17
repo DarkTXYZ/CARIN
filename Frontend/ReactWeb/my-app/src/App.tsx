@@ -5,17 +5,28 @@ import { type } from 'os'
 
 type Post = {
   id: number,
-  name: string
+  name: string,
+  nums: Array<number>
+  mapped : any
 }
 
 const App = () => {
 
-  const [posts, setPosts] = useState<Post[]>([])
-
+  const [posts, setPosts] = useState([])
+  
   const getPosts = async () => {
     try {
       const userPosts = await axios.get("http://localhost:8080/employees")
-      setPosts(userPosts.data._embedded.employeeList);
+      .then(response => {
+        setPosts(response.data);
+        console.log(response);
+      })
+      // await axios.post(link, {
+      //   name: 'Fred Flintstone',
+      //   role: 'pilot',
+      //   nums: [1,2,3,4]
+      // })
+
     } catch (err: any) {
       console.error(err.message);
     }
@@ -25,7 +36,7 @@ const App = () => {
     getPosts()
     const interval = setInterval(() => {
       getPosts()
-    }, 1000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [])  // includes empty dependency array
 
@@ -34,7 +45,7 @@ const App = () => {
       <h1>useEffect</h1>
       <ul>
         {posts.map((post: Post) => (
-          <li key={post.id}>{post.name}</li>
+          <li key={post.id}>{post.name} {post.nums} {post.mapped.sss} {post.mapped.abc}</li>
         ))}
       </ul>
     </div>
