@@ -56,7 +56,6 @@ public class Game {
           field[x][y] = unit;
           order.add(unit);
     }
-
     public static void remove(Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         order.remove(field[x][y]);
@@ -230,11 +229,11 @@ public class Game {
             e.printStackTrace();
         }
         Game g = new Game();
-            Unit v1 = new Virus(70,"iamv1");
+            Unit v1 = new Virus(70,2,3,"iamv1");
             Pair<Integer,Integer> z = new Pair<>(0,0);
             g.addVirus(v1,z);
 
-            Unit v2 = new Virus(70,"iamv2");
+            Unit v2 = new Virus(70,2,3,"iamv2");
             Pair<Integer,Integer> x = new Pair<>(1,0);
             g.addVirus(v2,x);
 
