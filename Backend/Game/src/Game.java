@@ -64,6 +64,17 @@ public class Game {
         atbdOrder.remove(field[x][y]);
         field[x][y] = null;
     }
+    public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
+        int x = destination.fst(); int y = destination.snd();
+        int oldx = u.getPosition().fst(); int oldy = u.getPosition().snd();
+        if(Objects.equals(field[x][y],null)){
+            Unit temp = field[oldx][oldy];
+            field[x][y] = temp;
+            field[oldx][oldy] = null;
+        }else{
+            throw new UnexecutableCommandException("unit occupied in destination tile");
+        }
+    }
     public static void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
@@ -73,6 +84,7 @@ public class Game {
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
+        unit = null;
     }
     public static void visualize(){
         System.out.println("-------------------------------");
@@ -218,29 +230,39 @@ public class Game {
             e.printStackTrace();
         }
         Game g = new Game();
-            Unit s = new Virus(70,"yasss");
+            Unit v1 = new Virus(70,"iamv1");
             Pair<Integer,Integer> z = new Pair<>(0,0);
-            g.addVirus(s,z);
+            g.addVirus(v1,z);
 
-            Unit ss = new Virus();
+            Unit v2 = new Virus(70,"iamv2");
             Pair<Integer,Integer> x = new Pair<>(1,0);
-            g.addVirus(ss,x);
+            g.addVirus(v2,x);
 
-            Unit a = new ATBD();
+            Unit a1 = new ATBD();
             Pair<Integer,Integer> c = new Pair<>(2,2);
-            g.addATBD(a,c);
+            g.addATBD(a1,c);
 
             Unit b = new ATBD();
             Pair<Integer,Integer> v = new Pair<>(3,3);
             g.addATBD(b,v);
             Game.visualize();
 
-            s.attack(a);
-            ss.attack(b);
+            v1.attack(a1);
+            v2.attack(b);
             b.destruct();
-            a.destruct();
-            s.destruct();
+            v1.destruct();
             Game.visualize();
+            Pair<Integer,Integer> des1 = new Pair<>(3,3);
+            Pair<Integer,Integer> des2 = new Pair<>(2,1);
+            System.out.println("before move");
+            v1.move(des1);
+            v1.move(des2);
+            System.out.println(v1.getGene());
+            visualize();
+            v2.move(des1);
+            v2.move(des2);
+        System.out.println("after move");
+            visualize();
     }
 
 }
