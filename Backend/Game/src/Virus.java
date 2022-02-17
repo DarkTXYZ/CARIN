@@ -25,4 +25,5 @@ public class Virus extends UnitImpl{
         Game.destroyVirus(this);
     }
 
+
 }
