@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class Game {
 
 
     //this method should init unit
-    public void spawn(Unit unit, Pair<Integer,Integer> position){
+    public static void add(Unit unit, Pair<Integer,Integer> position){
       int x = position.fst(); int y = position.snd();
       if(x>m || y>n) {
          System.out.println("out of range");
@@ -44,26 +43,24 @@ public class Game {
       else System.out.println("This tile already has a unit");
     }
 
-    public void remove(Pair<Integer,Integer> position){
+    public static void remove(Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         order.remove(field[x][y]);
         field[x][y] = null;
     }
-    public static void destroy(Unit unit, Unit spawn){
+    public static void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
-        int x = pos.fst(); int y = pos.snd();
-        field[x][y] = null;
+        remove(pos);
         order.remove(unit);
         Unit v = new Virus(spawn);
-        order.add(v);
-        field[x][y] = v;
-
+        add(v,pos);
     }
-    public static void visulaize(){
+    public static void visualize(){
         System.out.println("-------------------------------");
         for(int i =0; i<m;i++){
             for (int j= 0;j<n;j++){
                 if(Objects.equals(field[i][j],null)) {
+                    System.out.print("|empty|");
                 }else
                 System.out.print("|"+field[i][j].getGene()+"|");
             }
@@ -99,6 +96,7 @@ public class Game {
             System.out.println("--------1--------");
             m = s.nextInt();
             n = s.nextInt();
+            field= new Unit[m][n];
             if( m <= 0 || n <= 0){ throw new IOException(); }
             System.out.println("m : " + m);
             System.out.println("n : " + n);
@@ -156,27 +154,27 @@ public class Game {
         Game g = new Game();
             Unit s = new Virus(70,"yas");
             Pair<Integer,Integer> z = new Pair<>(0,0);
-            g.spawn(s,z);
+            g.add(s,z);
 
             Unit ss = new Virus();
             Pair<Integer,Integer> x = new Pair<>(1,0);
-            g.spawn(ss,x);
+            g.add(ss,x);
 
             Unit a = new ATBD();
-            Pair<Integer,Integer> c = new Pair<>(2,0);
-            g.spawn(a,c);
+            Pair<Integer,Integer> c = new Pair<>(2,2);
+            g.add(a,c);
 
             Unit b = new ATBD();
-            Pair<Integer,Integer> v = new Pair<>(3,0);
-            g.spawn(b,v);
-            Game.visulaize();
+            Pair<Integer,Integer> v = new Pair<>(3,3);
+            g.add(b,v);
+            Game.visualize();
 
             s.attack(a);
             ss.attack(b);
             b.destruct();
             a.destruct();
 
-            Game.visulaize();
+            Game.visualize();
     }
 
 }

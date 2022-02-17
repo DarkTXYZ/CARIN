@@ -1,17 +1,10 @@
 import java.util.Map;
 
-public class Virus implements Unit{
-    Map<String,Integer> bindings;
-    Pair<Integer,Integer> position;
-
-    int Hp = 690;
-    int Atk = 69;
-    int cost;
-    String geneticCode = "iam groot";
-    //program
+public class Virus extends UnitImpl{
 
     public Virus(){
-        System.out.println("iam here");
+        System.out.println("Virus created");
+        geneticCode = "dfaultvirus";
     }
     public Virus(int atk,String gene){
         this.Atk = atk;
@@ -25,37 +18,8 @@ public class Virus implements Unit{
 
     }
 
+    @Override
+    public void destruct() {
 
-    public void move(Pair<Integer,Integer> position){
-    }
-    public void shoot(String direction){}
-
-    public void attack(Unit a){
-        a.takingDamage(this);
-    }
-    public void destruct(){}
-
-    public void setHp(){}
-    public void setAttack(){}
-    public int getHp(){
-        return Hp;
-    }
-
-    public int getAtk(){
-        return Atk;
-    }
-    public String getGene(){return geneticCode;}
-
-
-    public void takingDamage(Unit attacker){
-        Hp-=attacker.getAtk();
-    }
-
-    public Pair<Integer,Integer> getPosition(){
-        return position;
-    }
-
-    public void setPos(Pair<Integer,Integer> pos){
-        position = pos;
     }
 }
