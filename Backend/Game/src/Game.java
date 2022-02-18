@@ -122,22 +122,22 @@ public class Game {
         }
         return  null;
     }
-
-    public Unit senseClosestVirus(ATBD unit){
-        Pair<Integer,Integer> ans = new Pair<>(0,0);
-        double minDistance = 0;
-        for(int i = 0 ; i < order.size() ; ++i){
-            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
-            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
-            minDistance = Math.min(minDistance , calPosition);
-            if(calPosition == 0) continue;
-            if(minDistance > calPosition){
-                ans = order.get(i).getPosition();
-            }
-        }
-        return getVirusFromPos(ans);
-    }
-
+//
+//    public Unit senseClosestVirus(ATBD unit){
+//        Pair<Integer,Integer> ans = new Pair<>(0,0);
+//        double minDistance = 0;
+//        for(int i = 0 ; i < order.size() ; ++i){
+//            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
+//            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
+//            minDistance = Math.min(minDistance , calPosition);
+//            if(calPosition == 0) continue;
+//            if(minDistance > calPosition){
+//                ans = order.get(i).getPosition();
+//            }
+//        }
+//        return getVirusFromPos(ans);
+//    }
+//
     public Unit getATBDFromPos(Pair<Integer,Integer> pos){
         for(int i = 0 ; i < atbdOrder.size() ; ++i){
             if(pos == atbdOrder.get(i).getPosition()){
@@ -146,21 +146,67 @@ public class Game {
         }
         return  null;
     }
-    
-    public Unit senseClosestATBD(Unit unit){
-        Pair<Integer,Integer> ans = new Pair<>(0,0);
-        double minDistance = 0;
-        for(int i = 0 ; i < order.size() ; ++i){
-            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
-            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
-            minDistance = Math.min(minDistance , calPosition);
-            if(calPosition == 0) continue;
-            if(minDistance > calPosition){
-                ans = order.get(i).getPosition();
+//
+//    public Unit senseClosestATBD(Unit unit){
+//        Pair<Integer,Integer> ans = new Pair<>(0,0);
+//        double minDistance = 0;
+//        for(int i = 0 ; i < order.size() ; ++i){
+//            Pair<Integer,Integer> curPosition = order.get(i).getPosition();
+//            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
+//            minDistance = Math.min(minDistance , calPosition);
+//            if(calPosition == 0) continue;
+//            if(minDistance > calPosition){
+//                ans = order.get(i).getPosition();
+//            }
+//        }
+//        return  getATBDFromPos(ans);
+//    }
+
+    public int senseClosestVirus(ATBD u){
+        Pair<Integer, Integer> pos = u.getPosition();
+        int ans = 0;
+        Pair<Integer,Integer> temp = new Pair<>(0,0);
+        for(int i = 0 ; i < virusOrder.size() ; ++i){
+            Pair<Integer,Integer> virusPos = virusOrder.get(i).getPosition();
+            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
+            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
+                if(Objects.equals(xydiff.fst(), xydiff.snd())){
+                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
+
+                    }
+                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
+
+                    }
+                }
+
+                if( xydiff.fst() > xydiff.snd()){ // up right
+
+                }
+                if( xydiff.fst() < xydiff.snd()){ // down left
+
+                }
+            }else{ // straight
+                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
+
+                }
+                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
+
+                }
+                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
+
+                }
+                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
+
+                }
             }
         }
-        return  getATBDFromPos(ans);
+        return 0;
     }
+
+    public int senseClosestATBD(Virus u){
+        return 0;
+    }
+
     public void senseNearby(Unit unit, String direction){}
 
     public void update(){
