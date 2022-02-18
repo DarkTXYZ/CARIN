@@ -1,6 +1,6 @@
-import java.util.Map;
+import java.util.HashMap;
 
-public class Virus extends UnitImpl{
+public class Virus extends UnitImpl {
 
     public Virus(){
         System.out.println("Virus created");
@@ -12,6 +12,10 @@ public class Virus extends UnitImpl{
         this.Hp = hp;
         this.lifeSteal = lifeSteal;
         geneticCode = gene;
+        bindings = new HashMap<>();
+        try {
+            setProgram(GeneticEvaluator.getInstance().evaluate( this));
+        }catch (Exception e) {System.out.println("genethingy");}
     }
     public Virus(Unit template){
         Hp = template.getHp();
@@ -19,11 +23,16 @@ public class Virus extends UnitImpl{
         Atk = template.getAtk();
         geneticCode = template.getGene();
         lifeSteal = template.getLifeSteal();
+        bindings = new HashMap<>();
+        try {
+            setProgram(GeneticEvaluator.getInstance().evaluate( this));
+        }catch (Exception e) {System.out.println("genethingy");}
+
     }
 
     @Override
     public void destruct() {
-        previousAttacker.setHP(previousAttacker.getKillgain());
+        previousAttacker.setHP(previousAttacker.getLifeSteal());
         Game.destroyVirus(this);
     }
 

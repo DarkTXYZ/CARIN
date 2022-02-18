@@ -1,6 +1,8 @@
-import java.util.Map;
 
-public abstract class UnitImpl implements Unit{
+import java.util.Map;
+import java.util.Objects;
+
+public abstract class UnitImpl implements Unit {
     Map<String,Integer> bindings;
     Pair<Integer,Integer> position;
 
@@ -9,24 +11,50 @@ public abstract class UnitImpl implements Unit{
     int Atk;
     int lifeSteal;
     int cost;
-    int killgain;
+    int moveCost;
     String geneticCode;
     Unit previousAttacker;
-    //program
-    protected UnitImpl(){System.out.println("unit created");}
+    Executable program;
+    protected UnitImpl(){System.out.println("gameUnit created");}
     protected UnitImpl(String geneticCode){
         this.geneticCode = geneticCode;
     }
+
+    @Override
+    public void setProgram(Executable program) {
+        this.program = program;
+    }
+
+    @Override
+    public void execute() {
+        if(Objects.equals(program,null)){
+            System.out.println("program null");
+        }else
+        program.execute();
+    }
+
     public void attack(Unit a){
         a.takingDamage(this);
     }
 
     public abstract void destruct();
 
-
-    //move direction need impl
     @Override
-    public void move(Pair<Integer, Integer> destination) {
+    public void move(String direction) {
+        Pair<Integer,Integer> gmove = new Pair<>(position.fst(), position.snd());
+
+        if(direction.equals("left")){gmove =new Pair<>(position.fst(),position.snd()-1);}
+        if(direction.equals( "right")){gmove =new Pair<>(position.fst(),position.snd()+1);}
+        if(direction.equals("up")){gmove =new Pair<>(position.fst()-1,position.snd());}
+        if(direction.equals("down")){gmove =new Pair<>(position.fst()+1,position.snd());}
+        if(direction.equals( "upleft")){gmove =new Pair<>(position.fst()-1,position.snd()-1);}
+        if(direction.equals("downleft")){gmove =new Pair<>(position.fst()+1,position.snd()-1);}
+        if(direction.equals( "upright")){gmove =new Pair<>(position.fst()-1,position.snd()+1);}
+        if(direction.equals( "downright")){gmove =new Pair<>(position.fst()+1,position.snd()+1);}
+        gmove(gmove);
+    }
+
+    public void gmove(Pair<Integer, Integer> destination) {
         try {
             Game.move(this, destination);
         }catch (UnexecutableCommandException e){
@@ -51,7 +79,7 @@ public abstract class UnitImpl implements Unit{
 
 
     public void setPos(Pair<Integer,Integer> pos){position = pos;}
-    public void setAttack(int mod){Atk+=mod;}
+
 
     @Override
     public void setHP(int mod) {
@@ -65,8 +93,21 @@ public abstract class UnitImpl implements Unit{
     public int getMaxHp() { return maxHp; }
     public int getLifeSteal() { return lifeSteal;}
     public int getCost(){return cost;}
-    public int getKillgain() {return killgain;}
-
+    public void setAttack(int mod){Atk+=mod;}
     public Pair<Integer,Integer> getPosition(){return position;}
     public String getGene(){return geneticCode;}
+
+    @Override
+    public Map<String, Integer> getBindings() {
+        return bindings;
+    }
+
+    public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost){
+        maxHp+=cHp;
+        Hp+=cHp;
+        Atk += cAtk;
+        lifeSteal +=cLs;
+        cost += ccost;
+        moveCost+=cmoveCost;
+    }
 }

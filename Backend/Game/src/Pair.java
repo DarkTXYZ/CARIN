@@ -16,6 +16,11 @@ public class Pair<T1,T2> {
         return snd;
     }
 
+    public void setPair(T1 fst, T2 snd){
+        this.fst = fst;
+        this.snd = snd;
+    }
+
     @Override
     public String toString() {
         return "(" + fst + ", " + snd + ")";

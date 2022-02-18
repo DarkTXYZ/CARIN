@@ -32,7 +32,7 @@ public class Game {
         System.out.println("All viruses have been eliminated");
     }
 
-    public static void addATBD(Unit a,Pair<Integer,Integer> position){
+    public static void addATBD(Unit a, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         if(x>m || y>n) {
             System.out.println("out of range");
@@ -41,10 +41,11 @@ public class Game {
         if(Objects.equals(field[x][y],null)) {
             add(a,position);
             atbdOrder.add(a);
-        }else System.out.println("can't add; This tile already has a unit");
+            shop.modCurrency(-a.getCost());
+        }else System.out.println("can't add; This tile already has a gameUnit");
 
     }
-    public static void addVirus(Unit v,Pair<Integer,Integer> position){
+    public static void addVirus(Unit v, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         if(x>m || y>n) {
             System.out.println("out of range");
@@ -53,10 +54,10 @@ public class Game {
         if(Objects.equals(field[x][y],null)) {
             add(v,position);
             virusOrder.add(v);
-        }else System.out.println("can't add; This tile already has a unit");
+        }else System.out.println("can't add; This tile already has a gameUnit");
 
     }
-    //this method should init unit
+    //this method should init gameUnit
     public static void add(Unit unit, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
           unit.setPos(position);
@@ -72,15 +73,17 @@ public class Game {
         field[x][y] = null;
     }
     public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
+        //field [x][y]
         int x = destination.fst(); int y = destination.snd();
         int oldx = u.getPosition().fst(); int oldy = u.getPosition().snd();
+        if(x>=m||y>=n) {return;}
         if(Objects.equals(field[x][y],null)){
             Unit temp = field[oldx][oldy];
             temp.setPos(destination);
             field[x][y] = temp;
             field[oldx][oldy] = null;
         }else{
-            throw new UnexecutableCommandException("unit occupied in destination tile");
+            throw new UnexecutableCommandException("gameUnit occupied in destination tile");
         }
     }
     public static void destroyATBD(Unit unit, Unit spawn){
@@ -102,13 +105,14 @@ public class Game {
                 if(Objects.equals(field[i][j],null)) {
                     System.out.print("|  e  |");
                 }else
-                    System.out.print("|"+field[i][j].getGene()+"|");
+                    System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
             System.out.print("\n");
         }
         System.out.println("list order"+order.toString());
         System.out.println("virus order" +virusOrder.toString());
         System.out.println("atbd order"+atbdOrder.toString());
+        System.out.println("Shop currency: "+shop.getCurrency());
         System.out.println("-------------------------------");
     }
 
@@ -123,12 +127,12 @@ public class Game {
         return  null;
     }
 
-    public Unit senseClosestVirus(ATBD unit){
+    public Unit senseClosestVirus(ATBD gameUnit){
         Pair<Integer,Integer> ans = new Pair<>(0,0);
         double minDistance = 0;
         for(int i = 0 ; i < order.size() ; ++i){
             Pair<Integer,Integer> curPosition = order.get(i).getPosition();
-            double calPosition = Math.sqrt(Math.pow(unit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(unit.getPosition().snd() - curPosition.snd(), 2));
+            double calPosition = Math.sqrt(Math.pow(gameUnit.getPosition().fst() - curPosition.fst(), 2) + Math.pow(gameUnit.getPosition().snd() - curPosition.snd(), 2));
             minDistance = Math.min(minDistance , calPosition);
             if(calPosition == 0) continue;
             if(minDistance > calPosition){
@@ -181,9 +185,91 @@ public class Game {
         }
     */
 
+
+    static Unit createNewVirus(int n){
+        Unit virus = new Virus(viruses[n]);
+        return virus;
+    }
+    static Unit createNewATBD(int n){
+        Unit a = new ATBD(10,10,10,"testA",10);
+        return a;
+    }
+
+
+
+    static Unit gangster = new Virus(75,50,250,"move right");
+    static Unit pistolDude = new Virus(50,100,200,"move left");
+    static Unit sniper = new Virus(150,20,160,"snipe");
+    static Unit[] viruses = {gangster,pistolDude,sniper};
+
+
     protected static final String inFile = "src/configfile.in";
 
     public static void main(String[] args) {
+        config(inFile);
+        shop.modCurrency(initialATBDCredits);
+        for(int i =0;i<3;i++){
+            viruses[i].configMod(initVirusATK,initVirusLifeSteal,initVirusHP,atbdPlacementCost,atbdMoveCost);
+            //atbd[i]
+        }
+
+        addVirus(createNewVirus(0),new Pair<>(2,1));
+        addVirus(createNewVirus(1),new Pair<>(2,3));
+        Objective = new Objective(0,2);
+        visualize();
+        for(Unit u:order){
+            u.execute();
+        }
+        visualize();
+
+
+
+
+
+
+
+
+//            Unit v1 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "kuay");
+//            Pair<Integer,Integer> z = new Pair<>(0,0);
+//            g.addVirus(v1,z);
+//
+//            Unit v2 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "sud");
+//            Pair<Integer,Integer> x = new Pair<>(1,0);
+//            g.addVirus(v2,x);
+//
+//            Unit a1 = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "eiei");
+//            Pair<Integer,Integer> c = new Pair<>(2,2);
+//            g.addATBD(a1,c);
+//
+//            Unit b = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "weebo");
+//            Pair<Integer,Integer> v = new Pair<>(3,3);
+//            g.addATBD(b,v);
+//            Game.visualize();
+//
+//            v1.attack(a1);
+//            v2.attack(b);
+//            b.destruct();
+//            v1.destruct();
+//            Game.visualize();
+//            Pair<Integer,Integer> des1 = new Pair<>(3,3);
+//            Pair<Integer,Integer> des2 = new Pair<>(2,1);
+//            System.out.println("before move");
+//            v1.move(des1);
+//            v1.move(des2);
+//            System.out.println(v1.getGene());
+//            visualize();
+//            v2.move(des1);
+//            v2.move(des2);
+//        System.out.println("after move");
+//            visualize();
+//            field[des1.fst()][des1.snd()].destruct();
+//            visualize();
+    }
+
+
+
+
+    public static void config(String inFile){
         try(FileReader fr = new FileReader(inFile);
             Scanner s = new Scanner(fr)){
             System.out.println("--------1--------");
@@ -244,42 +330,6 @@ public class Game {
         }catch (IOException e){
             e.printStackTrace();
         }
-        Game g = new Game();
-            Unit v1 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "kuay");
-            Pair<Integer,Integer> z = new Pair<>(0,0);
-            g.addVirus(v1,z);
-
-            Unit v2 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "sud");
-            Pair<Integer,Integer> x = new Pair<>(1,0);
-            g.addVirus(v2,x);
-
-            Unit a1 = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "eiei");
-            Pair<Integer,Integer> c = new Pair<>(2,2);
-            g.addATBD(a1,c);
-
-            Unit b = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "weebo");
-            Pair<Integer,Integer> v = new Pair<>(3,3);
-            g.addATBD(b,v);
-            Game.visualize();
-
-            v1.attack(a1);
-            v2.attack(b);
-            b.destruct();
-            v1.destruct();
-            Game.visualize();
-            Pair<Integer,Integer> des1 = new Pair<>(3,3);
-            Pair<Integer,Integer> des2 = new Pair<>(2,1);
-            System.out.println("before move");
-            v1.move(des1);
-            v1.move(des2);
-            System.out.println(v1.getGene());
-            visualize();
-            v2.move(des1);
-            v2.move(des2);
-        System.out.println("after move");
-            visualize();
-            field[des1.fst()][des1.snd()].destruct();
-            visualize();
     }
 
 }

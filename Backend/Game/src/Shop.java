@@ -2,12 +2,12 @@ import java.util.Map;
 
 public class Shop {
     private static Shop instance;
-    int currency;
-    Map<ATBD,Boolean> status;
+    private int currency;
+    Map<Integer,Boolean> status;
     /** update shop*/
     public void  updateStatus(){
-        for(ATBD a:status.keySet()){
-            if(a.getCost()>=currency) {
+        for(int a:status.keySet()){
+            if(a>=currency) {
                 status.replace(a,true);
             }else status.replace(a,false);
         }
@@ -25,5 +25,6 @@ public class Shop {
     public void modCurrency(int mod){
         currency+=mod;
     }
+    public int getCurrency(){return currency;}
 
 }
