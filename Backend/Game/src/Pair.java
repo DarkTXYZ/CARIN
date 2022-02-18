@@ -20,6 +20,10 @@ public class Pair<T1,T2> {
         this.fst = fst;
         this.snd = snd;
     }
+    
+    public Pair<Integer,Integer> minus( Pair<Integer,Integer> a , Pair<Integer,Integer> b){
+        return new Pair<Integer,Integer>(a.fst()-b.fst(), a.snd()-b.snd());
+    }
 
     @Override
     public String toString() {
