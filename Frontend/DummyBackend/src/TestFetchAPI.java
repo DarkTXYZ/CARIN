@@ -18,12 +18,13 @@ public class TestFetchAPI {
     public static void main(String[] args) throws IOException, InterruptedException {
 //        GETGameData();
 //        POST();
-        int cnt = 0;
-        while (true) {
-            GETInput();
-            PUTGameData(cnt++);
-            Thread.sleep(3000);
-        }
+        PUTGameData();
+//        int cnt = 0;
+//        while (true) {
+//            GETInput();
+//            PUTGameData(cnt++);
+//            Thread.sleep(3000);
+//        }
     }
 
     public static void GETGameData() throws IOException {
@@ -133,20 +134,20 @@ public class TestFetchAPI {
         }
     }
 
-    public static void PUTGameData(int cnt) throws IOException {
+    public static void PUTGameData() throws IOException {
 
         List<Integer> pos = new LinkedList<>();
-        pos.add(2);
-        pos.add(3);
+        pos.add(42);
+        pos.add(8668);
         Map<String, Integer> bindings = new HashMap<>();
         bindings.put("sss", 2);
-        bindings.put("bbb", 3);
+        bindings.put("bbb", 555);
         List<List<Integer>> order = new LinkedList<>();
         order.add(pos);
         order.add(pos);
 
         JSONObject obj = new JSONObject();
-        obj.put("state", cnt);
+        obj.put("state", 3);
         obj.put("pos", pos);
         obj.put("order", order);
         obj.put("bindings", bindings);
