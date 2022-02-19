@@ -66,6 +66,7 @@ public class Game {
     }
 
     public static void remove(Pair<Integer,Integer> position){
+
         int x = position.fst(); int y = position.snd();
         order.remove(field[x][y]);
         virusOrder.remove(field[x][y]);
@@ -103,7 +104,7 @@ public class Game {
         for(int i =0; i<m;i++){
             for (int j= 0;j<n;j++){
                 if(Objects.equals(field[i][j],null)) {
-                    System.out.print("|  e  |");
+                    System.out.print("| "+i+","+j+" |");
                 }else
                     System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
@@ -168,52 +169,240 @@ public class Game {
 //        return  getATBDFromPos(ans);
 //    }
 
-    public int senseClosestVirus(ATBD u){
-        Pair<Integer, Integer> pos = u.getPosition();
-        int ans = 0;
-        Pair<Integer,Integer> temp = new Pair<>(0,0);
-        for(int i = 0 ; i < virusOrder.size() ; ++i){
-            Pair<Integer,Integer> virusPos = virusOrder.get(i).getPosition();
-            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
-            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
-                if(Objects.equals(xydiff.fst(), xydiff.snd())){
-                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
 
-                    }
-                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
 
-                    }
+    /*  00 01 02 03 04 05
+        10 11 12 13 14 15
+        20 21 22 23 24 25
+        30 31 32 33 34 35
+        40 41 42 43 44 45
+
+    */
+    public static int senseClosestVirus(Unit u){
+        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+        int tempans = Integer.MAX_VALUE;
+        int ans = Integer.MAX_VALUE;
+        for(int i = 0 ; i < virusOrder.size() ; ++i) {
+            int y = virusOrder.get(i).getPosition().fst();
+            int x = virusOrder.get(i).getPosition().snd();
+            int xdiff = x-hx;
+            int ydiff = y-hy;
+            if(Math.abs(xdiff) == Math.abs(ydiff)){ //diagonal
+                if(xdiff < 0 && ydiff<0 ){//upleft
+                    tempans =  xdiff*-10+8;
                 }
-
-                if( xydiff.fst() > xydiff.snd()){ // up right
-
+                if(xdiff>0 && ydiff > 0) {// downright
+                    tempans =  xdiff*10+4;
                 }
-                if( xydiff.fst() < xydiff.snd()){ // down left
-
+                if(xdiff>0 && ydiff <0 ){ //upright
+                    tempans = xdiff*10+2;
                 }
-            }else{ // straight
-                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
-
+                if(xdiff<0 && ydiff>0 ){ // downleft
+                    tempans = ydiff*10+6;
                 }
-                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
-
+            }else { //line
+                if(ydiff == 0 && xdiff>0){ // right
+                    tempans = xdiff*10+3;
                 }
-                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
-
+                if(ydiff == 0 && xdiff<0){// left
+                    tempans = xdiff*-10+7;
                 }
-                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
-
+                if(xdiff == 0 &&ydiff<0){// up
+                    tempans = ydiff*-10+1;
+                }
+                if(xdiff == 0 && ydiff>0){// down
+                    tempans = ydiff*10+5;
                 }
             }
+            ans = Math.min(ans,tempans);
+//
+//            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
+//            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
+//                if(Objects.equals(xydiff.fst(), xydiff.snd())){
+//                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
+//
+//                    }
+//                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
+//
+//                    }
+//                }
+//
+//                if( xydiff.fst() > xydiff.snd()){ // up right
+//
+//                }
+//                if( xydiff.fst() < xydiff.snd()){ // down left
+//
+//                }
+//            }else{ // straight
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
+//
+//                }
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
+//
+//                }
+//            }
+//        }
         }
-        return 0;
+        if(ans == Integer.MAX_VALUE) ans =0;
+        return ans;
     }
 
-    public int senseClosestATBD(Virus u){
-        return 0;
+    public static int senseClosestATBD(Unit u){
+        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+        int tempans = Integer.MAX_VALUE;
+        int ans = Integer.MAX_VALUE;
+        for(int i = 0 ; i < atbdOrder.size() ; ++i) {
+            int y = atbdOrder.get(i).getPosition().fst();
+            int x = atbdOrder.get(i).getPosition().snd();
+            int xdiff = x - hx;
+            int ydiff = y - hy;
+            if (Math.abs(xdiff) == Math.abs(ydiff)) { //diagonal
+                if (xdiff < 0 && ydiff < 0) {//upleft
+                    tempans = xdiff * -10 + 8;
+                }
+                if (xdiff > 0 && ydiff > 0) {// downright
+                    tempans = xdiff * 10 + 4;
+                }
+                if (xdiff > 0 && ydiff < 0) { //upright
+                    tempans = xdiff * 10 + 2;
+                }
+                if (xdiff < 0 && ydiff > 0) { // downleft
+                    tempans = ydiff * 10 + 6;
+                }
+            } else { //line
+                if (ydiff == 0 && xdiff > 0) { // right
+                    tempans = xdiff * 10 + 3;
+                }
+                if (ydiff == 0 && xdiff < 0) {// left
+                    tempans = xdiff * -10 + 7;
+                }
+                if (xdiff == 0 && ydiff < 0) {// up
+                    tempans = ydiff * -10 + 1;
+                }
+                if (xdiff == 0 && ydiff > 0) {// down
+                    tempans = ydiff * 10 + 5;
+                }
+            }
+            ans = Math.min(ans, tempans);
+        }
+        if(ans == Integer.MAX_VALUE) ans = 0;
+        return ans;
     }
+    /*    00 01 02 03 04 05
+          10 11 12 13 14 15
+          20 21 at vi 24 25
+          30 31 32 33 34 35
+          40 41 42 43 44 45
 
-    public void senseNearby(Unit unit, String direction){}
+      */
+    public static int senseNearby(Unit u, String direction){
+        int ans =  0;
+        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+        int x = hx; int y = hy;
+        if(direction.equals("right")){
+            x++;
+            while (x<n){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (x-hx)*10+1;
+                    else return (x-hx)*10+2;
+                }else{
+                    x++;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("left")){
+            x--;
+            while (x>=0){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (hx-x)*10+1;
+                    else return (hx-x)*10+2;
+                }else{
+                    x--;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("up")){
+            y--;
+            while (y<=0){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
+                    else return (hy-y)*10+2;
+                }else{
+                    y--;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("down")){
+            y++;
+            while (y<m){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (y-hy)*10+1;
+                    else return (y-hy)*10+2;
+                }else{
+                    y++;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("upright")){
+            y--; x++;
+            while (y>=0 || x<n){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
+                    else return (hy-y)*10+2;
+                }else{
+                    y--; x++;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("downright")){
+            y++; x++;
+            while (y<m || x<n){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (y-hy)*10+1;
+                    else return (y-hy)*10+2;
+                }else{
+                    y++; x++;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("downleft")){
+            y++; x--;
+            while (y<m || x>=0){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (y-hy)*10+1;
+                    else return (y-hy)*10+2;
+                }else{
+                    y++; x--;
+                }
+            }
+            return 0;
+        }
+        else if(direction.equals("upleft")){
+            y--; x--;
+            while (y>=0 || x>=0){
+                if(!Objects.equals((field[y][x]),null)){
+                    if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
+                    else return (hy-y)*10+2;
+                }else{
+                    y--; x--;
+                }
+            }
+            return 0;
+        }
+        return -99;
+    }
 
     public void update(){
 
@@ -239,7 +428,7 @@ public class Game {
         return virus;
     }
     static Unit createNewATBD(int n){
-        Unit a = new ATBD(10,10,10,"testA",10);
+        Unit a = new ATBD_(10,10,10,"testA",10);
         return a;
     }
 
@@ -263,12 +452,28 @@ public class Game {
 
         addVirus(createNewVirus(0),new Pair<>(2,1));
         addVirus(createNewVirus(1),new Pair<>(2,3));
+        addATBD(createNewATBD(1),new Pair<>(2,0));
+        addVirus(createNewVirus(1),new Pair<>(2,4));
+        addVirus(createNewVirus(1),new Pair<>(4,0));
+        addVirus(createNewVirus(1),new Pair<>(0,4));
+        addATBD(createNewATBD(1),new Pair<>(2,2));
         Objective = new Objective(0,2);
         visualize();
-        for(Unit u:order){
-            u.execute();
-        }
-        visualize();
+//        System.out.println(Game.senseClosestVirus(field[2][2])); //13
+//        System.out.println(Game.senseClosestATBD(field[2][1])); //13
+//        System.out.println(Game.senseClosestATBD(field[2][3])); //17
+//        System.out.println(Game.senseClosestATBD(field[4][0])); //22
+//        System.out.println(Game.senseClosestATBD(field[0][4])); // 26
+//        System.out.println(senseNearby(field[0][4],"downleft")); //22
+//        System.out.println(senseNearby(field[4][0],"upright")); //22
+//        System.out.println(senseNearby(field[2][1],"right")); //12
+//        System.out.println(senseNearby(field[2][0],"right")); //11
+//        System.out.println(senseNearby(field[2][2],"right")); //11
+//        System.out.println(senseNearby(field[2][2],"left")); //11
+//        System.out.println(senseNearby(field[2][2],"downleft")); //21
+
+
+
 
 
 

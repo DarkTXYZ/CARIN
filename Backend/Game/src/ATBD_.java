@@ -1,11 +1,11 @@
 import java.util.HashMap;
 
-public class ATBD extends UnitImpl {
+public class ATBD_ extends UnitImpl {
 
 
 
 
-    public ATBD(int atk, int lifeSteal, int hp, String gene,int cost){
+    public ATBD_(int atk, int lifeSteal, int hp, String gene, int cost){
         this.Atk = atk;
         this.maxHp = hp;
         this.Hp = hp;
@@ -16,7 +16,7 @@ public class ATBD extends UnitImpl {
         bindings = new HashMap<>();
     }
 
-    public ATBD(Unit template){
+    public ATBD_(Unit template){
         Hp = template.getHp();
         maxHp = template.getMaxHp();
         Atk = template.getAtk();
