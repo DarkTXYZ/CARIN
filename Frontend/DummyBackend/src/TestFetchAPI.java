@@ -138,7 +138,7 @@ public class TestFetchAPI {
 
         List<Integer> pos = new LinkedList<>();
         pos.add(42);
-        pos.add(8668);
+        pos.add(6666);
         Map<String, Integer> bindings = new HashMap<>();
         bindings.put("sss", 2);
         bindings.put("bbb", 555);
