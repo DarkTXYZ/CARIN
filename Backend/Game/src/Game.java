@@ -73,6 +73,14 @@ public class Game {
         atbdOrder.remove(field[x][y]);
         field[x][y] = null;
     }
+    public static void moveATBD(Unit u,Pair<Integer,Integer> destination){
+        u.setHP(-atbdMoveCost);
+        try {
+            move(u,destination);
+        }catch (Exception e){
+            System.out.println("can't execute move");
+        }
+    }
     public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
         //field [x][y]
         int x = destination.fst(); int y = destination.snd();
@@ -96,7 +104,7 @@ public class Game {
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        shop.setCurrency(2);
+        shop.setCurrency();
         Objective.modfst(1);
     }
     public static void visualize(){
