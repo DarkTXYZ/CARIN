@@ -329,9 +329,9 @@ public class Game {
             }
             return 0;
         }
-        else if(direction.equals("up")){
+        else if(direction.equals("up")){ // << mark
             y--;
-            while (y<=0){
+            while (y>=0){
                 if(!Objects.equals((field[y][x]),null)){
                     if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
                     else return (hy-y)*10+2;
@@ -355,7 +355,7 @@ public class Game {
         }
         else if(direction.equals("upright")){
             y--; x++;
-            while (y>=0 || x<n){
+            while (y>=0 && x<n){
                 if(!Objects.equals((field[y][x]),null)){
                     if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
                     else return (hy-y)*10+2;
@@ -367,7 +367,7 @@ public class Game {
         }
         else if(direction.equals("downright")){
             y++; x++;
-            while (y<m || x<n){
+            while (y<m && x<n){
                 if(!Objects.equals((field[y][x]),null)){
                     if(field[y][x].getClass().getName().equals("Virus")) return (y-hy)*10+1;
                     else return (y-hy)*10+2;
@@ -379,7 +379,7 @@ public class Game {
         }
         else if(direction.equals("downleft")){
             y++; x--;
-            while (y<m || x>=0){
+            while (y<m && x>=0){
                 if(!Objects.equals((field[y][x]),null)){
                     if(field[y][x].getClass().getName().equals("Virus")) return (y-hy)*10+1;
                     else return (y-hy)*10+2;
@@ -391,7 +391,7 @@ public class Game {
         }
         else if(direction.equals("upleft")){
             y--; x--;
-            while (y>=0 || x>=0){
+            while (y>=0 && x>=0){
                 if(!Objects.equals((field[y][x]),null)){
                     if(field[y][x].getClass().getName().equals("Virus")) return (hy-y)*10+1;
                     else return (hy-y)*10+2;
@@ -452,29 +452,31 @@ public class Game {
 
         addVirus(createNewVirus(0),new Pair<>(2,1));
         addVirus(createNewVirus(1),new Pair<>(2,3));
-        addATBD(createNewATBD(1),new Pair<>(2,0));
+        addATBD(createNewATBD(1),new Pair<>(5,2));
         addVirus(createNewVirus(1),new Pair<>(2,4));
-        addVirus(createNewVirus(1),new Pair<>(4,0));
+        addVirus(createNewVirus(1),new Pair<>(3,0));
         addVirus(createNewVirus(1),new Pair<>(0,4));
         addATBD(createNewATBD(1),new Pair<>(2,2));
         Objective = new Objective(0,2);
         visualize();
-//        System.out.println(Game.senseClosestVirus(field[2][2])); //13
-//        System.out.println(Game.senseClosestATBD(field[2][1])); //13
-//        System.out.println(Game.senseClosestATBD(field[2][3])); //17
-//        System.out.println(Game.senseClosestATBD(field[4][0])); //22
-//        System.out.println(Game.senseClosestATBD(field[0][4])); // 26
 //        System.out.println(senseNearby(field[0][4],"downleft")); //22
-//        System.out.println(senseNearby(field[4][0],"upright")); //22
+//        System.out.println(senseNearby(field[5][2],"downright")); // 0
 //        System.out.println(senseNearby(field[2][1],"right")); //12
-//        System.out.println(senseNearby(field[2][0],"right")); //11
+//        System.out.println(senseNearby(field[3][0],"upright")); //11
 //        System.out.println(senseNearby(field[2][2],"right")); //11
 //        System.out.println(senseNearby(field[2][2],"left")); //11
-//        System.out.println(senseNearby(field[2][2],"downleft")); //21
+//        System.out.println(senseNearby(field[2][2],"down")); //32
 
-
-
-
+        //corner case :
+            //topleft - left => pass , upleft => pass , up => pass
+            //topright - right => pass , upright => pass , up ==> pass
+            //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
+            //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
+        //side case :
+            //left side - left => pass , upleft => pass , downleft => pass
+            //right side - right => pass , upright => pass , downright => pass
+            //upper side - up => pass , upleft => pass , upright => pass
+            //bottom side - down => pass , downleft => pass , downright => pass
 
 
 
