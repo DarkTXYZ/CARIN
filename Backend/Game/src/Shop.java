@@ -1,3 +1,4 @@
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Shop {
@@ -12,17 +13,32 @@ public class Shop {
             }else status.replace(a,false);
         }
     }
-    private Shop(){}
-    public static Shop getInstance(){
-        if(Shop.instance == null) Shop.instance = new Shop();
+    private Shop(int[] cost){
+        status = new LinkedHashMap<>();
+        for(int i = 0;i<cost.length;i++){
+            status.put(cost[i],false);
+        }
+    }
+    public static Shop getInstance(int[] cost){
+        if(Shop.instance == null) Shop.instance = new Shop(cost);
         return Shop.instance;
+    }
+    public static void updateCost(int[] cost){
+        instance.status = new LinkedHashMap<>();
+        for(int i = 0;i<cost.length;i++){
+            instance.status.put(cost[i],false);
+        }
+    }
+    public Map<Integer, Boolean> getMap(){
+        return status;
     }
 
 
     private void updateCurrency(){
         currency ++;
     }
-    public void modCurrency(int mod){
+
+    public void setCurrency(int mod){
         currency+=mod;
     }
     public int getCurrency(){return currency;}

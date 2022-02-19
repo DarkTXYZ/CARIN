@@ -9,22 +9,23 @@ import java.util.Scanner;
 
 public class Game {
 
-    static int m = 4,n = 4;
+    static int m = 20,n = 20;
     static Unit[][] field= new Unit[m][n];
-
+    protected static final String inFile = "src/configfile.in";
     static int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
-            , atbdMoveCost;
+            , atbdMoveCost , atbdCreditsDrop;
     static double spawnCount = 0;
     static double timeUnitCount = 0;
     static double virusSpawnRate;
-    static Shop shop = Shop.getInstance();
+
     static GeneticEvaluator g  = GeneticEvaluator.getInstance();
     static List<Unit> order = new ArrayList<>();
     static List<Unit> virusOrder = new ArrayList<>();
     static List<Unit> atbdOrder = new ArrayList<>();
     static Objective Objective;
     static int virusLimit;
+    static Shop shop;
 
     public static void initObjective(int maxElim){
         Objective = new Objective(0,maxElim);
@@ -43,7 +44,7 @@ public class Game {
         if(Objects.equals(field[x][y],null)) {
             add(a,position);
             atbdOrder.add(a);
-            shop.modCurrency(-a.getCost());
+            shop.setCurrency(-a.getCost());
         }else System.out.println("can't add; This tile already has a gameUnit");
 
     }
@@ -98,7 +99,7 @@ public class Game {
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        shop.modCurrency(2);
+        shop.setCurrency(2);
         Objective.modfst(1);
     }
     public static void visualize(){
@@ -118,9 +119,6 @@ public class Game {
         System.out.println("Shop currency: "+shop.getCurrency());
         System.out.println("-------------------------------");
     }
-
-    public void spawnVirus(){}
-
     public Unit getVirusFromPos(Pair<Integer,Integer> pos){
         for(int i = 0 ; i < virusOrder.size() ; ++i){
             if(pos == virusOrder.get(i).getPosition()){
@@ -129,7 +127,6 @@ public class Game {
         }
         return  null;
     }
-
 //
 //    public Unit senseClosestVirus(ATBD unit){
 //        Pair<Integer,Integer> ans = new Pair<>(0,0);
@@ -171,15 +168,6 @@ public class Game {
 //        return  getATBDFromPos(ans);
 //    }
 
-
-
-    /*  00 01 02 03 04 05
-        10 11 12 13 14 15
-        20 21 22 23 24 25
-        30 31 32 33 34 35
-        40 41 42 43 44 45
-
-    */
     public static int senseClosestVirus(Unit u){
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
         int tempans = Integer.MAX_VALUE;
@@ -254,7 +242,6 @@ public class Game {
         if(ans == Integer.MAX_VALUE) ans =0;
         return ans;
     }
-
     public static int senseClosestATBD(Unit u){
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
         int tempans = Integer.MAX_VALUE;
@@ -296,13 +283,6 @@ public class Game {
         if(ans == Integer.MAX_VALUE) ans = 0;
         return ans;
     }
-    /*    00 01 02 03 04 05
-          10 11 12 13 14 15
-          20 21 at vi 24 25
-          30 31 32 33 34 35
-          40 41 42 43 44 45
-
-      */
     public static int senseNearby(Unit u, String direction){
         int ans =  0;
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
@@ -405,20 +385,15 @@ public class Game {
         }
         return -99;
     }
-
     public static void gShoot(Pair<Integer,Integer> pos, Unit u){
         int y = pos.fst(); int x = pos.snd();
         if(y<0 || x < 0 || y>=m || x>=n) System.out.println("can't shoot out of range"); // should not happen
         field[y][x].takingDamage(u);
     }
 
-    public void update(){
-
-    }
-    public void updateShop(){
+    public static void updateShop(){
         shop.updateStatus();
     }
-
 
     /*
         createNewVirus(atk , hp , lifesteal , gene , pos){
@@ -431,7 +406,6 @@ public class Game {
         }
     */
 
-
     static Unit createNewVirus(int n){
         Unit virus = new Virus(viruses[n]);
         return virus;
@@ -440,8 +414,6 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
-
-
 
     static Unit gangster = new Virus(75,50,250,"move right",1);
     static Unit pistolDude = new Virus(50,100,200,"move left",1);
@@ -453,16 +425,25 @@ public class Game {
     static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1);
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
+    static int virustemplate = viruses.length;
+    static int atbdtemplate = Atbds.length;
+    static int[] cost = {Merci.getCost(),Ana.getCost(),Lucio.getCost()};
 
-    protected static final String inFile = "src/configfile.in";
+
 
     public static void Initialize(){
         config(inFile);
-        shop.modCurrency(initialATBDCredits);
-        for(int i =0;i<3;i++){
+        shop = Shop.getInstance(cost);
+        shop.setCurrency(initialATBDCredits);
+        for(int i =0;i<virustemplate;i++){
             viruses[i].configMod(initVirusATK,initVirusLifeSteal,initVirusHP,atbdPlacementCost,atbdMoveCost);
-            //atbd[i]
+            Atbds[i].configMod(initATBDATK,initVirusLifeSteal,initATBDHP,atbdPlacementCost,atbdMoveCost);
         }
+        for (int i = 0;i<atbdtemplate;i++){
+            cost[i] = Atbds[i].getCost();
+        }
+        Shop.updateCost(cost);
+        System.out.println(shop.getMap().keySet());
     }
     public static void GetInput(){
         // ????????????????
@@ -499,15 +480,15 @@ public class Game {
 //        System.out.println(Game.senseClosestATBD(field[4][0])); //22
 //        System.out.println(Game.senseClosestATBD(field[0][4])); // 26
 
-        addVirus(createNewVirus(0),new Pair<>(2,1));
-        addVirus(createNewVirus(1),new Pair<>(2,3));
-        addATBD(createNewATBD(1),new Pair<>(5,2));
-        addVirus(createNewVirus(1),new Pair<>(2,4));
-        addVirus(createNewVirus(1),new Pair<>(3,0));
-        addVirus(createNewVirus(1),new Pair<>(0,4));
-        addATBD(createNewATBD(1),new Pair<>(2,2));
-        Objective = new Objective(0,2);
-        visualize();
+//        addVirus(createNewVirus(0),new Pair<>(2,1));
+//        addVirus(createNewVirus(1),new Pair<>(2,3));
+//        addATBD(createNewATBD(1),new Pair<>(5,2));
+//        addVirus(createNewVirus(1),new Pair<>(2,4));
+//        addVirus(createNewVirus(1),new Pair<>(3,0));
+//        addVirus(createNewVirus(1),new Pair<>(0,4));
+//        addATBD(createNewATBD(1),new Pair<>(2,2));
+//        Objective = new Objective(0,2);
+//        visualize();
 //        System.out.println(senseNearby(field[0][4],"downleft")); //22
 //        System.out.println(senseNearby(field[5][2],"downright")); // 0
 //        System.out.println(senseNearby(field[2][1],"right")); //12
@@ -630,6 +611,9 @@ public class Game {
             atbdMoveCost = s.nextInt();
             if( atbdMoveCost <= 0 || atbdMoveCost > initialATBDCredits ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
+            System.out.println("--------8--------");
+            System.out.println("Antibody Credits Drop : ");
+            atbdCreditsDrop = s.nextInt();
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException e){
