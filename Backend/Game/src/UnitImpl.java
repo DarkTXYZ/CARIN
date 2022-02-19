@@ -85,7 +85,7 @@ public abstract class UnitImpl implements Unit {
     public void setHP(int mod) {
         Hp+=mod;
         if(Hp>maxHp) Hp = maxHp;
-        if(Hp<0) Hp = 0;
+        if(Hp<=0) Hp = 1;
     }
 
     public int getHp(){return Hp;}
