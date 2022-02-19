@@ -404,12 +404,19 @@ public class Game {
         return -99;
     }
 
+    public static void gShoot(Pair<Integer,Integer> pos, Unit u){
+        int y = pos.fst(); int x = pos.snd();
+        if(y<0 || x < 0 || y>=m || x>=n) System.out.println("can't shoot out of range"); // should not happen
+        field[y][x].takingDamage(u);
+    }
+
     public void update(){
 
     }
     public void updateShop(){
         shop.updateStatus();
     }
+
 
     /*
         createNewVirus(atk , hp , lifesteal , gene , pos){
@@ -428,16 +435,21 @@ public class Game {
         return virus;
     }
     static Unit createNewATBD(int n){
-        Unit a = new ATBD_(10,10,10,"testA",10);
+        Unit a = new ATBD_(Atbds[n]);
         return a;
     }
 
 
 
-    static Unit gangster = new Virus(75,50,250,"move right");
-    static Unit pistolDude = new Virus(50,100,200,"move left");
-    static Unit sniper = new Virus(150,20,160,"snipe");
+    static Unit gangster = new Virus(75,50,250,"move right",1);
+    static Unit pistolDude = new Virus(50,100,200,"move left",1);
+    static Unit sniper = new Virus(150,20,160,"snipe",1);
     static Unit[] viruses = {gangster,pistolDude,sniper};
+
+    static Unit Merci = new ATBD_(100,20,800,"merci",20,5);
+    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2);
+    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1);
+    static Unit[] Atbds = {Merci,Ana,Lucio};
 
 
     protected static final String inFile = "src/configfile.in";
@@ -450,15 +462,19 @@ public class Game {
             //atbd[i]
         }
 
-        addVirus(createNewVirus(0),new Pair<>(2,1));
-        addVirus(createNewVirus(1),new Pair<>(2,3));
-        addATBD(createNewATBD(1),new Pair<>(2,0));
-        addVirus(createNewVirus(1),new Pair<>(2,4));
-        addVirus(createNewVirus(1),new Pair<>(4,0));
-        addVirus(createNewVirus(1),new Pair<>(0,4));
-        addATBD(createNewATBD(1),new Pair<>(2,2));
-        Objective = new Objective(0,2);
+        addVirus(createNewVirus(1),new Pair<>(2,2));
+        addATBD(createNewATBD(1),new Pair<>(0,0));
+//        addVirus(createNewVirus(1),new Pair<>(1,2));
+//        addATBD(createNewATBD(1),new Pair<>(1,3));
+//        addATBD(createNewATBD(1),new Pair<>(2,3));
+//        addATBD(createNewATBD(1),new Pair<>(3,3));
+//        addATBD(createNewATBD(1),new Pair<>(3,2));
+//        addATBD(createNewATBD(1),new Pair<>(3,1));
+//        addATBD(createNewATBD(1),new Pair<>(2,1));
+//        addATBD(createNewATBD(1),new Pair<>(1,1));
         visualize();
+        System.out.println(senseClosestATBD(field[2][2]));
+
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][3])); //17
@@ -471,6 +487,7 @@ public class Game {
 //        System.out.println(senseNearby(field[2][2],"right")); //11
 //        System.out.println(senseNearby(field[2][2],"left")); //11
 //        System.out.println(senseNearby(field[2][2],"downleft")); //21
+
 
 
 

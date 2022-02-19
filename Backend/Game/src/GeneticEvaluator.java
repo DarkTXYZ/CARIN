@@ -199,9 +199,9 @@ public class GeneticEvaluator implements Evaluator {
         if (Objects.equals(command, "nearby")) {
             if (!directionWords.contains(tkz.peek()))
                 throw new SyntaxErrorException("Missing direction word");
-            return new SensorExpression(command, tkz.consume());
+            return new SensorExpression(command, tkz.consume(),unit);
         } else
-            return new SensorExpression(command);
+            return new SensorExpression(command,unit);
     }
 
     private boolean isNumber(String peek) {

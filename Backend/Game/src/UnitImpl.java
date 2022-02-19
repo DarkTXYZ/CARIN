@@ -12,6 +12,7 @@ public abstract class UnitImpl implements Unit {
     int lifeSteal;
     int cost;
     int moveCost;
+    int attackRange;
     String geneticCode;
     Unit previousAttacker;
     Executable program;
@@ -62,10 +63,9 @@ public abstract class UnitImpl implements Unit {
         }
     }
 
-    @Override
-    public void shoot(String direction) {
 
-    }
+    public abstract void shoot(String direction);
+
 
     public void takingDamage(Unit attacker){
         previousAttacker = attacker;

@@ -43,14 +43,17 @@ class Identifier implements Evaluable {
 class SensorExpression implements Evaluable {
 
     String command, direction = null;
+    Unit u;
 
-    public SensorExpression(String command) {
+    public SensorExpression(String command,Unit u) {
         this.command = command;
+        this.u = u;
     }
 
-    public SensorExpression(String command, String direction) {
+    public SensorExpression(String command, String direction,Unit u) {
         this.command = command;
         this.direction = direction;
+        this.u = u;
     }
 
     //left | right | up | down | upleft | upright | downleft | downright
@@ -58,13 +61,15 @@ class SensorExpression implements Evaluable {
     public int eval() {
         if (Objects.equals(command, "virus")) {
             System.out.println("Finding Closest Virus");
-            return 69;
+            return Game.senseClosestVirus(u);
+
         } else if (Objects.equals(command, "antibody")) {
             System.out.println("Finding Closest ATBD");
-            return 420;
+
+            return Game.senseClosestATBD(u);
         } else {
             System.out.println("Finding Closest Unit in " + direction + " direction");
-            return 748;
+            return Game.senseNearby(u,direction);
         }
     }
 }
