@@ -444,6 +444,7 @@ public class Game {
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
+        initObjective(100);
     }
     public static void GetInput(){
         // ????????????????
@@ -451,7 +452,7 @@ public class Game {
 
     public static void Update(){
         int rand;
-        while(Objective.fst() > 0){
+        while(Objective.snd() - Objective.fst() > 0){
             /*if(ซื้อตัว){
                 //เสกมา
             }
@@ -461,8 +462,15 @@ public class Game {
             }
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
-                //เกิด
-                spawnCount = spawnCount - rand;
+                if( rand == 0 ){
+                    spawnCount = spawnCount - rand;
+                }
+                if( rand == 1 ){
+                    spawnCount = spawnCount - 2*rand;
+                }
+                if( rand == 2 ){
+                    spawnCount = spawnCount - 3*rand;
+                }
             }else{
                 spawnCount++;
             }
@@ -612,8 +620,10 @@ public class Game {
             if( atbdMoveCost <= 0 || atbdMoveCost > initialATBDCredits ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
             System.out.println("--------8--------");
-            System.out.println("Antibody Credits Drop : ");
+            System.out.print("Antibody Credits Drop : ");
             atbdCreditsDrop = s.nextInt();
+            System.out.println(atbdCreditsDrop);
+            if( atbdCreditsDrop <= 0 ) throw new IOException();
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException e){
