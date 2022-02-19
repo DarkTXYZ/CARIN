@@ -15,6 +15,8 @@ public class Game {
     static int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
             , atbdMoveCost;
+    static double spawnCount = 0;
+    static double timeUnitCount = 0;
     static double virusSpawnRate;
     static Shop shop = Shop.getInstance();
     static GeneticEvaluator g  = GeneticEvaluator.getInstance();
@@ -454,14 +456,42 @@ public class Game {
 
     protected static final String inFile = "src/configfile.in";
 
-    public static void main(String[] args) {
+    public static void Initialize(){
         config(inFile);
         shop.modCurrency(initialATBDCredits);
         for(int i =0;i<3;i++){
             viruses[i].configMod(initVirusATK,initVirusLifeSteal,initVirusHP,atbdPlacementCost,atbdMoveCost);
             //atbd[i]
         }
+    }
+    public static void GetInput(){
+        // ????????????????
+    }
 
+    public static void Update(){
+        int rand;
+        while(Objective.fst() > 0){
+            /*if(ซื้อตัว){
+                //เสกมา
+            }
+            */
+            for( Unit u : order ){
+                u.execute();
+            }
+            if( spawnCount >= 1 ){
+                rand = (int)(Math.random() * 3);
+                //เกิด
+                spawnCount = spawnCount - rand;
+            }else{
+                spawnCount++;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Initialize();
+        GetInput();
+        Update();
 
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
