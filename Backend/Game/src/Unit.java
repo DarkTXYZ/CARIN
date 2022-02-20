@@ -21,6 +21,7 @@ public interface Unit {
     int getMaxHp();
     int getLifeSteal();
     int getCost();
+    int getAttackRange();
 
 
     String getGene();

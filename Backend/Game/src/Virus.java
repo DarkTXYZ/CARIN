@@ -25,6 +25,7 @@ public class Virus extends UnitImpl {
         geneticCode = template.getGene();
         lifeSteal = template.getLifeSteal();
         bindings = new HashMap<>();
+        this.attackRange = template.getAttackRange();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
         }catch (Exception e) {System.out.println("genethingy");}
@@ -45,7 +46,7 @@ public class Virus extends UnitImpl {
         if(target<(attackRange+1)*10){
             Pair<Integer,Integer> targetPos = new Pair<>(-1,-1);
 
-            int coord = (target-1)/10;
+            int coord = (target-2)/10;
             int x = position.snd(); int y = position.fst();
             if(direction.equals("right")) targetPos = new Pair<>(y,x+coord);
             if(direction.equals("left")) targetPos = new Pair<>(y,x-coord);

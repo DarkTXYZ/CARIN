@@ -84,7 +84,7 @@ public class Game {
         order.remove(field[y][x]);
         virusOrder.remove(field[y][x]);
         atbdOrder.remove(field[y][x]);
-        field[x][y] = null;
+        field[y][x] = null;
         String s = String.valueOf(y)+String.valueOf(x);
         emptySlot.add(s);
 
@@ -108,9 +108,9 @@ public class Game {
             field[y][x] = temp;
             field[oldy][oldx] = null;
             String s = String.valueOf(oldy)+String.valueOf(oldx);
-            emptySlot.remove(s);
+            emptySlot.add(s);
             String newS = String.valueOf(y)+String.valueOf(x);
-            emptySlot.add(newS);
+            emptySlot.remove(newS);
         }else{
             throw new UnexecutableCommandException("gameUnit occupied in destination tile");
         }
@@ -530,13 +530,23 @@ public class Game {
 //        addVirus(createNewVirus(1),new Pair<>(0,4));
 //        addATBD(createNewATBD(1),new Pair<>(2,2));
 
-        addVirus(createNewVirus(0),randomTile());
-        addVirus(createNewVirus(1),randomTile());
-        addATBD(createNewATBD(1),randomTile());
-        addVirus(createNewVirus(1),randomTile());
-        addVirus(createNewVirus(1),randomTile());
-        addVirus(createNewVirus(1),randomTile());
-        addATBD(createNewATBD(1),randomTile());
+//        addVirus(createNewVirus(0),randomTile());
+//        addVirus(createNewVirus(1),randomTile());
+//        addATBD(createNewATBD(1),randomTile());
+//        addVirus(createNewVirus(1),randomTile());
+//        addVirus(createNewVirus(1),randomTile());
+//        addVirus(createNewVirus(1),randomTile());
+//        addATBD(createNewATBD(1),randomTile());
+          addVirus(createNewVirus(1), new Pair<>(1,1));
+          addATBD(createNewATBD(1),new Pair<>(1,4));
+
+          visualize();
+        field[1][1].move("right");
+        field[1][2].move("right");
+        field[1][4].shoot("left");
+        field[1][4].shoot("left");
+        field[1][4].shoot("left");
+        field[1][4].shoot("left");
 
         visualize();
 
