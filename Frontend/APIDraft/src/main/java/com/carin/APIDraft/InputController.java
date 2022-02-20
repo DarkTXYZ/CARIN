@@ -14,9 +14,29 @@ public class InputController {
     }
 
     @CrossOrigin
-    @PutMapping("/put")
-    public Input putInput(@RequestBody Input input) {
-        InputService.setInput(input);
+    @GetMapping("/state")
+    public int getState() {
+        return InputService.getState();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/state")
+    public Input putInputState(@RequestBody Input input) {
+        InputService.setInputState(input);
+        return InputService.getInput();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/type")
+    public Input putInputType(@RequestBody Input input) {
+        InputService.setType(input);
+        return InputService.getInput();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/pos")
+    public Input putInputPos(@RequestBody Input input) {
+        InputService.setPos(input);
         return InputService.getInput();
     }
 
