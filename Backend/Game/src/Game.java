@@ -1,11 +1,8 @@
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class Game {
 
@@ -18,6 +15,7 @@ public class Game {
     static double spawnCount = 0;
     static double timeUnitCount = 0;
     static double virusSpawnRate;
+    static SortedSet<String> emptySlot = new TreeSet<>();
 
     static GeneticEvaluator g  = GeneticEvaluator.getInstance();
     static List<Unit> order = new ArrayList<>();
@@ -33,6 +31,16 @@ public class Game {
     //tell if we win
     public static void notifyReachElim(){
         System.out.println("All viruses have been eliminated");
+    }
+    public static Pair<Integer,Integer> randomTile(){
+        //write random here
+        Random r = new Random();
+        int rand = r.nextInt(emptySlot.size()/2);
+
+        String s = emptySlot.toArray(new String[emptySlot.size()])[rand];
+        int y =  s.charAt(0)-'0';
+        int x = s.charAt(1)-'0';
+        return new Pair<>(y,x);
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
@@ -62,19 +70,24 @@ public class Game {
     }
     //this method should init gameUnit
     public static void add(Unit unit, Pair<Integer,Integer> position){
-        int x = position.fst(); int y = position.snd();
+        int y = position.fst(); int x = position.snd();
           unit.setPos(position);
-          field[x][y] = unit;
+          field[y][x] = unit;
           order.add(unit);
+          String s = String.valueOf(y)+String.valueOf(x);
+          emptySlot.remove(s);
     }
 
     public static void remove(Pair<Integer,Integer> position){
 
-        int x = position.fst(); int y = position.snd();
-        order.remove(field[x][y]);
-        virusOrder.remove(field[x][y]);
-        atbdOrder.remove(field[x][y]);
+        int y = position.fst(); int x = position.snd();
+        order.remove(field[y][x]);
+        virusOrder.remove(field[y][x]);
+        atbdOrder.remove(field[y][x]);
         field[x][y] = null;
+        String s = String.valueOf(y)+String.valueOf(x);
+        emptySlot.add(s);
+
     }
     public static void moveATBD(Unit u,Pair<Integer,Integer> destination){
         u.setHP(-atbdMoveCost);
@@ -86,14 +99,18 @@ public class Game {
     }
     public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
         //field [x][y]
-        int x = destination.fst(); int y = destination.snd();
-        int oldx = u.getPosition().fst(); int oldy = u.getPosition().snd();
-        if(x>=m||y>=n) {return;}
-        if(Objects.equals(field[x][y],null)){
-            Unit temp = field[oldx][oldy];
+        int y = destination.fst(); int x = destination.snd();
+        int oldy = u.getPosition().fst(); int oldx = u.getPosition().snd();
+        if(y>=m||x>=n) {return;}
+        if(Objects.equals(field[y][x],null)){
+            Unit temp = field[oldy][oldx];
             temp.setPos(destination);
-            field[x][y] = temp;
-            field[oldx][oldy] = null;
+            field[y][x] = temp;
+            field[oldy][oldx] = null;
+            String s = String.valueOf(oldy)+String.valueOf(oldx);
+            emptySlot.remove(s);
+            String newS = String.valueOf(y)+String.valueOf(x);
+            emptySlot.add(newS);
         }else{
             throw new UnexecutableCommandException("gameUnit occupied in destination tile");
         }
@@ -107,7 +124,7 @@ public class Game {
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        shop.setCurrency();
+        shop.setCurrency(atbdCreditsDrop);
         Objective.modfst(1);
     }
     public static void visualize(){
@@ -121,10 +138,12 @@ public class Game {
             }
             System.out.print("\n");
         }
+        System.out.println("Empty tile: "+emptySlot);
         System.out.println("list order"+order.toString());
         System.out.println("virus order" +virusOrder.toString());
         System.out.println("atbd order"+atbdOrder.toString());
         System.out.println("Shop currency: "+shop.getCurrency());
+
         System.out.println("-------------------------------");
     }
     public Unit getVirusFromPos(Pair<Integer,Integer> pos){
@@ -453,6 +472,13 @@ public class Game {
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
         initObjective(100);
+        for(int i = 0;i<m;i++){
+            for(int j = 0;j<n;j++){
+                String s = String.valueOf(i)+String.valueOf(j);
+                emptySlot.add(s);
+            }
+        }
+        System.out.println(emptySlot);
     }
     public static void GetInput(){
         // ????????????????
@@ -487,8 +513,8 @@ public class Game {
 
     public static void main(String[] args) {
         Initialize();
-        GetInput();
-        Update();
+//        GetInput();
+//        Update();
 
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
@@ -503,6 +529,17 @@ public class Game {
 //        addVirus(createNewVirus(1),new Pair<>(3,0));
 //        addVirus(createNewVirus(1),new Pair<>(0,4));
 //        addATBD(createNewATBD(1),new Pair<>(2,2));
+
+        addVirus(createNewVirus(0),randomTile());
+        addVirus(createNewVirus(1),randomTile());
+        addATBD(createNewATBD(1),randomTile());
+        addVirus(createNewVirus(1),randomTile());
+        addVirus(createNewVirus(1),randomTile());
+        addVirus(createNewVirus(1),randomTile());
+        addATBD(createNewATBD(1),randomTile());
+
+        visualize();
+
 //        Objective = new Objective(0,2);
 //        visualize();
 //        System.out.println(senseNearby(field[0][4],"downleft")); //22
