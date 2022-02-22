@@ -9,10 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TestFetchAPI {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -25,40 +22,6 @@ public class TestFetchAPI {
 //            PUTGameData(cnt++);
 //            Thread.sleep(3000);
 //        }
-    }
-
-    public static void GETGameData() throws IOException {
-        StringBuilder result = new StringBuilder();
-        URL url = new URL("http://localhost:8080/gamedata");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(con.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null; ) {
-                result.append(line);
-            }
-        }
-
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object obj = parser.parse(String.valueOf(result));
-
-            JSONObject obj2 = (JSONObject) obj;
-            System.out.println("Data GET: ");
-            System.out.println(obj2.toString());
-            System.out.println("---------------------");
-//            System.out.println(obj2.get("state"));
-//            List<Integer> a = (List<Integer>) obj2.get("pos");
-//            Map<String , Integer> b = (Map<String, Integer>) obj2.get("bindings");
-//            if(a != null)
-//                System.out.println(a.get(1));
-//            if(b != null)
-//                System.out.println(b.get("sss"));
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void GETInput() throws IOException {
@@ -79,7 +42,7 @@ public class TestFetchAPI {
             Object obj = parser.parse(String.valueOf(result));
 
             JSONObject obj2 = (JSONObject) obj;
-            System.out.println("Data GET: ");
+            System.out.println("InputData GET: ");
             System.out.println(obj2.toString());
             System.out.println("---------------------");
 //            System.out.println(obj2.get("state"));
@@ -95,65 +58,38 @@ public class TestFetchAPI {
         }
     }
 
-    public static void POST() throws IOException {
-        List<Integer> nums = new LinkedList<>();
-        nums.add(1);
-        nums.add(2);
-        Map<String, Integer> mapped = new HashMap<>();
-        mapped.put("haha", 222);
-        mapped.put("kkk", 333);
-
-
-        JSONObject obj = new JSONObject();
-        obj.put("name", "Jackson PP");
-        obj.put("nums", nums);
-        obj.put("role", "student");
-        obj.put("mapped", mapped);
-
-        String rawData = obj.toJSONString();
-        System.out.println(rawData);
-
-        URL url = new URL("http://localhost:8080/employees");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-        try (OutputStream os = con.getOutputStream()) {
-            byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            System.out.println(response);
-        }
-    }
-
     public static void PUTGameData() throws IOException {
 
-        List<Integer> pos = new LinkedList<>();
-        pos.add(42);
-        pos.add(8668);
-        Map<String, Integer> bindings = new HashMap<>();
-        bindings.put("sss", 2);
-        bindings.put("bbb", 555);
-        List<List<Integer>> order = new LinkedList<>();
-        order.add(pos);
-        order.add(pos);
+//        private int state;
+//        private List<Integer> posX,posY,type,shopState;
+//        private int objective , objectiveMax;
+//        private int m,n;
+
+        Integer[] a = { 1, 3, 1, 3, 2};
+        List<Integer> posX = Arrays.asList(a);
+
+        a = new Integer[]{2, 2, 3, 0, 3};
+        List<Integer> posY = Arrays.asList(a);
+
+        a = new Integer[]{2, 1, 1, 3, 2};
+        List<Integer> type = Arrays.asList(a);
+
+        a = new Integer[]{1, 0, 1};
+        List<Integer> shopState = Arrays.asList(a);
 
         JSONObject obj = new JSONObject();
-        obj.put("state", 3);
-        obj.put("pos", pos);
-        obj.put("order", order);
-        obj.put("bindings", bindings);
+        obj.put("state", 2);
+        obj.put("posX", posX);
+        obj.put("posY", posY);
+        obj.put("type", type);
+        obj.put("objective", 2);
+        obj.put("objectiveMax", 10);
+        obj.put("shopState", shopState);
+        obj.put("m", 10);
+        obj.put("n", 10);
 
         String rawData = obj.toJSONString();
-        System.out.println("Raw Data PUT:");
+        System.out.println("Raw GameData PUT:");
         System.out.println(rawData);
 
         URL url = new URL("http://localhost:8080/gamedata/put");
@@ -178,4 +114,5 @@ public class TestFetchAPI {
         }
         System.out.println("---------------------");
     }
+
 }

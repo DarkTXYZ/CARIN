@@ -1,0 +1,12 @@
+gameData
+- state, 
+- shopState, currency
+- posX, posY, type
+- objective, objectiveMax
+- m, n
+
+input 
+- clickState
+- clickType
+- posX_placement
+- posY_placement
