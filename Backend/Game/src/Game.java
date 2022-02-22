@@ -15,7 +15,17 @@ public class Game {
     static double spawnCount = 0;
     static double timeUnitCount = 0;
     static double virusSpawnRate;
-    static SortedSet<String> emptySlot = new TreeSet<>();
+    static SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            String[] arr1 = o1.split(" ");
+            String[] arr2 = o2.split(" ");
+            if(Integer.parseInt(arr1[0])==Integer.parseInt(arr2[0])){
+                return Integer.parseInt(arr1[1])-Integer.parseInt(arr2[1]);
+            }
+            return Integer.parseInt(arr1[0])-Integer.parseInt(arr2[0]);
+        }
+    });
 
     static GeneticEvaluator g  = GeneticEvaluator.getInstance();
     static List<Unit> order = new ArrayList<>();
@@ -32,15 +42,42 @@ public class Game {
     public static void notifyReachElim(){
         System.out.println("All viruses have been eliminated");
     }
-    public static Pair<Integer,Integer> randomTile(){
-        //write random here
-        Random r = new Random();
-        int rand = r.nextInt(emptySlot.size()/2);
+    public static Pair<Integer,Integer> randomTile()throws GameOverException{
+        try {
+            //write random here
+            Random r = new Random();
+            int area;
+            if (emptySlot.size() == 1) {
+                area = 1;
+            } else {
+                area = emptySlot.size() / 2;
+            }
+            int rand = r.nextInt(area);
 
-        String s = emptySlot.toArray(new String[emptySlot.size()])[rand];
-        int y =  s.charAt(0)-'0';
-        int x = s.charAt(1)-'0';
-        return new Pair<>(y,x);
+            String s = emptySlot.toArray(new String[emptySlot.size()])[rand];
+//            int length = s.length()/2;
+//            if(length %2 ==1&&s.length()>2) length++;
+//            //1 2
+//            //2 1
+//            // 01 0
+//            int runner = 0;
+//            String posY =""; String posX="";
+//            while (runner<s.length()) {
+//                if (runner < length) {
+//                    posY += s.charAt(runner);
+//                }else{
+//                    posX+=s.charAt(runner);
+//                }
+//                runner++;
+//            }
+            String[] arr = s.split(" ");
+            int y = Integer.parseInt(arr[0]);
+            int x = Integer.parseInt(arr[1]);
+            System.out.println("y = " + y+" x = "+x);
+            return new Pair<>(y, x);
+        }catch (Exception e){
+            throw new GameOverException("Game over");
+        }
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
@@ -74,18 +111,18 @@ public class Game {
           unit.setPos(position);
           field[y][x] = unit;
           order.add(unit);
-          String s = String.valueOf(y)+String.valueOf(x);
+          String s = String.valueOf(y)+" "+String.valueOf(x);
           emptySlot.remove(s);
     }
 
     public static void remove(Pair<Integer,Integer> position){
 
         int y = position.fst(); int x = position.snd();
-        order.remove(field[y][x]);
+//        order.remove(field[y][x]);
         virusOrder.remove(field[y][x]);
         atbdOrder.remove(field[y][x]);
         field[y][x] = null;
-        String s = String.valueOf(y)+String.valueOf(x);
+        String s = String.valueOf(y)+" "+String.valueOf(x);
         emptySlot.add(s);
 
     }
@@ -100,6 +137,7 @@ public class Game {
     public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
         //field [x][y]
         int y = destination.fst(); int x = destination.snd();
+        if(y< 0|| x<0) throw new UnexecutableCommandException("Out of field range");
         int oldy = u.getPosition().fst(); int oldx = u.getPosition().snd();
         if(y>=m||x>=n) {return;}
         if(Objects.equals(field[y][x],null)){
@@ -107,9 +145,9 @@ public class Game {
             temp.setPos(destination);
             field[y][x] = temp;
             field[oldy][oldx] = null;
-            String s = String.valueOf(oldy)+String.valueOf(oldx);
+            String s = String.valueOf(oldy)+" "+String.valueOf(oldx);
             emptySlot.add(s);
-            String newS = String.valueOf(y)+String.valueOf(x);
+            String newS = String.valueOf(y)+" "+String.valueOf(x);
             emptySlot.remove(newS);
         }else{
             throw new UnexecutableCommandException("gameUnit occupied in destination tile");
@@ -143,7 +181,7 @@ public class Game {
         System.out.println("virus order" +virusOrder.toString());
         System.out.println("atbd order"+atbdOrder.toString());
         System.out.println("Shop currency: "+shop.getCurrency());
-
+        System.out.println("Objective :" +Objective.fst()+"/"+Objective.snd());
         System.out.println("-------------------------------");
     }
     public Unit getVirusFromPos(Pair<Integer,Integer> pos){
@@ -444,10 +482,32 @@ public class Game {
 
     static Unit gangster = new Virus(75,50,250,"move right",1);
     static Unit pistolDude = new Virus(50,100,200,"move left",1);
-    static Unit sniper = new Virus(150,20,160,"snipe",1);
+    static Unit sniper = new Virus(150,20,160,"move downright",1);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(100,20,800,"merci",20,5);
+    static Unit Merci = new ATBD_(696969,20,69696969,    "virusLoc = virus " +
+            "if (virusLoc / 10 - 1) " +
+            "then  " +
+            "  if (virusLoc % 10 - 7) then move upleft " +
+            "  else if (virusLoc % 10 - 6) then move left " +
+            "  else if (virusLoc % 10 - 5) then move downleft " +
+            "  else if (virusLoc % 10 - 4) then move down " +
+            "  else if (virusLoc % 10 - 3) then move downright " +
+            "  else if (virusLoc % 10 - 2) then move right " +
+            "  else if (virusLoc % 10 - 1) then move upright " +
+            "  else move up " +
+            "else if (virusLoc) " +
+            "then  " +
+            "  if (virusLoc % 10 - 7) then shoot upleft " +
+            "  else if (virusLoc % 10 - 6) then shoot left " +
+            "  else if (virusLoc % 10 - 5) then shoot downleft " +
+            "  else if (virusLoc % 10 - 4) then shoot down " +
+            "  else if (virusLoc % 10 - 3) then shoot downright " +
+            "  else if (virusLoc % 10 - 2) then shoot right " +
+            "  else if (virusLoc % 10 - 1) then shoot upright " +
+            "  else shoot up " +
+            "else {} "
+            ,20,1);
     static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2);
     static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1);
     static Unit[] Atbds = {Merci,Ana,Lucio};
@@ -455,6 +515,8 @@ public class Game {
     static int virustemplate = viruses.length;
     static int atbdtemplate = Atbds.length;
     static int[] cost = {Merci.getCost(),Ana.getCost(),Lucio.getCost()};
+
+
 
 
 
@@ -471,54 +533,70 @@ public class Game {
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
-        initObjective(100);
+        initObjective(10);
         for(int i = 0;i<m;i++){
             for(int j = 0;j<n;j++){
-                String s = String.valueOf(i)+String.valueOf(j);
+                String s = String.valueOf(i)+" "+String.valueOf(j);
                 emptySlot.add(s);
             }
         }
+        addATBD(createNewATBD(0),new Pair<>(2,2));
+//        addATBD(createNewATBD(0),new Pair<>(,10));
+//        addATBD(createNewATBD(0),new Pair<>(19,19));
         System.out.println(emptySlot);
     }
     public static void GetInput(){
         // ????????????????
     }
 
-    public static void Update() throws InterruptedException {
+    public static void Update() throws InterruptedException, GameOverException {
         int rand;
         while(Objective.snd() - Objective.fst() > 0){
             /*if(ซื้อตัว){
                 //เสกมา
             }
             */
-            for( Unit u : order ){
-                u.execute();
+            Iterator<Unit> it = order.iterator();
+            while (it.hasNext()){
+                Unit u = it.next();
+                try {
+                    u.execute();
+                }catch (DeadException e){
+                    it.remove();
+                }
             }
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
                 if( rand == 0 ){
                     addVirus(createNewVirus(0), randomTile());
-                    spawnCount = spawnCount - rand;
+//                    spawnCount = spawnCount - rand;
                 }
                 if( rand == 1 ){
                     addVirus(createNewVirus(1), randomTile());
-                    spawnCount = spawnCount - 2*rand;
+//                    spawnCount = spawnCount - 2*rand;
                 }
                 if( rand == 2 ){
                     addVirus(createNewVirus(2), randomTile());
-                    spawnCount = spawnCount - 3*rand;
+//                    spawnCount = spawnCount - 3*rand;
                 }
             }else{
                 spawnCount++;
             }
+            visualize();
             Thread.sleep(1000);
         }
+        System.out.println("Ezgaem");
     }
 
     public static void main(String[] args) {
         Initialize();
+
 //        GetInput();
-//        Update();
+        try {
+            Update();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());}
 
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
@@ -541,18 +619,11 @@ public class Game {
 //        addVirus(createNewVirus(1),randomTile());
 //        addVirus(createNewVirus(1),randomTile());
 //        addATBD(createNewATBD(1),randomTile());
-          addVirus(createNewVirus(1), new Pair<>(1,1));
-          addATBD(createNewATBD(1),new Pair<>(1,4));
+//          addVirus(createNewVirus(1), new Pair<>(1,1));
+//          addATBD(createNewATBD(1),new Pair<>(1,4));
 
-          visualize();
-        field[1][1].move("right");
-        field[1][2].move("right");
-        field[1][4].shoot("left");
-        field[1][4].shoot("left");
-        field[1][4].shoot("left");
-        field[1][4].shoot("left");
 
-        visualize();
+
 
 //        Objective = new Objective(0,2);
 //        visualize();

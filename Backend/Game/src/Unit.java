@@ -10,7 +10,7 @@ public interface Unit {
 
     void takingDamage(Unit attacker);
 
-    void execute();
+    void execute() throws DeadException;
 
     void setProgram(Executable program);
 

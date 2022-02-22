@@ -15,6 +15,9 @@ public class ATBD_ extends UnitImpl {
         this.attackRange = attackRange;
         geneticCode = gene;
         bindings = new HashMap<>();
+        try {
+            setProgram(GeneticEvaluator.getInstance().evaluate( this));
+        }catch (Exception e) {System.out.println("genethingy");}
     }
 
     public ATBD_(Unit template){
@@ -25,13 +28,16 @@ public class ATBD_ extends UnitImpl {
         lifeSteal = template.getLifeSteal();
         this.attackRange = template.getAttackRange();
         bindings = new HashMap<>();
+        try {
+            setProgram(GeneticEvaluator.getInstance().evaluate( this));
+        }catch (Exception e) {System.out.println("genethingy");}
     }
 
     @Override
     public void shoot(String direction) {
         int target = Game.senseNearby(this,direction);
         if(target == 0) return;
-        if(target%10 == 2){return;}
+        if(target%10 == 2){return;} //11 /11 21 31 41
         int attckdistance = (attackRange+1)*10;
         if(target<attckdistance){
             Pair<Integer,Integer> targetPos = new Pair<>(-1,-1);

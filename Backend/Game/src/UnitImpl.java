@@ -13,6 +13,7 @@ public abstract class UnitImpl implements Unit {
     int cost;
     int moveCost;
     int attackRange;
+    boolean isDead = false;
     String geneticCode;
     Unit previousAttacker;
     Executable program;
@@ -27,7 +28,8 @@ public abstract class UnitImpl implements Unit {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws DeadException{
+        if(isDead) throw new DeadException("isdead");
         if(Objects.equals(program,null)){
             System.out.println("program null");
         }else
@@ -59,7 +61,7 @@ public abstract class UnitImpl implements Unit {
         try {
             Game.move(this, destination);
         }catch (UnexecutableCommandException e){
-            System.out.println(e.getMessage());
+
         }
     }
 
@@ -73,6 +75,7 @@ public abstract class UnitImpl implements Unit {
         if(Hp<=0) {
             Hp = 0;
             this.destruct();
+            isDead = true;
         }
     }
 
