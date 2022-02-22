@@ -45,13 +45,13 @@ public abstract class UnitImpl implements Unit {
         Pair<Integer,Integer> gmove = new Pair<>(position.fst(), position.snd());
 
         if(direction.equals("left")){gmove =new Pair<>(position.fst(),position.snd()-1);}
-        if(direction.equals( "right")){gmove =new Pair<>(position.fst(),position.snd()+1);}
-        if(direction.equals("up")){gmove =new Pair<>(position.fst()-1,position.snd());}
-        if(direction.equals("down")){gmove =new Pair<>(position.fst()+1,position.snd());}
-        if(direction.equals( "upleft")){gmove =new Pair<>(position.fst()-1,position.snd()-1);}
-        if(direction.equals("downleft")){gmove =new Pair<>(position.fst()+1,position.snd()-1);}
-        if(direction.equals( "upright")){gmove =new Pair<>(position.fst()-1,position.snd()+1);}
-        if(direction.equals( "downright")){gmove =new Pair<>(position.fst()+1,position.snd()+1);}
+        else if(direction.equals( "right")){gmove =new Pair<>(position.fst(),position.snd()+1);}
+        else if(direction.equals("up")){gmove =new Pair<>(position.fst()-1,position.snd());}
+        else if(direction.equals("down")){gmove =new Pair<>(position.fst()+1,position.snd());}
+        else if(direction.equals( "upleft")){gmove =new Pair<>(position.fst()-1,position.snd()-1);}
+        else if(direction.equals("downleft")){gmove =new Pair<>(position.fst()+1,position.snd()-1);}
+        else if(direction.equals( "upright")){gmove =new Pair<>(position.fst()-1,position.snd()+1);}
+        else if(direction.equals( "downright")){gmove =new Pair<>(position.fst()+1,position.snd()+1);}
         gmove(gmove);
     }
 
@@ -93,6 +93,8 @@ public abstract class UnitImpl implements Unit {
     public int getMaxHp() { return maxHp; }
     public int getLifeSteal() { return lifeSteal;}
     public int getCost(){return cost;}
+    public int getAttackRange() {return attackRange;}
+
     public void setAttack(int mod){Atk+=mod;}
     public Pair<Integer,Integer> getPosition(){return position;}
     public String getGene(){return geneticCode;}

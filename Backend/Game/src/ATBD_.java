@@ -23,6 +23,7 @@ public class ATBD_ extends UnitImpl {
         Atk = template.getAtk();
         geneticCode = template.getGene();
         lifeSteal = template.getLifeSteal();
+        this.attackRange = template.getAttackRange();
         bindings = new HashMap<>();
     }
 
@@ -31,10 +32,11 @@ public class ATBD_ extends UnitImpl {
         int target = Game.senseNearby(this,direction);
         if(target == 0) return;
         if(target%10 == 2){return;}
-        if(target<(attackRange+1)*10){
+        int attckdistance = (attackRange+1)*10;
+        if(target<attckdistance){
             Pair<Integer,Integer> targetPos = new Pair<>(-1,-1);
 
-            int coord = (target-2)/10;
+            int coord = (target-1)/10;
             int x = position.snd(); int y = position.fst();
             if(direction.equals("right")) targetPos = new Pair<>(y,x+coord);
             if(direction.equals("left")) targetPos = new Pair<>(y,x-coord);
