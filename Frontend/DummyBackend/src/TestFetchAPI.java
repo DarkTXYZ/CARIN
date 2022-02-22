@@ -85,8 +85,8 @@ public class TestFetchAPI {
         obj.put("objective", 2);
         obj.put("objectiveMax", 10);
         obj.put("shopState", shopState);
-        obj.put("m", 6);
-        obj.put("n", 6);
+        obj.put("m", 10);
+        obj.put("n", 10);
 
         String rawData = obj.toJSONString();
         System.out.println("Raw GameData PUT:");

@@ -13,9 +13,9 @@ class App extends React.Component {
 	interval: any;
 
 	state = {
-		m : 5,
-		n : 5,
-		shopState: [0,0,0],
+		m: 5,
+		n: 5,
+		shopState: [0, 0, 0],
 		state: -1,		// state of game
 		posX: [], // position x of hosts
 		posY: [], // position y of hosts
@@ -55,9 +55,9 @@ class App extends React.Component {
 					<div className='flex justify-center my-5'>
 						<img src={logo} style={{ height: 100 }} />
 					</div>
-					<div className='flex flex-row justify-center items-center space-x-10'>
+					<div className='flex flex-row justify-center space-x-10'>
 						<div>
-							<Objective objective = {this.state.objective} objectiveMax = {this.state.objectiveMax} />
+							<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
 						</div>
 						<div>
 							<Field name="Jack" m={this.state.m} n={this.state.n} px={this.state.posX} py={this.state.posY} t={this.state.type} />
