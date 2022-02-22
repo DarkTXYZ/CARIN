@@ -484,7 +484,7 @@ public class Game {
         // ????????????????
     }
 
-    public static void Update(){
+    public static void Update() throws InterruptedException {
         int rand;
         while(Objective.snd() - Objective.fst() > 0){
             /*if(ซื้อตัว){
@@ -497,17 +497,21 @@ public class Game {
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
                 if( rand == 0 ){
+                    addVirus(createNewVirus(0), randomTile());
                     spawnCount = spawnCount - rand;
                 }
                 if( rand == 1 ){
+                    addVirus(createNewVirus(1), randomTile());
                     spawnCount = spawnCount - 2*rand;
                 }
                 if( rand == 2 ){
+                    addVirus(createNewVirus(2), randomTile());
                     spawnCount = spawnCount - 3*rand;
                 }
             }else{
                 spawnCount++;
             }
+            Thread.sleep(1000);
         }
     }
 
