@@ -1,33 +1,32 @@
 package com.carin.APIDraft;
 
 public class Input {
-    private int state;
-    private boolean isBuy;
-    private String type;
+
+    private int clickState;
+    private String clickType;
     private int posX_placement, posY_placement;
 
-    public Input(int state, boolean isBuy, String type, int posX_placement, int posY_placement) {
-        this.state = state;
-        this.isBuy = isBuy;
-        this.type = type;
+    public Input(int clickState, String clickType, int posX_placement, int posY_placement) {
+        this.clickState = clickState;
+        this.clickType = clickType;
         this.posX_placement = posX_placement;
         this.posY_placement = posY_placement;
     }
 
-    public int getState() {
-        return state;
+    public int getClickState() {
+        return clickState;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setClickState(int clickState) {
+        this.clickState = clickState;
     }
 
-    public boolean isBuy() {
-        return isBuy;
+    public String getClickType() {
+        return clickType;
     }
 
-    public void setBuy(boolean buy) {
-        isBuy = buy;
+    public void setClickType(String clickType) {
+        this.clickType = clickType;
     }
 
     public int getPosX_placement() {
@@ -44,13 +43,5 @@ public class Input {
 
     public void setPosY_placement(int posY_placement) {
         this.posY_placement = posY_placement;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

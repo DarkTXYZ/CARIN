@@ -5,22 +5,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class InputService {
 
-    private static Input input = new Input(0,false, null,-1, -1);
+    private static Input input = new Input(0,null, -1,-1);
 
     public static Input getInput() {
         return input;
     }
 
-    public static int getState() {
-        return input.getState();
+    public static int getClickState() {
+        return input.getClickState();
     }
 
-    public static void setInputState(Input input) {
-        InputService.input.setState(input.getState());
+    public static void setClickState(Input input) {
+        InputService.input.setClickState(input.getClickState());
     }
 
-    public static void setType(Input input) {
-        InputService.input.setType(input.getType());
+    public static void setClickType(Input input) {
+        InputService.input.setClickType(input.getClickType());
     }
 
     public static void setPos(Input input) {

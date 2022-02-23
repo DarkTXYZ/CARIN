@@ -1,25 +1,38 @@
 package com.carin.APIDraft;
 
-import javax.persistence.ElementCollection;
 import java.util.List;
-import java.util.Map;
 
 public class GameData {
+    private int m, n;
     private int state;
-    private List<Integer> posX,posY,type,shopState;
-    private int objective , objectiveMax;
-    private int m,n;
+    private List<Integer> shopState, cost;
+    private int currency;
+    private List<Integer> posX, posY, hp, hpMax;
+    private List<String> type;
+    private int objective, objectiveMax;
 
-    public GameData(int state, List<Integer> posX, List<Integer> posY, List<Integer> type, List<Integer> shopState, int objective, int objectiveMax, int m, int n) {
-        this.state = state;
-        this.posX = posX;
-        this.posY = posY;
-        this.type = type;
-        this.shopState = shopState;
-        this.objective = objective;
-        this.objectiveMax = objectiveMax;
+    public GameData(int m, int n, int state, List<Integer> shopState, List<Integer> cost, int currency, List<Integer> posX, List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<String> type, int objective, int objectiveMax) {
         this.m = m;
         this.n = n;
+        this.state = state;
+        this.shopState = shopState;
+        this.cost = cost;
+        this.currency = currency;
+        this.posX = posX;
+        this.posY = posY;
+        this.hp = hp;
+        this.hpMax = hpMax;
+        this.type = type;
+        this.objective = objective;
+        this.objectiveMax = objectiveMax;
+    }
+
+    public List<Integer> getCost() {
+        return cost;
+    }
+
+    public void setCost(List<Integer> cost) {
+        this.cost = cost;
     }
 
     public int getM() {
@@ -46,6 +59,22 @@ public class GameData {
         this.state = state;
     }
 
+    public List<Integer> getShopState() {
+        return shopState;
+    }
+
+    public void setShopState(List<Integer> shopState) {
+        this.shopState = shopState;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
     public List<Integer> getPosX() {
         return posX;
     }
@@ -62,20 +91,28 @@ public class GameData {
         this.posY = posY;
     }
 
-    public List<Integer> getType() {
+    public List<String> getType() {
         return type;
     }
 
-    public void setType(List<Integer> type) {
+    public void setType(List<String> type) {
         this.type = type;
     }
 
-    public List<Integer> getShopState() {
-        return shopState;
+    public List<Integer> getHp() {
+        return hp;
     }
 
-    public void setShopState(List<Integer> shopState) {
-        this.shopState = shopState;
+    public void setHp(List<Integer> hp) {
+        this.hp = hp;
+    }
+
+    public List<Integer> getHpMax() {
+        return hpMax;
+    }
+
+    public void setHpMax(List<Integer> hpMax) {
+        this.hpMax = hpMax;
     }
 
     public int getObjective() {

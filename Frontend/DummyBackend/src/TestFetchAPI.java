@@ -15,7 +15,14 @@ public class TestFetchAPI {
     public static void main(String[] args) throws IOException, InterruptedException {
 //        GETGameData();
 //        POST();
-        PUTGameData();
+        while(true) {
+            PUTGameData();
+            Thread.sleep(1000);
+            PUTGameData2();
+            Thread.sleep(1000);
+        }
+
+
 //        int cnt = 0;
 //        while (true) {
 //            GETInput();
@@ -58,35 +65,106 @@ public class TestFetchAPI {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void PUTGameData() throws IOException {
 
-//        private int state;
-//        private List<Integer> posX,posY,type,shopState;
-//        private int objective , objectiveMax;
 //        private int m,n;
+//        private int state;
+//        private List<Integer> shopState;
+//        private int currency;
+//        private List<Integer> posX,posY,type,hp,hpMax;
+//        private int objective , objectiveMax;
 
-        Integer[] a = { 1, 3, 1, 3, 2};
-        List<Integer> posX = Arrays.asList(a);
-
-        a = new Integer[]{2, 2, 3, 0, 3};
-        List<Integer> posY = Arrays.asList(a);
-
-        a = new Integer[]{2, 1, 1, 3, 2};
-        List<Integer> type = Arrays.asList(a);
-
-        a = new Integer[]{1, 0, 1};
-        List<Integer> shopState = Arrays.asList(a);
+        int m = 20, n = 20;
+        int state = 1;
+        List<Integer> shopState = Arrays.asList(0, 1, 1);
+        int currency = 100;
+        List<Integer> cost = Arrays.asList(20,40,60);
+        List<Integer> posX = Arrays.asList(1, 3, 1, 3, 2);
+        List<Integer> posY = Arrays.asList(2, 2, 3, 0, 3);
+        List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10);
+        List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45);
+        List<String> type = Arrays.asList("atbd1","atbd2","atbd3","atbd1","atbd2");
+        int objective = 2 , objectiveMax = 10;
 
         JSONObject obj = new JSONObject();
-        obj.put("state", 2);
+        obj.put("m", m);
+        obj.put("n", n);
+        obj.put("state", state);
+        obj.put("shopState", shopState);
+        obj.put("currency", currency);
+        obj.put("cost",cost);
         obj.put("posX", posX);
         obj.put("posY", posY);
+        obj.put("hp", hp);
+        obj.put("hpMax", hpMax);
         obj.put("type", type);
-        obj.put("objective", 2);
-        obj.put("objectiveMax", 10);
+        obj.put("objective", objective);
+        obj.put("objectiveMax", objectiveMax);
+
+        String rawData = obj.toJSONString();
+        System.out.println("Raw GameData PUT:");
+        System.out.println(rawData);
+
+        URL url = new URL("http://localhost:8080/gamedata/put");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("PUT");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setDoOutput(true);
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+        System.out.println("Response:");
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            System.out.println(response);
+        }
+        System.out.println("---------------------");
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void PUTGameData2() throws IOException {
+
+//        private int m,n;
+//        private int state;
+//        private List<Integer> shopState;
+//        private int currency;
+//        private List<Integer> posX,posY,type,hp,hpMax;
+//        private int objective , objectiveMax;
+
+        int m = 20, n = 20;
+        int state = 1;
+        List<Integer> shopState = Arrays.asList(1, 1, 1);
+        int currency = 200;
+        List<Integer> cost = Arrays.asList(20,40,60);
+        List<Integer> posX = Arrays.asList(7, 2, 4, 5, 8);
+        List<Integer> posY = Arrays.asList(9, 8, 2, 6, 1);
+        List<Integer> hp = Arrays.asList(20, 25, 50, 60, 30);
+        List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45);
+        List<String> type = Arrays.asList("atbd1","atbd2","atbd3","atbd1","atbd2");
+        int objective = 4 , objectiveMax = 10;
+
+        JSONObject obj = new JSONObject();
+        obj.put("m", m);
+        obj.put("n", n);
+        obj.put("state", state);
         obj.put("shopState", shopState);
-        obj.put("m", 10);
-        obj.put("n", 10);
+        obj.put("currency", currency);
+        obj.put("cost",cost);
+        obj.put("posX", posX);
+        obj.put("posY", posY);
+        obj.put("hp", hp);
+        obj.put("hpMax", hpMax);
+        obj.put("type", type);
+        obj.put("objective", objective);
+        obj.put("objectiveMax", objectiveMax);
 
         String rawData = obj.toJSONString();
         System.out.println("Raw GameData PUT:");

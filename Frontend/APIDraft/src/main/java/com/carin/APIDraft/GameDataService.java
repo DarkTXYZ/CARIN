@@ -8,7 +8,7 @@ import java.util.LinkedList;
 @Service
 public class GameDataService {
 
-    private static GameData gameData = new GameData(-1,new LinkedList<>(),new LinkedList<>(),new LinkedList<>(), Arrays.asList(0,0,0),-1,-1,5,5);
+    private static GameData gameData = new GameData(0,0,0,null,null,0,null,null,null,null,null,0,0);
 
     public static GameData getGameData() {
         return gameData;

@@ -1,12 +1,14 @@
 gameData
-- state, 
-- shopState, currency
-- posX, posY, type
-- objective, objectiveMax
-- m, n
+- m, n : int
+- state : int ?
+- shopState : list<int>
+- currency : int
+- posX, posY, hp, hpMax,cost : int
+- type : string
+- objective, objectiveMax : int
 
 input 
-- clickState
-- clickType
-- posX_placement
-- posY_placement
+- clickState : int
+- clickType : string
+- posX_placement : int
+- posY_placement : int
