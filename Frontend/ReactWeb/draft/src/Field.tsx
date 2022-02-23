@@ -10,6 +10,8 @@ function Node(props: any) {
     let color = ""
     let ATBDchosen: any = null
     let size = props.size
+    let progheight = size * 0.1
+    let progwidth = size * 0.8
 
     if (((props.x + props.y) % 2) === 0)
         color = "bg-rose-300 flex justify-center"
@@ -19,29 +21,37 @@ function Node(props: any) {
     if (props.select)
         color += " border-4 border-green-400"
 
-    if (props.type === 1) {
+    if (props.type === 'atbd1') {
         ATBDchosen = atbd1
-    } else if (props.type === 2) {
+    } else if (props.type === 'atbd2') {
         ATBDchosen = atbd2
-    } else if (props.type === 3) {
+    } else if (props.type === 'atbd3') {
         ATBDchosen = atbd3
     }
 
-    let image = null
+    let image : any = null
     if (props.type !== 0)
         image = <img src={ATBDchosen} alt="" style={{ height: size }} />
     else
         image = null
 
     node = (
-        <div className={color} style={{ height: size, width: size }}
-            onMouseDown={() => {
-                Controller.sendPos({
-                    posX_placement: props.x,
-                    posY_placement: props.y,
-                })
+        <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
+            onClick={() => {
+                if(image === null) {
+                    Controller.sendPos({
+                        posX_placement: props.x,
+                        posY_placement: props.y,
+                    })
+                }
             }}>
-            {image}
+
+            <div>
+                {props.type !== 0 && <progress className = 'fixed rotate-45' style = {{transform: "translate(-50%,-80%)",height:progheight,width:progwidth}}value={props.hp} max={props.hpMax}></progress>}
+            </div>
+            <div>
+                {image}
+            </div>
         </div>
     )
     return (
@@ -66,11 +76,11 @@ function Field(props: any) {
 
     const [selectX, setSelectX] = useState<number>(-1)
     const [selectY, setSelectY] = useState<number>(-1)
-    const [clickState , setClickState] = useState<number>(-1)
+    const [clickState, setClickState] = useState<number>(-1)
 
     Controller.getPosX().then(resp => setSelectX(resp))
     Controller.getPosY().then(resp => setSelectY(resp))
-    Controller.getState().then(resp => setClickState(resp))
+    Controller.getClickState().then(resp => setClickState(resp))
 
     const createGrid = () => {
         const Grid = []
@@ -100,8 +110,8 @@ function Field(props: any) {
                                 for (let i = 0; i < px.length; ++i) {
                                     if (px[i] === nodeId && py[i] === rowId) {
                                         return (
-                                            <div className = ''>
-                                                <Node x={nodeId} y={rowId} size={size} type={type[i]} select={selected} />
+                                            <div className=''>
+                                                <Node x={nodeId} y={rowId} size={size} type={type[i]} select={false} hp={props.hp[i]} hpMax={props.hpMax[i]} />
                                             </div>
                                         )
                                     }

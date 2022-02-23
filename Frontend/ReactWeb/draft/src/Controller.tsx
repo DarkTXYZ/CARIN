@@ -10,17 +10,17 @@ class Controller {
         await axios.put('http://localhost:8080/input/put/pos', data)
     }
 
-    static async sendType(data: any) {
-        await axios.put('http://localhost:8080/input/put/type', data)
+    static async sendClickType(data: any) {
+        await axios.put('http://localhost:8080/input/put/clicktype', data)
     }
 
     // Web State
-    static async sendState(data: any) {
-        await axios.put('http://localhost:8080/input/put/state', data)
+    static async sendClickState(data: any) {
+        await axios.put('http://localhost:8080/input/put/clickstate', data)
     }
 
-    static async getState() {
-        const resp = await axios.get<number>('http://localhost:8080/input/state')
+    static async getClickState() {
+        const resp = await axios.get<number>('http://localhost:8080/input/clickstate')
         return resp.data
     }
 

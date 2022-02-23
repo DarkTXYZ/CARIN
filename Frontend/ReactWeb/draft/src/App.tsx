@@ -15,13 +15,17 @@ class App extends React.Component {
 	state = {
 		m: 5,
 		n: 5,
-		shopState: [0, 0, 0],
 		state: -1,		// state of game
+		shopState: [0, 0, 0],
+		currency: 0,
+		cost: [],
 		posX: [], // position x of hosts
 		posY: [], // position y of hosts
+		hp : [],
+		hpMax : [],
 		type: [], // type of hosts
-		objective: -1, // number of viruses left
-		objectiveMax: -1
+		objective: 0, // number of viruses left
+		objectiveMax: 0
 	}
 
 	componentDidMount() {
@@ -50,7 +54,7 @@ class App extends React.Component {
 
 	render(): React.ReactNode {
 		return (
-			<div>
+			<div className = "flex justify-center">
 				<div className='flex flex-col space-y-3'>
 					<div className='flex justify-center my-5'>
 						<img src={logo} style={{ height: 100 }} />
@@ -60,10 +64,10 @@ class App extends React.Component {
 							<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
 						</div>
 						<div>
-							<Field name="Jack" m={this.state.m} n={this.state.n} px={this.state.posX} py={this.state.posY} t={this.state.type} />
+							<Field name="Jack" m={this.state.m} n={this.state.n} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax}/>
 						</div>
 						<div>
-							<Shop isBuy={this.state.shopState} />
+							<Shop canBuy={this.state.shopState} cost={this.state.cost}/>
 						</div>
 					</div>
 
