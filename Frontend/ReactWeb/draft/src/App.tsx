@@ -52,21 +52,21 @@ class App extends React.Component {
 
 	}
 
+	// style={{backgroundImage: `url("https://mcdn.wallpapersafari.com/medium/21/87/CIrvgO.jpg")`, backgroundSize: "cover" }}
 	render(): React.ReactNode {
 		return (
-			<div className='fixed w-full h-full' style={{backgroundImage: `url("https://mcdn.wallpapersafari.com/medium/21/87/CIrvgO.jpg")`, backgroundSize: "cover" }}>
+			<div className='fixed w-full h-full bg-gradient-to-l from-sky-600 to-red-600' >
 				<div className="flex justify-center">
-					<div style={{ backgroundImage: "url('https://pin.it/6q0xEyR')" }}></div>
 					<div className='flex flex-col space-y-3'>
 						<div className='flex justify-center my-5'>
 							<img src={logo} style={{ height: 100 }} />
 						</div>
-						<div className='flex flex-row justify-center space-x-10'>
+						<div className='flex flex-row items-center justify-center space-x-10'>
 							<div>
 								<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
 							</div>
 							<div>
-								<Field name="Jack" m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />
+								<Field m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />
 							</div>
 							<div>
 								<Shop canBuy={this.state.shopState} cost={this.state.cost} currency={this.state.currency} />

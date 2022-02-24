@@ -55,21 +55,29 @@ function Shop(props: any) {
     // Controller.getPosY().then(resp => setPosY(resp))
 
     let cost = props.cost
+    let name = ['Mercy','Ana','Lucio']
+    let shopTile = []
+    for(let i = 0 ; i < 3 ; ++i) {
+        if(canBuy[i])
+            shopTile.push(<ShopTile onClick={() => selected('atbd' + (i+1))} canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={clickType} name={name[i]} />)
+        else
+            shopTile.push(<ShopTile canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={clickType} name={name[i]} />) 
+    }
 
     return (
 
         <div className='flex flex-col space-y-2'>
 
-            <div className='flex justify-center bg-gradient-to-b from-yellow-500 to-yellow-300 w-40 p-2 font-bold text-lg rounded-xl'>
+            <div className='select-none flex justify-center bg-gradient-to-b from-yellow-500 to-yellow-300 w-40 p-2 font-bold text-lg rounded-xl'>
                 Currency : {props.currency}
             </div>
-            <div className='flex flex-col space-y-3 justify-center'>
-                <ShopTile onClick={() => selected('atbd1')} canBuy={canBuy[0]} type={1} cost={cost[0]} selected={clickType} name="Mercy" />
-                <ShopTile onClick={() => selected('atbd2')} canBuy={canBuy[1]} type={2} cost={cost[1]} selected={clickType} name="Ana" />
-                <ShopTile onClick={() => selected('atbd3')} canBuy={canBuy[2]} type={3} cost={cost[2]} selected={clickType} name="Lucio" />
+            <div className='flex flex-col space-y-2 justify-center'>
+                {shopTile[0]}
+                {shopTile[1]}
+                {shopTile[2]}
             </div>
 
-            <div className='flex flex-row justify-between space-x-2 translate-y-2 w-40'>
+            <div className='flex flex-row justify-between space-x-2 w-40'>
                 <div className='hover:drop-shadow-xl'>
                     {clickState !== 0 && <button className='bg-gradient-to-l from-green-600 to-green-400 p-2 rounded-xl text-xl font-bold hover:scale-105 duration-300 ease-out'>Place</button>}
                 </div>

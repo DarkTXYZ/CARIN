@@ -4,6 +4,7 @@ import atbd2 from './lib/atbd2.png'
 import atbd3 from './lib/atbd3.png'
 import Controller from "./Controller"
 import { useState } from "react"
+import React, { Component } from "react";
 
 function Node(props: any) {
     let color = ""
@@ -62,7 +63,7 @@ function Field(props: any) {
     const m = props.m
     const n = props.n
 
-    let scale = 0.7
+    let scale = 0.65
     let fullWidth = 1920 * scale
     let fullHeight = 1080 * scale
     let size = fullWidth / m < fullHeight / n ? fullWidth / m : fullHeight / n
@@ -123,17 +124,43 @@ function Field(props: any) {
         )
     }
 
+    let screenWidth = 1232
+    let screenHeight = 686
+
     return (
 
-        <div className="flex justify-center">
-            <TransformWrapper doubleClick={{ disabled: true }}>
-                <TransformComponent>
-                    <div className="">
-                        {createGrid()}
+
+        <TransformWrapper centerOnInit={true} initialScale={0.9} minScale={0.5} maxScale={100} limitToBounds={false} doubleClick={{ disabled: true }}>
+
+            {({ zoomIn, zoomOut, centerView, ...rest }) => (
+
+                <React.Fragment>
+                    <div className="flex flex-col space-y-2">
+                        <div className="flex items-center justify-center border-8 border-yellow-400 rounded-xl" style={{ width: 1248, height: 702 }}>
+                            <div className="flex flex-col space-y-2">
+                                <div className="">
+                                    <TransformComponent>
+                                        <div className="flex items-center justify-center" style={{ width: screenWidth, height: screenHeight }}>
+                                            {createGrid()}
+                                        </div>
+                                    </TransformComponent>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="tools">
+                                <button className='text-xl font-bold rounded-xl p-2 hover:scale-105 duration-300 ease-out hover:drop-shadow-xl bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400' onClick={() => {
+                                    centerView(0.9)
+                                }}>Reset View</button>
+                            </div>
+                        </div>
                     </div>
-                </TransformComponent>
-            </TransformWrapper>
-        </div>
+
+                </React.Fragment>
+
+            )}
+        </TransformWrapper >
+
 
     )
 
