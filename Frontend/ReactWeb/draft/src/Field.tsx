@@ -6,7 +6,6 @@ import Controller from "./Controller"
 import { useState } from "react"
 
 function Node(props: any) {
-    let node = null
     let color = ""
     let ATBDchosen: any = null
     let size = props.size
@@ -19,7 +18,7 @@ function Node(props: any) {
         color = "bg-rose-400 flex justify-center"
 
     if (props.select)
-        color += " border-4 border-green-400"
+        color += " border-2 border-green-400"
 
     if (props.type === 'atbd1') {
         ATBDchosen = atbd1
@@ -29,34 +28,31 @@ function Node(props: any) {
         ATBDchosen = atbd3
     }
 
-    let image : any = null
+    let image: any = null
     if (props.type !== 0)
         image = <img src={ATBDchosen} alt="" style={{ height: size }} />
     else
         image = null
 
-    node = (
-        <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
-            onClick={() => {
-                if(image === null) {
-                    Controller.sendPos({
-                        posX_placement: props.x,
-                        posY_placement: props.y,
-                    })
-                }
-            }}>
-
-            <div>
-                {props.type !== 0 && <progress className = 'fixed rotate-45' style = {{transform: "translate(-50%,-80%)",height:progheight,width:progwidth}}value={props.hp} max={props.hpMax}></progress>}
-            </div>
-            <div>
-                {image}
-            </div>
-        </div>
-    )
     return (
         <div>
-            {node}
+            <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
+                onClick={() => {
+                    if (image === null) {
+                        Controller.sendPos({
+                            posX_placement: props.x,
+                            posY_placement: props.y,
+                        })
+                    }
+                }}>
+
+                <div>
+                    {props.type !== 0 && <progress className='fixed rotate-45' style={{ transform: "translate(-50%,-80%)", height: progheight, width: progwidth }} value={props.hp} max={props.hpMax}></progress>}
+                </div>
+                <div>
+                    {image}
+                </div>
+            </div>
         </div>
     )
 }

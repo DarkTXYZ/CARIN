@@ -25,7 +25,7 @@ function ShopTile(props: any) {
     let modify = ""
 
     if (!canBuy) {
-        modify = "opacity-50 border-4 border-gray-400"
+        modify = "opacity-70 border-4 border-gray-400"
     } else {
         if (selected === 'atbd' + type)
             modify = 'opacity-100 border-4 border-yellow-400'
@@ -41,7 +41,7 @@ function ShopTile(props: any) {
 
     return (
         <div className="flex flex-row items-center space-x-10" onClick={props.onClick}>
-            <div className={modify + " w-40 flex flex-col rounded-2xl hover:drop-shadow-xl duration-300 ease-out hover:scale-105"}>
+            <div className={modify + " w-40 flex flex-col rounded-2xl bg-white hover:drop-shadow-xl duration-300 ease-out hover:scale-105"}>
                 <div className="self-center">
                     {tileImg}
                 </div>

@@ -21,8 +21,8 @@ class App extends React.Component {
 		cost: [],
 		posX: [], // position x of hosts
 		posY: [], // position y of hosts
-		hp : [],
-		hpMax : [],
+		hp: [],
+		hpMax: [],
 		type: [], // type of hosts
 		objective: 0, // number of viruses left
 		objectiveMax: 0
@@ -54,23 +54,26 @@ class App extends React.Component {
 
 	render(): React.ReactNode {
 		return (
-			<div className = "flex justify-center">
-				<div className='flex flex-col space-y-3'>
-					<div className='flex justify-center my-5'>
-						<img src={logo} style={{ height: 100 }} />
-					</div>
-					<div className='flex flex-row justify-center space-x-10'>
-						<div>
-							<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
+			<div className='fixed w-full h-full' style={{backgroundImage: `url("https://mcdn.wallpapersafari.com/medium/21/87/CIrvgO.jpg")`, backgroundSize: "cover" }}>
+				<div className="flex justify-center">
+					<div style={{ backgroundImage: "url('https://pin.it/6q0xEyR')" }}></div>
+					<div className='flex flex-col space-y-3'>
+						<div className='flex justify-center my-5'>
+							<img src={logo} style={{ height: 100 }} />
 						</div>
-						<div>
-							<Field name="Jack" m={this.state.m} n={this.state.n} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax}/>
+						<div className='flex flex-row justify-center space-x-10'>
+							<div>
+								<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
+							</div>
+							<div>
+								<Field name="Jack" m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />
+							</div>
+							<div>
+								<Shop canBuy={this.state.shopState} cost={this.state.cost} currency={this.state.currency} />
+							</div>
 						</div>
-						<div>
-							<Shop canBuy={this.state.shopState} cost={this.state.cost}/>
-						</div>
-					</div>
 
+					</div>
 				</div>
 
 			</div>
