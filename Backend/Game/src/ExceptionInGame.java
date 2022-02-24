@@ -3,3 +3,6 @@ class UnexecutableCommandException extends Exception{
         super(message);
     }
 }
+class DeadException extends Exception{
+    public DeadException(String message){super(message);}
+}

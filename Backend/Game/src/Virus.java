@@ -43,6 +43,8 @@ public class Virus extends UnitImpl {
         int target = Game.senseNearby(this,direction);
         if(target == 0) return;
         if(target%10 == 1){return;}
+        // 12 12 12 12 12
+        // 22
         if(target<(attackRange+1)*10){
             Pair<Integer,Integer> targetPos = new Pair<>(-1,-1);
 
@@ -57,6 +59,7 @@ public class Virus extends UnitImpl {
             if(direction.equals("downright")) targetPos = new Pair<>(y+coord,x+coord);
             if(direction.equals("upleft")) targetPos = new Pair<>(y-coord,x-coord);
             if(direction.equals("downleft")) targetPos = new Pair<>(y+coord,x-coord);
+
             Game.gShoot(targetPos,this);
         }
         return;
