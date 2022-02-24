@@ -14,28 +14,28 @@ public class InputController {
     }
 
     @CrossOrigin
-    @GetMapping("/state")
-    public int getState() {
-        return InputService.getState();
+    @GetMapping("/clickstate")
+    public int getClickState() {
+        return InputService.getClickState();
     }
 
     @CrossOrigin
-    @PutMapping("/put/state")
-    public Input putInputState(@RequestBody Input input) {
-        InputService.setInputState(input);
+    @PutMapping("/put/clickstate")
+    public Input putClickState(@RequestBody Input input) {
+        InputService.setClickState(input);
         return InputService.getInput();
     }
 
     @CrossOrigin
-    @PutMapping("/put/type")
-    public Input putInputType(@RequestBody Input input) {
-        InputService.setType(input);
+    @PutMapping("/put/clicktype")
+    public Input putClickType(@RequestBody Input input) {
+        InputService.setClickType(input);
         return InputService.getInput();
     }
 
     @CrossOrigin
     @PutMapping("/put/pos")
-    public Input putInputPos(@RequestBody Input input) {
+    public Input putPos(@RequestBody Input input) {
         InputService.setPos(input);
         return InputService.getInput();
     }
