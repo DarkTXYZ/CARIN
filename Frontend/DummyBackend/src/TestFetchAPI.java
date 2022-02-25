@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -17,6 +18,8 @@ public class TestFetchAPI {
 //        POST();
 //        while(true) {
             PUTGameData();
+//        setGameState(1);
+//        setGameState(1);
 //            Thread.sleep(3000);
 //            PUTGameData2();
 //            Thread.sleep(3000);
@@ -65,6 +68,38 @@ public class TestFetchAPI {
         }
     }
 
+    public static void setGameState(int state) throws IOException {
+        JSONObject obj = new JSONObject();
+        obj.put("state", state);
+
+
+        String rawData = obj.toJSONString();
+        System.out.println("Raw GameData PUT:");
+        System.out.println(rawData);
+
+        URL url = new URL("http://localhost:8080/gamedata/put");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("PUT");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setDoOutput(true);
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+        System.out.println("Response:");
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            System.out.println(response);
+        }
+        System.out.println("---------------------");
+    }
+
     @SuppressWarnings("unchecked")
     public static void PUTGameData() throws IOException {
 
@@ -75,7 +110,7 @@ public class TestFetchAPI {
 //        private List<Integer> posX,posY,type,hp,hpMax;
 //        private int objective , objectiveMax;
 
-        int m = 6, n = 6;
+        int m = 20, n = 20;
         int state = 1;
         List<Integer> shopState = Arrays.asList(0, 1, 1);
         int currency = 100;

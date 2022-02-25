@@ -27,9 +27,9 @@ public class InputController {
     }
 
     @CrossOrigin
-    @PutMapping("/put/clicktype")
-    public Input putClickType(@RequestBody Input input) {
-        InputService.setClickType(input);
+    @PutMapping("/put/job")
+    public Input putJob(@RequestBody Input input) {
+        InputService.setJob(input);
         return InputService.getInput();
     }
 
@@ -39,5 +39,32 @@ public class InputController {
         InputService.setPos(input);
         return InputService.getInput();
     }
+
+    @CrossOrigin
+    @PutMapping("/put/pausestate")
+    public Input putPauseState(@RequestBody Input input) {
+        InputService.setPauseState(input);
+        return InputService.getInput();
+    }
+
+    @CrossOrigin
+    @GetMapping("/pausestate")
+    public int getPauseState() {
+        return InputService.getPauseState();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/speedstate")
+    public Input putSpeedState(@RequestBody Input input) {
+        InputService.setSpeedState(input);
+        return InputService.getInput();
+    }
+
+    @CrossOrigin
+    @GetMapping("/speedstate")
+    public int getSpeedState() {
+        return InputService.getSpeedState();
+    }
+
 
 }

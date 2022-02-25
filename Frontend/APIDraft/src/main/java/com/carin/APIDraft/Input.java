@@ -3,14 +3,29 @@ package com.carin.APIDraft;
 public class Input {
 
     private int clickState;
-    private String clickType;
-    private int posX_placement, posY_placement;
 
-    public Input(int clickState, String clickType, int posX_placement, int posY_placement) {
+    private String job;
+    private int posX_place, posY_place;
+
+    private int pauseMoveState;
+    private int ogX, ogY, posX, posY;
+
+    private int speedState;
+
+    private int pauseState;
+
+    public Input(int clickState, String job, int posX_place, int posY_place, int pauseMoveState, int ogX, int ogY, int posX, int posY, int speedState, int pauseState) {
         this.clickState = clickState;
-        this.clickType = clickType;
-        this.posX_placement = posX_placement;
-        this.posY_placement = posY_placement;
+        this.job = job;
+        this.posX_place = posX_place;
+        this.posY_place = posY_place;
+        this.pauseMoveState = pauseMoveState;
+        this.ogX = ogX;
+        this.ogY = ogY;
+        this.posX = posX;
+        this.posY = posY;
+        this.speedState = speedState;
+        this.pauseState = pauseState;
     }
 
     public int getClickState() {
@@ -21,27 +36,83 @@ public class Input {
         this.clickState = clickState;
     }
 
-    public String getClickType() {
-        return clickType;
+    public String getJob() {
+        return job;
     }
 
-    public void setClickType(String clickType) {
-        this.clickType = clickType;
+    public void setJob(String job) {
+        this.job = job;
     }
 
-    public int getPosX_placement() {
-        return posX_placement;
+    public int getPosX_place() {
+        return posX_place;
     }
 
-    public void setPosX_placement(int posX_placement) {
-        this.posX_placement = posX_placement;
+    public void setPosX_place(int posX_place) {
+        this.posX_place = posX_place;
     }
 
-    public int getPosY_placement() {
-        return posY_placement;
+    public int getPosY_place() {
+        return posY_place;
     }
 
-    public void setPosY_placement(int posY_placement) {
-        this.posY_placement = posY_placement;
+    public void setPosY_place(int posY_place) {
+        this.posY_place = posY_place;
+    }
+
+    public int getPauseMoveState() {
+        return pauseMoveState;
+    }
+
+    public void setPauseMoveState(int pauseMoveState) {
+        this.pauseMoveState = pauseMoveState;
+    }
+
+    public int getOgX() {
+        return ogX;
+    }
+
+    public void setOgX(int ogX) {
+        this.ogX = ogX;
+    }
+
+    public int getOgY() {
+        return ogY;
+    }
+
+    public void setOgY(int ogY) {
+        this.ogY = ogY;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public int getSpeedState() {
+        return speedState;
+    }
+
+    public void setSpeedState(int speedState) {
+        this.speedState = speedState;
+    }
+
+    public int getPauseState() {
+        return pauseState;
+    }
+
+    public void setPauseState(int pauseState) {
+        this.pauseState = pauseState;
     }
 }
