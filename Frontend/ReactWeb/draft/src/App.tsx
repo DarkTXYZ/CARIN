@@ -7,6 +7,10 @@ import Field from './Field';
 import Shop from './Shop';
 import logo from './lib/logo.png'
 import Objective from './Objective';
+import Tutorial from './Tutorial';
+import MoveButton from './MoveButton';
+import PauseButton from './PauseButton';
+import SpeedButton from './SpeedButton';
 
 class App extends React.Component {
 
@@ -61,18 +65,22 @@ class App extends React.Component {
 						<div className='flex justify-center my-5'>
 							<img src={logo} style={{ height: 100 }} />
 						</div>
-						<div className='flex flex-row items-center justify-center space-x-10'>
-							<div>
-								<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
+						{this.state.state !== 0 &&
+							<div className='flex flex-row justify-center space-x-10'>
+								<div>
+									<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
+								</div>
+								<div className='flex flex-col'>
+									<Field m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />
+								</div>
+								<div>
+									<Shop canBuy={this.state.shopState} cost={this.state.cost} currency={this.state.currency} />
+								</div>
 							</div>
-							<div>
-								<Field m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />
-							</div>
-							<div>
-								<Shop canBuy={this.state.shopState} cost={this.state.cost} currency={this.state.currency} />
-							</div>
-						</div>
-
+						}
+						{this.state.state === 0 &&
+							<Tutorial/>
+						}
 					</div>
 				</div>
 

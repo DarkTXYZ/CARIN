@@ -5,6 +5,9 @@ import atbd3 from './lib/atbd3.png'
 import Controller from "./Controller"
 import { useState } from "react"
 import React, { Component } from "react";
+import MoveButton from "./MoveButton"
+import SpeedButton from "./SpeedButton"
+import PauseButton from "./PauseButton"
 
 function Node(props: any) {
     let color = ""
@@ -41,8 +44,8 @@ function Node(props: any) {
                 onClick={() => {
                     if (image === null) {
                         Controller.sendPos({
-                            posX_placement: props.x,
-                            posY_placement: props.y,
+                            posX_place: props.x,
+                            posY_place: props.y,
                         })
                     }
                 }}>
@@ -147,12 +150,18 @@ function Field(props: any) {
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div className="flex flex-row justify-between space-x-2">
                             <div className="tools">
                                 <button className='text-xl font-bold rounded-xl p-2 hover:scale-105 duration-300 ease-out hover:drop-shadow-xl bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400' onClick={() => {
                                     centerView(0.9)
                                 }}>Reset View</button>
                             </div>
+                            <div className="flex flex-row space-x-2">
+                                <MoveButton />
+                                <PauseButton />
+                                <SpeedButton />
+                            </div>
+
                         </div>
                     </div>
 

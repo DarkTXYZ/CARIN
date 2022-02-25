@@ -9,7 +9,7 @@ import ShopTile from './ShopTile'
 function Shop(props: any) {
 
     const [clickState, setClickState] = useState<number>(0)
-    const [clickType, setClickType] = useState<string>('')
+    const [job, setJob] = useState<string>('')
     const [hover, setHover] = useState<boolean>(false)
     const [hover1, setHover1] = useState<boolean>(false)
     const [hover2, setHover2] = useState<boolean>(false)
@@ -28,27 +28,27 @@ function Shop(props: any) {
 
     const selected = (typeATBD: string) => {
         setClickState(1)
-        setClickType(typeATBD)
+        setJob(typeATBD)
         Controller.sendPos({
-            posX_placement: -1,
-            posY_placement: -1,
+            posX_place: -1,
+            posY_place: -1,
         })
     }
 
     const cancel = () => {
         setClickState(0)
-        setClickType('')
+        setJob('')
         Controller.sendPos({
-            posX_placement: -1,
-            posY_placement: -1,
+            posX_place: -1,
+            posY_place: -1,
         })
     }
 
     Controller.sendClickState({
         clickState: clickState
     })
-    Controller.sendClickType({
-        clickType: clickType
+    Controller.sendJob({
+        job: job
     })
 
     // Controller.getPosX().then(resp => setPosX(resp))
@@ -59,9 +59,9 @@ function Shop(props: any) {
     let shopTile = []
     for(let i = 0 ; i < 3 ; ++i) {
         if(canBuy[i])
-            shopTile.push(<ShopTile onClick={() => selected('atbd' + (i+1))} canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={clickType} name={name[i]} />)
+            shopTile.push(<ShopTile onClick={() => selected('atbd' + (i+1))} canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={job} name={name[i]} />)
         else
-            shopTile.push(<ShopTile canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={clickType} name={name[i]} />) 
+            shopTile.push(<ShopTile canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={job} name={name[i]} />) 
     }
 
     return (
