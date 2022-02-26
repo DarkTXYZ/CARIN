@@ -9,50 +9,44 @@ import ShopTile from './ShopTile'
 function Shop(props: any) {
 
     const [clickState, setClickState] = useState<number>(0)
-    const [job, setJob] = useState<string>('')
-    const [hover, setHover] = useState<boolean>(false)
-    const [hover1, setHover1] = useState<boolean>(false)
-    const [hover2, setHover2] = useState<boolean>(false)
+    const [job, setJob] = useState<any>('')
 
-    const toggleHover = () => {
-        setHover(!hover)
-    }
-    const toggleHover1 = () => {
-        setHover1(!hover1)
-    }
-    const toggleHover2 = () => {
-        setHover2(!hover2)
-    }
+    Controller.getInput("clickstate").then(resp => {
+        setClickState(resp)
+    })
+    Controller.getInput("job").then(resp => {
+        setJob(resp)
+    })
 
     let canBuy: number[] = props.canBuy
 
     const selected = (typeATBD: string) => {
-        setClickState(1)
-        setJob(typeATBD)
-        Controller.sendPos({
+        Controller.sendInput("job",{
+            job: typeATBD
+        })
+        Controller.sendInput("clickstate",{
+            clickState: 1
+        })
+        Controller.sendInput("posplace",{
             posX_place: -1,
             posY_place: -1,
         })
     }
 
     const cancel = () => {
-        setClickState(0)
-        setJob('')
-        Controller.sendPos({
+        Controller.sendInput("job",{
+            job: ''
+        })
+        Controller.sendInput("clickstate",{
+            clickState: 0
+        })
+        Controller.sendInput("posplace",{
             posX_place: -1,
             posY_place: -1,
         })
     }
 
-    Controller.sendClickState({
-        clickState: clickState
-    })
-    Controller.sendJob({
-        job: job
-    })
 
-    // Controller.getPosX().then(resp => setPosX(resp))
-    // Controller.getPosY().then(resp => setPosY(resp))
 
     let cost = props.cost
     let name = ['Mercy','Ana','Lucio']

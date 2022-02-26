@@ -6,24 +6,25 @@ function SpeedButton(){
 
     const [state,setState] = useState<number>()
 
-    Controller.getSpeedState().then(resp => {
+    Controller.getInput("speedstate").then(resp => {
         setState(resp)
     })
 
     const clicked = () => {
         if(state === 0){
-            Controller.sendSpeedState({
+            Controller.sendInput("speedstate",{
                 speedState : 1
             })
         }
         else{
-            Controller.sendSpeedState({
+            Controller.sendInput("speedstate",{
                 speedState : 0
             })
         }
-        Controller.sendPauseState({
+        Controller.sendInput("pausestate",{
             pauseState: 0
         })
+
     }
 
     let modify = ""

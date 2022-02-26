@@ -6,22 +6,22 @@ function PauseButton(){
 
     const [state,setState] = useState<number>()
 
-    Controller.getPauseState().then(resp => {
+    Controller.getInput("pausestate").then(resp => {
         setState(resp)
     })
 
     const clicked = () => {
         if(state === 0){
-            Controller.sendPauseState({
+            Controller.sendInput("pausestate",{
                 pauseState : 1
             })
         }
         else{
-            Controller.sendPauseState({
+            Controller.sendInput("pausestate",{
                 pauseState : 0
             })
         }
-        Controller.sendSpeedState({
+        Controller.sendInput("speedstate",{
             speedState: 0
         })
     }

@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
-import GameData from './GameData';
 import Controller from './Controller';
 import Field from './Field';
 import Shop from './Shop';
 import logo from './lib/logo.png'
 import Objective from './Objective';
 import Tutorial from './Tutorial';
-import MoveButton from './MoveButton';
-import PauseButton from './PauseButton';
-import SpeedButton from './SpeedButton';
 
 class App extends React.Component {
 

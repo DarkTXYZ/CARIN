@@ -43,7 +43,7 @@ function Node(props: any) {
             <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
                 onClick={() => {
                     if (image === null) {
-                        Controller.sendPos({
+                        Controller.sendInput("posplace" , {
                             posX_place: props.x,
                             posY_place: props.y,
                         })
@@ -78,9 +78,9 @@ function Field(props: any) {
     const [selectY, setSelectY] = useState<number>(-1)
     const [clickState, setClickState] = useState<number>(-1)
 
-    Controller.getPosX().then(resp => setSelectX(resp))
-    Controller.getPosY().then(resp => setSelectY(resp))
-    Controller.getClickState().then(resp => setClickState(resp))
+    Controller.getInput("posplacex").then(resp => setSelectX(resp))
+    Controller.getInput("posplacey").then(resp => setSelectY(resp))
+    Controller.getInput("clickstate").then(resp => setClickState(resp))
 
     const createGrid = () => {
         const Grid = []
