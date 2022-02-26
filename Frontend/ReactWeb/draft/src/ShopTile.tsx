@@ -2,16 +2,9 @@ import { useState } from "react"
 import tile1 from './lib/atbd1.png'
 import tile2 from './lib/atbd2.png'
 import tile3 from './lib/atbd3.png'
-import Controller from "./Controller"
 
 function ShopTile(props: any) {
     const [hover, setHover] = useState<boolean>(false)
-    const [clickState , setClickState] = useState<number>()
-
-    Controller.getInput('clickstate').then(resp => {
-        setClickState(resp)
-    })
-
 
     const toggleHover = () => {
         setHover(!hover)
@@ -31,7 +24,7 @@ function ShopTile(props: any) {
     if (!canBuy) {
         modify = "opacity-70 border-4 border-gray-400"
     } else {
-        if (selected === 'atbd' + type && clickState !== 0){
+        if (selected === 'atbd' + type && props.clickState !== 0){
             if(type === 1) {
                 modify = 'opacity-100 border-4 border-yellow-300'
             } else if(type === 2) {

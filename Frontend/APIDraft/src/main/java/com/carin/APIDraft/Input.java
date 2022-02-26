@@ -2,38 +2,57 @@ package com.carin.APIDraft;
 
 public class Input {
 
-    private int clickState;
+    private int selectedX, selectedY;
 
+    private int placeState;
     private String job;
     private int posX_place, posY_place;
 
-    private int pauseMoveState;
-    private int ogX, ogY, posX, posY;
+    private int moveState;
+    private int ogX, ogY, posX_move, posY_move;
 
     private int speedState;
 
     private int pauseState;
 
-    public Input(int clickState, String job, int posX_place, int posY_place, int pauseMoveState, int ogX, int ogY, int posX, int posY, int speedState, int pauseState) {
-        this.clickState = clickState;
+    public Input(int selectedX, int selectedY, int placeState, String job, int posX_place, int posY_place, int moveState, int ogX, int ogY, int posX_move, int posY_move, int speedState, int pauseState) {
+        this.selectedX = selectedX;
+        this.selectedY = selectedY;
+        this.placeState = placeState;
         this.job = job;
         this.posX_place = posX_place;
         this.posY_place = posY_place;
-        this.pauseMoveState = pauseMoveState;
+        this.moveState = moveState;
         this.ogX = ogX;
         this.ogY = ogY;
-        this.posX = posX;
-        this.posY = posY;
+        this.posX_move = posX_move;
+        this.posY_move = posY_move;
         this.speedState = speedState;
         this.pauseState = pauseState;
     }
 
-    public int getClickState() {
-        return clickState;
+    public int getSelectedX() {
+        return selectedX;
     }
 
-    public void setClickState(int clickState) {
-        this.clickState = clickState;
+    public void setSelectedX(int selectedX) {
+        this.selectedX = selectedX;
+    }
+
+    public int getSelectedY() {
+        return selectedY;
+    }
+
+    public void setSelectedY(int selectedY) {
+        this.selectedY = selectedY;
+    }
+
+    public int getPlaceState() {
+        return placeState;
+    }
+
+    public void setPlaceState(int placeState) {
+        this.placeState = placeState;
     }
 
     public String getJob() {
@@ -60,12 +79,12 @@ public class Input {
         this.posY_place = posY_place;
     }
 
-    public int getPauseMoveState() {
-        return pauseMoveState;
+    public int getMoveState() {
+        return moveState;
     }
 
-    public void setPauseMoveState(int pauseMoveState) {
-        this.pauseMoveState = pauseMoveState;
+    public void setMoveState(int moveState) {
+        this.moveState = moveState;
     }
 
     public int getOgX() {
@@ -84,20 +103,20 @@ public class Input {
         this.ogY = ogY;
     }
 
-    public int getPosX() {
-        return posX;
+    public int getPosX_move() {
+        return posX_move;
     }
 
-    public void setPosX(int posX) {
-        this.posX = posX;
+    public void setPosX_move(int posX_move) {
+        this.posX_move = posX_move;
     }
 
-    public int getPosY() {
-        return posY;
+    public int getPosY_move() {
+        return posY_move;
     }
 
-    public void setPosY(int posY) {
-        this.posY = posY;
+    public void setPosY_move(int posY_move) {
+        this.posY_move = posY_move;
     }
 
     public int getSpeedState() {

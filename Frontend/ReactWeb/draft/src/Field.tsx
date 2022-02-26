@@ -4,7 +4,7 @@ import atbd2 from './lib/atbd2.png'
 import atbd3 from './lib/atbd3.png'
 import Controller from "./Controller"
 import { useState } from "react"
-import React, { Component } from "react";
+import React from "react";
 import MoveButton from "./MoveButton"
 import SpeedButton from "./SpeedButton"
 import PauseButton from "./PauseButton"
@@ -42,14 +42,11 @@ function Node(props: any) {
         <div>
             <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
                 onClick={() => {
-                    if (image === null) {
-                        Controller.sendInput("posplace" , {
-                            posX_place: props.x,
-                            posY_place: props.y,
-                        })
-                    }
+                    Controller.sendInput("selected" , {
+                        selectedX: props.x,
+                        selectedY: props.y,
+                    })
                 }}>
-
                 <div>
                     {props.type !== 0 && <progress className='fixed rotate-45' style={{ transform: "translate(-50%,-80%)", height: progheight, width: progwidth }} value={props.hp} max={props.hpMax}></progress>}
                 </div>
@@ -74,13 +71,11 @@ function Field(props: any) {
     // let width = fullWidth / m
     // let height = fullHeight / n
 
-    const [selectX, setSelectX] = useState<number>(-1)
-    const [selectY, setSelectY] = useState<number>(-1)
-    const [clickState, setClickState] = useState<number>(-1)
+    const [selectedX, setSelectedX] = useState<number>(-1)
+    const [selectedY, setSelectedY] = useState<number>(-1)
 
-    Controller.getInput("posplacex").then(resp => setSelectX(resp))
-    Controller.getInput("posplacey").then(resp => setSelectY(resp))
-    Controller.getInput("clickstate").then(resp => setClickState(resp))
+    Controller.getInput("selectedx").then(resp => setSelectedX(resp))
+    Controller.getInput("selectedy").then(resp => setSelectedY(resp))
 
     const createGrid = () => {
         const Grid = []
@@ -104,7 +99,7 @@ function Field(props: any) {
                         <div key={rowId}>
                             {row.map((node, nodeId) => {
                                 let selected = false
-                                if (selectX === nodeId && selectY === rowId && clickState !== 0)
+                                if (selectedX === nodeId && selectedY === rowId)
                                     selected = true
 
                                 for (let i = 0; i < px.length; ++i) {

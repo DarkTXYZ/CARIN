@@ -11,8 +11,8 @@ function MoveButton() {
             setState(1)
         else
             setState(0)
-        Controller.sendInput("clickstate" , {
-            clickstate : 0
+        Controller.sendInput("placestate" , {
+            placeState : 0
         })
     }
 

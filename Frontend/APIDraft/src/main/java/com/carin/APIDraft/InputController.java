@@ -7,23 +7,53 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "input")
 public class InputController {
 
+
     @CrossOrigin
     @GetMapping
     public Input getInput() {
         return InputService.getInput();
     }
 
+    // Selected XY
     @CrossOrigin
-    @GetMapping("/clickstate")
-    public int getClickState() {
-        return InputService.getClickState();
+    @GetMapping("/selectedx")
+    public int getSelectedX() {
+        return InputService.getSelectedX();
+    }
+
+
+    @CrossOrigin
+    @GetMapping("/selectedy")
+    public int getSelectedY() {
+        return InputService.getSelectedY();
     }
 
     @CrossOrigin
-    @PutMapping("/put/clickstate")
-    public Input putClickState(@RequestBody Input input) {
-        InputService.setClickState(input);
+    @PutMapping("/put/selected")
+    public Input putSelectedY(@RequestBody Input input) {
+        InputService.setSelected(input);
         return InputService.getInput();
+    }
+
+    // Place State
+    @CrossOrigin
+    @GetMapping("/placestate")
+    public int getPlaceState() {
+        return InputService.getPlaceState();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/placestate")
+    public Input getPlaceState(@RequestBody Input input) {
+        InputService.setPlaceState(input);
+        return InputService.getInput();
+    }
+
+    // Job
+    @CrossOrigin
+    @GetMapping("/job")
+    public String getJob() {
+        return InputService.getJob();
     }
 
     @CrossOrigin
@@ -33,24 +63,85 @@ public class InputController {
         return InputService.getInput();
     }
 
+    // Pos Place XY
     @CrossOrigin
-    @PutMapping("/put/pos")
-    public Input putPos(@RequestBody Input input) {
-        InputService.setPos(input);
-        return InputService.getInput();
+    @GetMapping("/posplacex")
+    public int getPosX_Place() {
+        return InputService.getPosX_place();
     }
 
     @CrossOrigin
-    @PutMapping("/put/pausestate")
-    public Input putPauseState(@RequestBody Input input) {
-        InputService.setPauseState(input);
-        return InputService.getInput();
+    @GetMapping("/posplacey")
+    public int getPosY_Place() {
+        return InputService.getPosY_place();
     }
 
     @CrossOrigin
-    @GetMapping("/pausestate")
-    public int getPauseState() {
-        return InputService.getPauseState();
+    @PutMapping("/put/posplace")
+    public Input putPosPlace(@RequestBody Input input) {
+        InputService.setPosPlace(input);
+        return InputService.getInput();
+    }
+
+    // Move State
+    @CrossOrigin
+    @GetMapping("/movestate")
+    public int getMoveState() {
+        return InputService.getMoveState();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/movestate")
+    public Input putMoveState(@RequestBody Input input) {
+        InputService.setMoveState(input);
+        return InputService.getInput();
+    }
+
+    // Og XY
+    @CrossOrigin
+    @GetMapping("/ogx")
+    public int getOgX() {
+        return InputService.getOgX();
+    }
+
+    @CrossOrigin
+    @GetMapping("/ogy")
+    public int getOgY() {
+        return InputService.getOgY();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/og")
+    public Input putOg(@RequestBody Input input) {
+        InputService.setOg(input);
+        return InputService.getInput();
+    }
+
+    // Pos Move XY
+    @CrossOrigin
+    @GetMapping("/posmovex")
+    public int getPosX_move() {
+        return InputService.getPosX_move();
+    }
+
+    @CrossOrigin
+    @GetMapping("/posmovey")
+    public int getPosY_move() {
+        return InputService.getPosY_move();
+    }
+
+    @CrossOrigin
+    @PutMapping("/put/posmove")
+    public Input putPosMove(@RequestBody Input input) {
+        InputService.setPosMove(input);
+        return InputService.getInput();
+    }
+
+    // Speed state
+    @CrossOrigin
+    @GetMapping("/speedstate")
+    public int getSpeedState() {
+        return InputService.getSpeedState();
     }
 
     @CrossOrigin
@@ -60,11 +151,17 @@ public class InputController {
         return InputService.getInput();
     }
 
+    // Pause State
     @CrossOrigin
-    @GetMapping("/speedstate")
-    public int getSpeedState() {
-        return InputService.getSpeedState();
+    @GetMapping("/pausestate")
+    public int getPauseState() {
+        return InputService.getPauseState();
     }
 
-
+    @CrossOrigin
+    @PutMapping("/put/pausestate")
+    public Input putPauseState(@RequestBody Input input) {
+        InputService.setPauseState(input);
+        return InputService.getInput();
+    }
 }
