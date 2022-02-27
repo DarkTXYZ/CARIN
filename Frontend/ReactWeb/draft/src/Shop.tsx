@@ -17,39 +17,41 @@ function Shop(props: any) {
     let canBuy: number[] = props.canBuy
 
     const selected = (typeATBD: string) => {
-        Controller.sendInput("job",{
+        Controller.sendInput("job", {
             job: typeATBD
         })
-        Controller.sendInput("placestate",{
+        Controller.sendInput("placestate", {
             placeState: 1
         })
-        Controller.sendInput("selected",{
+        Controller.sendInput("selected", {
             selectedX: -1,
             selectedY: -1,
         })
     }
 
     const cancel = () => {
-        Controller.sendInput("job",{
-            job: ''
-        })
-        Controller.sendInput("placestate",{
+        Controller.sendInput("placestate", {
             placeState: 0
         })
-        Controller.sendInput("selected",{
+        Controller.sendInput("selected", {
             selectedX: -1,
             selectedY: -1,
         })
     }
 
     let cost = props.cost
-    let name = ['Mercy','Ana','Lucio']
+    let name = ['Mercy', 'Ana', 'Lucio']
     let shopTile = []
-    for(let i = 0 ; i < 3 ; ++i) {
-        if(canBuy[i])
-            shopTile.push(<ShopTile onClick={() => selected('atbd' + (i+1))} canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={job} name={name[i]} placeState = {placeState} />)
+    for (let i = 0; i < 3; ++i) {
+        if (canBuy[i])
+            shopTile.push(<ShopTile onClick={() => {
+                selected('atbd' + (i + 1))
+                Controller.sendInput('movestate', {
+                    moveState: 0
+                })
+            }} canBuy={canBuy[i]} type={i + 1} cost={cost[i]} selected={job} name={name[i]} placeState={placeState} />)
         else
-            shopTile.push(<ShopTile canBuy={canBuy[i]} type={i+1} cost={cost[i]} selected={job} name={name[i]} placeState = {placeState}/>) 
+            shopTile.push(<ShopTile canBuy={canBuy[i]} type={i + 1} cost={cost[i]} selected={job} name={name[i]} placeState={placeState} />)
     }
 
     return (

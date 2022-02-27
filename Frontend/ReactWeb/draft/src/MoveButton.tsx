@@ -2,31 +2,109 @@ import move from './lib/move.png'
 import Controller from "./Controller"
 import { useState } from 'react'
 
-function MoveButton() {
-    
-    const [state,setState] = useState<number>()
+function MoveButton(props: any) {
+
+    // const [moveState,setMoveState] = useState<number>()
+    // const [selectedX, setSelectedX] = useState<number>(-1)
+    // const [selectedY, setSelectedY] = useState<number>(-1)
+
+    // Controller.getInput("selectedx").then(resp => setSelectedX(resp))
+    // Controller.getInput("selectedy").then(resp => setSelectedY(resp))
+    // Controller.getInput('movestate').then(resp => setMoveState(resp))
+
+    let moveState = props.moveState
+    let selectedX = props.x
+    let selectedY = props.y
 
     const clicked = () => {
-        if(state === 0)
-            setState(1)
+        if (moveState === 0) {
+            Controller.sendInput('movestate', {
+                moveState: 1
+            })
+            Controller.sendInput('selected', {
+                selectedX: -1,
+                selectedY: -1
+            })
+        }
         else
-            setState(0)
-        Controller.sendInput("placestate" , {
-            placeState : 0
+            Controller.sendInput('movestate', {
+                moveState: 0
+            })
+        Controller.sendInput("placestate", {
+            placeState: 0
         })
+    }
+
+    const selectATBDClicked = () => {
+        if (moveState === 1 && selectedX !== -1 && selectedY !== -1) {
+            Controller.sendInput('movestate', {
+                moveState: 2
+            })
+            Controller.sendInput('og', {
+                ogX: selectedX,
+                ogY: selectedY
+            })
+            Controller.sendInput('selected', {
+                selectedX: -1,
+                selectedY: -1
+            })
+        }
+        else
+            Controller.sendInput('movestate', {
+                moveState: 0
+            })
+    }
+
+    const selectTileClicked = () => {
+        if (moveState === 2 && selectedX !== -1 && selectedY !== -1) {
+            Controller.sendInput('movestate', {
+                moveState: 3
+            })
+            Controller.sendInput('posmove', {
+                posX_move: selectedX,
+                posY_move: selectedY
+            })
+            Controller.sendInput('selected', {
+                selectedX: -1,
+                selectedY: -1
+            })
+        }
+        else
+            Controller.sendInput('movestate', {
+                moveState: 0
+            })
     }
 
     let modify = ""
 
-    if(state === 1)
+    if (moveState !== 0)
         modify += "border-yellow-400 "
     else
         modify += "border-gray-400 "
 
     return (
-        <div className={modify + "border-2 rounded-md hover:scale-105 duration-300 ease-out"} onClick={clicked}>
-            <img src={move} width={40}/>
+        <div className='flex flex-row space-x-2'>
+            {moveState === 1 &&
+                <div className='flex flex-row space-x-2 items-center'>
+                    <p className="font-bold text-white">Select ATBD</p>
+                    <div className="font-bold bg-green-400 p-2 border-2 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectATBDClicked}>
+                        Select
+                    </div>
+                </div>
+            }
+            {moveState === 2 &&
+                <div className='flex flex-row space-x-2 items-center'>
+                    <p className="font-bold text-white">Select Tiles</p>
+                    <div className="font-bold bg-green-400 p-2 border-2 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectTileClicked}>
+                        Select
+                    </div>
+                </div>
+            }
+            <div className={modify + "border-2 rounded-md hover:scale-105 duration-300 ease-out"} onClick={clicked}>
+                <img src={move} width={40} />
+            </div>
         </div>
+
     )
 
 }

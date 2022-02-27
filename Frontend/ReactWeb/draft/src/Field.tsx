@@ -15,20 +15,40 @@ function Node(props: any) {
     let size = props.size
     let progheight = size * 0.1
     let progwidth = size * 0.8
+    let chosen = false;
 
     if (((props.x + props.y) % 2) === 0)
         color = "bg-rose-300 flex justify-center"
     else
         color = "bg-rose-400 flex justify-center"
 
-    if (props.select)
-        color += " border-2 border-green-400"
+    if (props.select) {
+        if (props.type === 0 && props.placeState !== 0)
+            color += " border-2 border-green-400"
+        else if (props.moveState === 1) {
+            if (props.type <= 3 && props.type >= 1)
+                color += " border-2 border-green-400"
+        } else if (props.moveState === 2) {
+            if (props.type === 0)
+                color += " border-2 border-green-400"
+        }
+    } else {
+        if (props.type === 0 && props.placeState !== 0)
+            chosen = true
+        else if (props.moveState === 1) {
+            if (props.type <= 3 && props.type >= 1)
+                chosen = true
+        } else if (props.moveState === 2) {
+            if (props.type === 0)
+                chosen = true
+        }
+    }
 
-    if (props.type === 'atbd1') {
+    if (props.type === 1) {
         ATBDchosen = atbd1
-    } else if (props.type === 'atbd2') {
+    } else if (props.type === 2) {
         ATBDchosen = atbd2
-    } else if (props.type === 'atbd3') {
+    } else if (props.type === 3) {
         ATBDchosen = atbd3
     }
 
@@ -42,10 +62,12 @@ function Node(props: any) {
         <div>
             <div className={color + ' flex flex-col relative items-center'} style={{ height: size, width: size }}
                 onClick={() => {
-                    Controller.sendInput("selected" , {
-                        selectedX: props.x,
-                        selectedY: props.y,
-                    })
+                    if (chosen) {
+                        Controller.sendInput("selected", {
+                            selectedX: props.x,
+                            selectedY: props.y,
+                        })
+                    }
                 }}>
                 <div>
                     {props.type !== 0 && <progress className='fixed rotate-45' style={{ transform: "translate(-50%,-80%)", height: progheight, width: progwidth }} value={props.hp} max={props.hpMax}></progress>}
@@ -73,9 +95,13 @@ function Field(props: any) {
 
     const [selectedX, setSelectedX] = useState<number>(-1)
     const [selectedY, setSelectedY] = useState<number>(-1)
+    const [placeState, setPlaceState] = useState<number>(-1)
+    const [moveState, setMoveState] = useState<number>(-1)
 
     Controller.getInput("selectedx").then(resp => setSelectedX(resp))
     Controller.getInput("selectedy").then(resp => setSelectedY(resp))
+    Controller.getInput("movestate").then(resp => setMoveState(resp))
+    Controller.getInput("placestate").then(resp => setPlaceState(resp))
 
     const createGrid = () => {
         const Grid = []
@@ -106,13 +132,13 @@ function Field(props: any) {
                                     if (px[i] === nodeId && py[i] === rowId) {
                                         return (
                                             <div className=''>
-                                                <Node x={nodeId} y={rowId} size={size} type={type[i]} select={false} hp={props.hp[i]} hpMax={props.hpMax[i]} />
+                                                <Node x={nodeId} y={rowId} size={size} type={type[i]} select={selected} hp={props.hp[i]} hpMax={props.hpMax[i]} moveState={moveState} placeState={placeState} />
                                             </div>
                                         )
                                     }
                                 }
                                 return (
-                                    <Node x={nodeId} y={rowId} size={size} type={0} select={selected} />
+                                    <Node x={nodeId} y={rowId} size={size} type={0} select={selected} moveState={moveState} placeState={placeState} />
                                 )
                             })}
                         </div>
@@ -126,7 +152,6 @@ function Field(props: any) {
     let screenHeight = 686
 
     return (
-
 
         <TransformWrapper centerOnInit={true} initialScale={0.9} minScale={0.5} maxScale={100} limitToBounds={false} doubleClick={{ disabled: true }}>
 
@@ -152,7 +177,7 @@ function Field(props: any) {
                                 }}>Reset View</button>
                             </div>
                             <div className="flex flex-row space-x-2">
-                                <MoveButton />
+                                <MoveButton moveState={moveState} x={selectedX} y={selectedY} />
                                 <PauseButton />
                                 <SpeedButton />
                             </div>

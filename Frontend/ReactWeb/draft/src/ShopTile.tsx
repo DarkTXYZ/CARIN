@@ -24,7 +24,7 @@ function ShopTile(props: any) {
     if (!canBuy) {
         modify = "opacity-70 border-4 border-gray-400"
     } else {
-        if (selected === 'atbd' + type && props.clickState !== 0){
+        if (selected === 'atbd' + type && props.placeState !== 0){
             if(type === 1) {
                 modify = 'opacity-100 border-4 border-yellow-300'
             } else if(type === 2) {

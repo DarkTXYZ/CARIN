@@ -12,9 +12,9 @@ class App extends React.Component {
 	interval: any;
 
 	state = {
-		m: 5,
-		n: 5,
-		state: -1,		// state of game
+		m: 0,
+		n: 0,
+		state: 0,		// state of game
 		shopState: [0, 0, 0],
 		currency: 0,
 		cost: [],
@@ -33,8 +33,6 @@ class App extends React.Component {
 
 	componentDidUpdate() {
 		this.fetch();
-		// this.input();
-		this.send();
 	}
 
 	fetch = () => {
@@ -43,15 +41,6 @@ class App extends React.Component {
 		})
 	}
 
-	input = () => {
-
-	}
-
-	send = () => {
-
-	}
-
-	// style={{backgroundImage: `url("https://mcdn.wallpapersafari.com/medium/21/87/CIrvgO.jpg")`, backgroundSize: "cover" }}
 	render(): React.ReactNode {
 		return (
 			<div className='fixed w-full h-full bg-gradient-to-l from-sky-600 to-red-600' >
