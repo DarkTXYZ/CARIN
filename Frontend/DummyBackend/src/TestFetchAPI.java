@@ -110,16 +110,16 @@ public class TestFetchAPI {
 //        private List<Integer> posX,posY,type,hp,hpMax;
 //        private int objective , objectiveMax;
 
-        int m = 20, n = 20;
+        int m = 6, n = 6;
         int state = 1;
         List<Integer> shopState = Arrays.asList(0, 1, 1);
         int currency = 100;
         List<Integer> cost = Arrays.asList(20,40,60);
         List<Integer> posX = Arrays.asList(1,2, 3, 4, 5);
-        List<Integer> posY = Arrays.asList(1, 1, 1, 1, 1);
+        List<Integer> posY = Arrays.asList(4, 3, 4, 0, 2);
         List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10);
         List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45);
-        List<String> type = Arrays.asList("atbd1","atbd2","atbd3","atbd1","atbd2");
+        List<Integer> type = Arrays.asList(1,2,3,1,2);
         int objective = 2 , objectiveMax = 10;
 
         JSONObject obj = new JSONObject();
