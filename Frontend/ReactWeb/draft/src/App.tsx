@@ -24,7 +24,7 @@ class App extends React.Component {
 		hpMax: [],
 		type: [], // type of hosts
 		objective: 0, // number of viruses left
-		objectiveMax: 0
+		objectiveMax: 0,
 	}
 
 	componentDidMount() {

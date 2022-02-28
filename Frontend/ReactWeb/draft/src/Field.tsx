@@ -2,7 +2,10 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch"
 import atbd1 from './lib/atbd1.png'
 import atbd2 from './lib/atbd2.png'
 import atbd3 from './lib/atbd3.png'
-import Controller from "./Controller"
+import virus1 from './lib/virus1.png'
+import virus2 from './lib/virus2.png'
+import virus3 from './lib/virus3.png'
+import Controller from "./Controller"                          
 import { useState } from "react"
 import React from "react";
 import MoveButton from "./MoveButton"
@@ -11,7 +14,7 @@ import PauseButton from "./PauseButton"
 
 function Node(props: any) {
     let color = ""
-    let ATBDchosen: any = null
+    let skin: any = null
     let size = props.size
     let progheight = size * 0.1
     let progwidth = size * 0.8
@@ -45,16 +48,22 @@ function Node(props: any) {
     }
 
     if (props.type === 1) {
-        ATBDchosen = atbd1
+        skin = atbd1
     } else if (props.type === 2) {
-        ATBDchosen = atbd2
+        skin = atbd2
     } else if (props.type === 3) {
-        ATBDchosen = atbd3
+        skin = atbd3
+    } else if (props.type === 4) {
+        skin = virus1
+    } else if (props.type === 5) {
+        skin = virus2
+    } else if (props.type === 6) {
+        skin = virus3
     }
 
     let image: any = null
     if (props.type !== 0)
-        image = <img src={ATBDchosen} alt="" style={{ height: size }} />
+        image = <img src={skin} alt="" style={{ height: size }} />
     else
         image = null
 
