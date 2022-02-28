@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -17,6 +18,8 @@ public class TestFetchAPI {
 //        POST();
 //        while(true) {
             PUTGameData();
+//        setGameState(1);
+//        setGameState(1);
 //            Thread.sleep(3000);
 //            PUTGameData2();
 //            Thread.sleep(3000);
@@ -65,6 +68,38 @@ public class TestFetchAPI {
         }
     }
 
+    public static void setGameState(int state) throws IOException {
+        JSONObject obj = new JSONObject();
+        obj.put("state", state);
+
+
+        String rawData = obj.toJSONString();
+        System.out.println("Raw GameData PUT:");
+        System.out.println(rawData);
+
+        URL url = new URL("http://localhost:8080/gamedata/put");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("PUT");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setDoOutput(true);
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+        System.out.println("Response:");
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            System.out.println(response);
+        }
+        System.out.println("---------------------");
+    }
+
     @SuppressWarnings("unchecked")
     public static void PUTGameData() throws IOException {
 
@@ -81,10 +116,10 @@ public class TestFetchAPI {
         int currency = 100;
         List<Integer> cost = Arrays.asList(20,40,60);
         List<Integer> posX = Arrays.asList(1,2, 3, 4, 5);
-        List<Integer> posY = Arrays.asList(1, 1, 1, 1, 1);
+        List<Integer> posY = Arrays.asList(4, 3, 4, 0, 2);
         List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10);
         List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45);
-        List<String> type = Arrays.asList("atbd1","atbd2","atbd3","atbd1","atbd2");
+        List<Integer> type = Arrays.asList(1,2,3,1,2);
         int objective = 2 , objectiveMax = 10;
 
         JSONObject obj = new JSONObject();

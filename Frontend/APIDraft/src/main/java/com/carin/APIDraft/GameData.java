@@ -8,10 +8,10 @@ public class GameData {
     private List<Integer> shopState, cost;
     private int currency;
     private List<Integer> posX, posY, hp, hpMax;
-    private List<String> type;
+    private List<Integer> type;
     private int objective, objectiveMax;
 
-    public GameData(int m, int n, int state, List<Integer> shopState, List<Integer> cost, int currency, List<Integer> posX, List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<String> type, int objective, int objectiveMax) {
+    public GameData(int m, int n, int state, List<Integer> shopState, List<Integer> cost, int currency, List<Integer> posX, List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<Integer> type, int objective, int objectiveMax) {
         this.m = m;
         this.n = n;
         this.state = state;
@@ -91,11 +91,11 @@ public class GameData {
         this.posY = posY;
     }
 
-    public List<String> getType() {
+    public List<Integer> getType() {
         return type;
     }
 
-    public void setType(List<String> type) {
+    public void setType(List<Integer> type) {
         this.type = type;
     }
 
