@@ -13,7 +13,6 @@ public class Game {
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
             , atbdMoveCost , atbdCreditsDrop;
     static double spawnCount = 0;
-    static double timeUnitCount = 0;
     static double virusSpawnRate;
     static SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
         @Override
@@ -184,14 +183,14 @@ public class Game {
         System.out.println("Objective :" + gObjective.fst()+"/"+ gObjective.snd());
         System.out.println("-------------------------------");
     }
-    public Unit getVirusFromPos(Pair<Integer,Integer> pos){
-        for(int i = 0 ; i < virusOrder.size() ; ++i){
-            if(pos == virusOrder.get(i).getPosition()){
-                return virusOrder.get(i);
-            }
-        }
-        return  null;
-    }
+//    public Unit getVirusFromPos(Pair<Integer,Integer> pos){
+//        for(int i = 0 ; i < virusOrder.size() ; ++i){
+//            if(pos == virusOrder.get(i).getPosition()){
+//                return virusOrder.get(i);
+//            }
+//        }
+//        return  null;
+//    }
 //
 //    public Unit senseClosestVirus(ATBD unit){
 //        Pair<Integer,Integer> ans = new Pair<>(0,0);
@@ -209,14 +208,14 @@ public class Game {
 //    }
 //
 
-    public Unit getATBDFromPos(Pair<Integer,Integer> pos){
-        for(int i = 0 ; i < atbdOrder.size() ; ++i){
-            if(pos == atbdOrder.get(i).getPosition()){
-                return atbdOrder.get(i);
-            }
-        }
-        return  null;
-    }
+//    public Unit getATBDFromPos(Pair<Integer,Integer> pos){
+//        for(int i = 0 ; i < atbdOrder.size() ; ++i){
+//            if(pos == atbdOrder.get(i).getPosition()){
+//                return atbdOrder.get(i);
+//            }
+//        }
+//        return  null;
+//    }
 //
 //    public Unit senseClosestATBD(Unit unit){
 //        Pair<Integer,Integer> ans = new Pair<>(0,0);
