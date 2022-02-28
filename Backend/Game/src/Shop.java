@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Shop {
@@ -42,5 +44,11 @@ public class Shop {
         currency+=mod;
     }
     public int getCurrency(){return currency;}
-
+    public List<Boolean> getStatus(){
+        List<Boolean> ret = new ArrayList<>();
+        for (int i:status.keySet()){
+            ret.add(status.get(i));
+        }
+        return ret;
+    }
 }

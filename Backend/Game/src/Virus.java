@@ -6,7 +6,7 @@ public class Virus extends UnitImpl {
         System.out.println("Virus created");
         geneticCode = "dfalt";
     }
-    public Virus(int atk, int lifeSteal, int hp, String gene,int attackRange){
+    public Virus(int atk, int lifeSteal, int hp, String gene,int attackRange,int skin){
         this.Atk = atk;
         this.maxHp = hp;
         this.Hp = hp;
@@ -14,6 +14,7 @@ public class Virus extends UnitImpl {
         geneticCode = gene;
         bindings = new HashMap<>();
         this.attackRange = attackRange;
+        this.skin = skin;
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
         }catch (Exception e) {System.out.println("genethingy");}
@@ -26,6 +27,7 @@ public class Virus extends UnitImpl {
         lifeSteal = template.getLifeSteal();
         bindings = new HashMap<>();
         this.attackRange = template.getAttackRange();
+        skin = template.getSkin();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
         }catch (Exception e) {System.out.println("genethingy");}

@@ -3,9 +3,7 @@ import java.util.HashMap;
 public class ATBD_ extends UnitImpl {
 
 
-
-
-    public ATBD_(int atk, int lifeSteal, int hp, String gene, int cost,int attackRange){
+    public ATBD_(int atk, int lifeSteal, int hp, String gene, int cost,int attackRange, int skin){
         this.Atk = atk;
         this.maxHp = hp;
         this.Hp = hp;
@@ -14,6 +12,7 @@ public class ATBD_ extends UnitImpl {
         this.moveCost = 2;
         this.attackRange = attackRange;
         geneticCode = gene;
+        this.skin = skin;
         bindings = new HashMap<>();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
@@ -28,6 +27,7 @@ public class ATBD_ extends UnitImpl {
         lifeSteal = template.getLifeSteal();
         this.attackRange = template.getAttackRange();
         bindings = new HashMap<>();
+        skin = template.getSkin();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
         }catch (Exception e) {System.out.println("genethingy");}
