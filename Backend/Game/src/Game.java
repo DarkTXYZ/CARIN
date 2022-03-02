@@ -78,6 +78,13 @@ public class Game {
             throw new GameOverException("Game over");
         }
     }
+    static Queue<Pair<Unit,Pair<Integer,Integer>>>deadList = new LinkedList<>();
+    public static void updateDeadlist(){
+        while(!deadList.isEmpty()){
+            Pair<Unit,Pair<Integer,Integer>> u = deadList.poll();
+            addVirus(u.fst(),u.snd());
+        }
+    }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
@@ -155,8 +162,8 @@ public class Game {
     public static void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        Unit v = new Virus(spawn);
-        addVirus(v,pos);
+        Unit u = new Virus(spawn);
+        deadList.add(new Pair<>(u,pos));
     }
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
@@ -484,7 +491,7 @@ public class Game {
     static Unit sniper = new Virus(150,20,160,"move downright",1,5);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(696969,20,69696969,    "virusLoc = virus " +
+    static Unit Merci = new ATBD_(696969,20,1,    "virusLoc = virus " +
             "if (virusLoc / 10 - 1) " +
             "then  " +
             "  if (virusLoc % 10 - 7) then move upleft " +
@@ -565,19 +572,21 @@ public class Game {
                     it.remove();
                 }
             }
+            updateDeadlist();
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
                 if( rand == 0 ){
                     addVirus(createNewVirus(0), randomTile());
-//                    spawnCount = spawnCount - rand;
+                    spawnCount = spawnCount - rand;
+                    addATBD(createNewATBD(1),randomTile());
                 }
                 if( rand == 1 ){
                     addVirus(createNewVirus(1), randomTile());
-//                    spawnCount = spawnCount - 2*rand;
+                    spawnCount = spawnCount - 2*rand;
                 }
                 if( rand == 2 ){
                     addVirus(createNewVirus(2), randomTile());
-//                    spawnCount = spawnCount - 3*rand;
+                    spawnCount = spawnCount - 3*rand;
                 }
             }else{
                 spawnCount++;
@@ -590,8 +599,10 @@ public class Game {
             List<Integer> skin =new ArrayList<>();
             int cur = shop.getCurrency();
             int[] obj = {gObjective.fst(),gObjective.snd()};
+            System.out.println("Shop Update");
+            shop.updateStatus();
             List<Boolean> shopStat = shop.getStatus();
-
+            System.out.println(shopStat);
 
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
@@ -600,11 +611,11 @@ public class Game {
                 posy.add(u.getPosition().fst());
                 skin.add(u.getSkin());
             }
-            System.out.println(maxHp);
-            System.out.println(hp);
-            System.out.println(posx);
-            System.out.println(posy);
-            System.out.println(skin);
+//            System.out.println(maxHp);
+//            System.out.println(hp);
+//            System.out.println(posx);
+//            System.out.println(posy);
+//            System.out.println(skin);
 
             Thread.sleep(1000);
             //fetch api
@@ -782,6 +793,7 @@ public class Game {
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
