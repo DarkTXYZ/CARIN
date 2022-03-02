@@ -67,15 +67,18 @@ function Shop(props: any) {
                 {shopTile[2]}
             </div>
 
-            <div className='flex flex-row justify-between space-x-2 w-40'>
-                <div className='hover:drop-shadow-xl'>
-                    {placeState !== 0 && <button className='bg-gradient-to-l from-green-600 to-green-400 p-2 rounded-xl text-xl font-bold hover:scale-105 duration-300 ease-out'>Place</button>}
+            {placeState !== 0 &&
+                <div className='flex flex-row justify-between space-x-2 w-40'>
+                    <div className='hover:drop-shadow-xl'>
+                        <button className='text-xl font-bold bg-gradient-to-l from-green-600 to-green-400 p-2 border-2 border-green-300 rounded-md hover:scale-105 duration-300 ease-out'>Place</button>
+                    </div>
+                    <div className='hover:drop-shadow-xl'>
+                        <button className='text-xl font-bold bg-gradient-to-l from-red-600 to-red-400 p-2 border-2 border-red-300 rounded-md hover:scale-105 duration-300 ease-out'
+                            onClick={cancel}>Cancel</button>
+                    </div>
                 </div>
-                <div className='hover:drop-shadow-xl'>
-                    {placeState !== 0 && <button className='bg-gradient-to-l from-red-600 to-red-400 p-2 rounded-xl text-xl font-bold hover:scale-105 duration-300 ease-out '
-                        onClick={cancel}>Cancel</button>}
-                </div>
-            </div>
+            }
+
 
         </div>
 

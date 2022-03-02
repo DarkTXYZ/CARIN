@@ -49,10 +49,6 @@ function MoveButton(props: any) {
                 selectedY: -1
             })
         }
-        else
-            Controller.sendInput('movestate', {
-                moveState: 0
-            })
     }
 
     const selectTileClicked = () => {
@@ -69,11 +65,18 @@ function MoveButton(props: any) {
                 selectedY: -1
             })
         }
-        else
-            Controller.sendInput('movestate', {
-                moveState: 0
-            })
     }
+
+    const cancel = () => {
+        Controller.sendInput("movestate", {
+            moveState: 0
+        })
+        Controller.sendInput("selected", {
+            selectedX: -1,
+            selectedY: -1,
+        })
+    }
+
 
     let modify = ""
 
@@ -87,7 +90,7 @@ function MoveButton(props: any) {
             {moveState === 1 &&
                 <div className='flex flex-row space-x-2 items-center'>
                     <p className="font-bold text-white">Select ATBD</p>
-                    <div className="font-bold bg-green-400 p-2 border-2 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectATBDClicked}>
+                    <div className="font-bold bg-gradient-to-l from-green-600 to-green-400 p-2 border-2 border-green-300 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectATBDClicked}>
                         Select
                     </div>
                 </div>
@@ -95,11 +98,17 @@ function MoveButton(props: any) {
             {moveState === 2 &&
                 <div className='flex flex-row space-x-2 items-center'>
                     <p className="font-bold text-white">Select Tiles</p>
-                    <div className="font-bold bg-green-400 p-2 border-2 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectTileClicked}>
+                    <div className="font-bold bg-gradient-to-l from-green-600 to-green-400 p-2 border-2 border-green-300 rounded-md hover:scale-105 duration-300 ease-out" onClick={selectTileClicked}>
                         Select
                     </div>
                 </div>
             }
+            {moveState !== 0 &&
+                <div className="font-bold bg-gradient-to-l from-red-600 to-red-400 p-2 border-2 border-red-300 rounded-md hover:scale-105 duration-300 ease-out" onClick={cancel}>
+                    Cancel
+                </div>
+            }
+
             <div className={modify + "border-2 rounded-md hover:scale-105 duration-300 ease-out"} onClick={clicked}>
                 <img src={move} width={40} />
             </div>
