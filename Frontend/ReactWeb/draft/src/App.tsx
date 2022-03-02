@@ -43,7 +43,7 @@ class App extends React.Component {
 
 	render(): React.ReactNode {
 		return (
-			<div className='fixed w-full h-full bg-gradient-to-l from-sky-600 to-red-600' >
+			<div className='fixed select-none w-full h-full bg-gradient-to-l from-sky-600 to-red-600' >
 				<div className="flex justify-center">
 					<div className='flex flex-col space-y-3'>
 						<div className='flex justify-center my-5'>

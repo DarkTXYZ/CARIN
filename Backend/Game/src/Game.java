@@ -610,12 +610,13 @@ public class Game {
                 posy.add(u.getPosition().fst());
                 skin.add(u.getSkin());
             }
+
 //            System.out.println(maxHp);
 //            System.out.println(hp);
 //            System.out.println(posx);
 //            System.out.println(posy);
 //            System.out.println(skin);
-
+            List<Integer> cost = shop.getcostList();
             Thread.sleep(1000);
             //fetch api
             Controller.sendGameData(n,m,1,shopStat,cur,Arrays.asList(1, 2, 3) ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);

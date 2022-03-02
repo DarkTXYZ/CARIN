@@ -58,4 +58,11 @@ public class Shop {
         }
         return ret;
     }
+    public List<Integer> getcostList(){
+        List<Integer> ret = new ArrayList<>();
+        for(int a:status.keySet()){
+            ret.add(a);
+        }
+        return ret;
+    }
 }

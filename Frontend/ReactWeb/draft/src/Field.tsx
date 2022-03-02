@@ -28,12 +28,15 @@ function Node(props: any) {
     if (props.select) {
         if (props.type === 0 && props.placeState !== 0)
             color += " border-2 border-green-400"
-        else if (props.moveState === 1) {
-            if (props.type <= 3 && props.type >= 1)
+        else if (props.moveState === 1 && props.type <= 3 && props.type >= 1)
+            color += " border-2 border-green-400"
+        else if (props.moveState === 2 && props.type === 0)
                 color += " border-2 border-green-400"
-        } else if (props.moveState === 2) {
-            if (props.type === 0)
-                color += " border-2 border-green-400"
+        else {
+            Controller.sendInput('selected' , {
+                selectedX : -1 ,
+                selectedY : -1
+            })
         }
     } else {
         if (props.type === 0 && props.placeState !== 0)
