@@ -600,11 +600,20 @@ public class Game {
                 posy.add(u.getPosition().fst());
                 skin.add(u.getSkin());
             }
+<<<<<<< Updated upstream
             System.out.println(maxHp);
             System.out.println(hp);
             System.out.println(posx);
             System.out.println(posy);
             System.out.println(skin);
+=======
+            List<Integer> cost = shop.getcostList();
+//            System.out.println(maxHp);
+//            System.out.println(hp);
+//            System.out.println(posx);
+//            System.out.println(posy);
+//            System.out.println(skin);
+>>>>>>> Stashed changes
 
             Thread.sleep(1000);
             //fetch api
