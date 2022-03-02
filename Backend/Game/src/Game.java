@@ -13,7 +13,6 @@ public class Game {
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
             , atbdMoveCost , atbdCreditsDrop;
     static double spawnCount = 0;
-    static double timeUnitCount = 0;
     static double virusSpawnRate;
     static SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
         @Override
@@ -31,12 +30,12 @@ public class Game {
     static List<Unit> order = new ArrayList<>();
     static List<Unit> virusOrder = new ArrayList<>();
     static List<Unit> atbdOrder = new ArrayList<>();
-    static Objective Objective;
+    static Objective gObjective;
     static int virusLimit;
     static Shop shop;
 
     public static void initObjective(int maxElim){
-        Objective = new Objective(0,maxElim);
+        gObjective = new Objective(0,maxElim);
     }
     //tell if we win
     public static void notifyReachElim(){
@@ -163,7 +162,7 @@ public class Game {
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
         shop.setCurrency(atbdCreditsDrop);
-        Objective.modfst(1);
+        gObjective.modfst(1);
     }
     public static void visualize(){
         System.out.println("-------------------------------");
@@ -181,17 +180,17 @@ public class Game {
         System.out.println("virus order" +virusOrder.toString());
         System.out.println("atbd order"+atbdOrder.toString());
         System.out.println("Shop currency: "+shop.getCurrency());
-        System.out.println("Objective :" +Objective.fst()+"/"+Objective.snd());
+        System.out.println("Objective :" + gObjective.fst()+"/"+ gObjective.snd());
         System.out.println("-------------------------------");
     }
-    public Unit getVirusFromPos(Pair<Integer,Integer> pos){
-        for(int i = 0 ; i < virusOrder.size() ; ++i){
-            if(pos == virusOrder.get(i).getPosition()){
-                return virusOrder.get(i);
-            }
-        }
-        return  null;
-    }
+//    public Unit getVirusFromPos(Pair<Integer,Integer> pos){
+//        for(int i = 0 ; i < virusOrder.size() ; ++i){
+//            if(pos == virusOrder.get(i).getPosition()){
+//                return virusOrder.get(i);
+//            }
+//        }
+//        return  null;
+//    }
 //
 //    public Unit senseClosestVirus(ATBD unit){
 //        Pair<Integer,Integer> ans = new Pair<>(0,0);
@@ -209,14 +208,14 @@ public class Game {
 //    }
 //
 
-    public Unit getATBDFromPos(Pair<Integer,Integer> pos){
-        for(int i = 0 ; i < atbdOrder.size() ; ++i){
-            if(pos == atbdOrder.get(i).getPosition()){
-                return atbdOrder.get(i);
-            }
-        }
-        return  null;
-    }
+//    public Unit getATBDFromPos(Pair<Integer,Integer> pos){
+//        for(int i = 0 ; i < atbdOrder.size() ; ++i){
+//            if(pos == atbdOrder.get(i).getPosition()){
+//                return atbdOrder.get(i);
+//            }
+//        }
+//        return  null;
+//    }
 //
 //    public Unit senseClosestATBD(Unit unit){
 //        Pair<Integer,Integer> ans = new Pair<>(0,0);
@@ -480,9 +479,9 @@ public class Game {
         return a;
     }
 
-    static Unit gangster = new Virus(75,50,250,"move right",1);
-    static Unit pistolDude = new Virus(50,100,200,"move left",1);
-    static Unit sniper = new Virus(150,20,160,"move downright",1);
+    static Unit gangster = new Virus(75,50,250,"move right",1,3);
+    static Unit pistolDude = new Virus(50,100,200,"move left",1,4);
+    static Unit sniper = new Virus(150,20,160,"move downright",1,5);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
     static Unit Merci = new ATBD_(696969,20,69696969,    "virusLoc = virus " +
@@ -507,9 +506,9 @@ public class Game {
             "  else if (virusLoc % 10 - 1) then shoot upright " +
             "  else shoot up " +
             "else {} "
-            ,20,1);
-    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2);
-    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1);
+            ,20,1,0);
+    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,1);
+    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,2);
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
     static int virustemplate = viruses.length;
@@ -551,11 +550,12 @@ public class Game {
 
     public static void Update() throws InterruptedException, GameOverException {
         int rand;
-        while(Objective.snd() - Objective.fst() > 0){
+        while(gObjective.snd() - gObjective.fst() > 0){
             /*if(ซื้อตัว){
                 //เสกมา
             }
             */
+            //fetch continue
             Iterator<Unit> it = order.iterator();
             while (it.hasNext()){
                 Unit u = it.next();
@@ -583,7 +583,31 @@ public class Game {
                 spawnCount++;
             }
             visualize();
+            List<Integer> posx =new ArrayList<>();
+            List<Integer> posy =new ArrayList<>();
+            List<Integer> hp =new ArrayList<>();
+            List<Integer> maxHp =new ArrayList<>();
+            List<Integer> skin =new ArrayList<>();
+            int cur = shop.getCurrency();
+            int[] obj = {gObjective.fst(),gObjective.snd()};
+            List<Boolean> shopStat = shop.getStatus();
+
+
+            for(Unit u: order){
+                maxHp.add(u.getMaxHp());
+                hp.add(u.getHp());
+                posx.add(u.getPosition().snd());
+                posy.add(u.getPosition().fst());
+                skin.add(u.getSkin());
+            }
+            System.out.println(maxHp);
+            System.out.println(hp);
+            System.out.println(posx);
+            System.out.println(posy);
+            System.out.println(skin);
+
             Thread.sleep(1000);
+            //fetch api
         }
         System.out.println("Ezgaem");
     }

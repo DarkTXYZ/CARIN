@@ -22,6 +22,7 @@ public interface Unit {
     int getLifeSteal();
     int getCost();
     int getAttackRange();
+    int getSkin();
 
 
     String getGene();

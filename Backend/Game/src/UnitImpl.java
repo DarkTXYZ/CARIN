@@ -13,7 +13,9 @@ public abstract class UnitImpl implements Unit {
     int cost;
     int moveCost;
     int attackRange;
+    int skin;
     boolean isDead = false;
+
     String geneticCode;
     Unit previousAttacker;
     Executable program;
@@ -97,6 +99,7 @@ public abstract class UnitImpl implements Unit {
     public int getLifeSteal() { return lifeSteal;}
     public int getCost(){return cost;}
     public int getAttackRange() {return attackRange;}
+    public int getSkin(){return skin;}
 
     public void setAttack(int mod){Atk+=mod;}
     public Pair<Integer,Integer> getPosition(){return position;}

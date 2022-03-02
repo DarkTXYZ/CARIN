@@ -161,9 +161,9 @@ public class GeneticEvaluator implements Evaluator {
 
     private Evaluable parseFactor() throws SyntaxErrorException, TokenizeErrorException {
         Evaluable power = parsePower();
-        while (tkz.peek("^")) {
+        if (tkz.peek("^")) {
             String ops = tkz.consume();
-            power = new BinaryArith(power, ops, parsePower());
+            power = new BinaryArith(power, ops, parseFactor());
         }
         return power;
     }
