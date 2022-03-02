@@ -5,13 +5,14 @@ import java.util.List;
 public class GameData {
     private int m, n;
     private int state;
-    private List<Integer> shopState, cost;
+    private List<Boolean> shopState;
+    private List<Integer> cost;
     private int currency;
     private List<Integer> posX, posY, hp, hpMax;
     private List<Integer> type;
     private int objective, objectiveMax;
 
-    public GameData(int m, int n, int state, List<Integer> shopState, List<Integer> cost, int currency, List<Integer> posX, List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<Integer> type, int objective, int objectiveMax) {
+    public GameData(int m, int n, int state, List<Boolean> shopState, List<Integer> cost, int currency, List<Integer> posX, List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<Integer> type, int objective, int objectiveMax) {
         this.m = m;
         this.n = n;
         this.state = state;
@@ -59,11 +60,11 @@ public class GameData {
         this.state = state;
     }
 
-    public List<Integer> getShopState() {
+    public List<Boolean> getShopState() {
         return shopState;
     }
 
-    public void setShopState(List<Integer> shopState) {
+    public void setShopState(List<Boolean> shopState) {
         this.shopState = shopState;
     }
 

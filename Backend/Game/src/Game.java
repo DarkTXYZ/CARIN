@@ -1,4 +1,3 @@
-
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -114,11 +113,11 @@ public class Game {
     //this method should init gameUnit
     public static void add(Unit unit, Pair<Integer,Integer> position){
         int y = position.fst(); int x = position.snd();
-          unit.setPos(position);
-          field[y][x] = unit;
-          order.add(unit);
-          String s = String.valueOf(y)+" "+String.valueOf(x);
-          emptySlot.remove(s);
+        unit.setPos(position);
+        field[y][x] = unit;
+        order.add(unit);
+        String s = String.valueOf(y)+" "+String.valueOf(x);
+        emptySlot.remove(s);
     }
 
     public static void remove(Pair<Integer,Integer> position){
@@ -486,9 +485,9 @@ public class Game {
         return a;
     }
 
-    static Unit gangster = new Virus(75,50,250,"move right",1,3);
-    static Unit pistolDude = new Virus(50,100,200,"move left",1,4);
-    static Unit sniper = new Virus(150,20,160,"move downright",1,5);
+    static Unit gangster = new Virus(75,50,250,"shoot up shoot left shoot right shoot down",1,4);
+    static Unit pistolDude = new Virus(50,100,200,"shoot up shoot left shoot right shoot down",1,5);
+    static Unit sniper = new Virus(150,20,160,"shoot up shoot left shoot right shoot down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
     static Unit Merci = new ATBD_(696969,20,1,    "virusLoc = virus " +
@@ -513,9 +512,9 @@ public class Game {
             "  else if (virusLoc % 10 - 1) then shoot upright " +
             "  else shoot up " +
             "else {} "
-            ,20,1,0);
-    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,1);
-    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,2);
+            ,20,1,1);
+    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,2);
+    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,3);
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
     static int virustemplate = viruses.length;
@@ -555,7 +554,7 @@ public class Game {
         // ????????????????
     }
 
-    public static void Update() throws InterruptedException, GameOverException {
+    public static void Update() throws InterruptedException, GameOverException, IOException {
         int rand;
         while(gObjective.snd() - gObjective.fst() > 0){
             /*if(ซื้อตัว){
@@ -620,6 +619,8 @@ public class Game {
             List<Integer> cost = shop.getcostList();
             Thread.sleep(1000);
             //fetch api
+            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
         }
         System.out.println("Ezgaem");
     }
@@ -672,15 +673,15 @@ public class Game {
 //        System.out.println(senseNearby(field[2][2],"down")); //32
 
         //corner case :
-            //topleft - left => pass , upleft => pass , up => pass
-            //topright - right => pass , upright => pass , up ==> pass
-            //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
-            //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
+        //topleft - left => pass , upleft => pass , up => pass
+        //topright - right => pass , upright => pass , up ==> pass
+        //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
+        //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
         //side case :
-            //left side - left => pass , upleft => pass , downleft => pass
-            //right side - right => pass , upright => pass , downright => pass
-            //upper side - up => pass , upleft => pass , upright => pass
-            //bottom side - down => pass , downleft => pass , downright => pass
+        //left side - left => pass , upleft => pass , downleft => pass
+        //right side - right => pass , upright => pass , downright => pass
+        //upper side - up => pass , upleft => pass , upright => pass
+        //bottom side - down => pass , downleft => pass , downright => pass
 
 
 

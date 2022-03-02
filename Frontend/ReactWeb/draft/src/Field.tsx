@@ -141,7 +141,7 @@ function Field(props: any) {
                                     selected = true
 
                                 for (let i = 0; i < px.length; ++i) {
-                                    if (px[i] === nodeId && py[i] === rowId) {
+                                    if (py[i] === nodeId && px[i] === rowId) {
                                         return (
                                             <div className=''>
                                                 <Node x={nodeId} y={rowId} size={size} type={type[i]} select={selected} hp={props.hp[i]} hpMax={props.hpMax[i]} moveState={moveState} placeState={placeState} />

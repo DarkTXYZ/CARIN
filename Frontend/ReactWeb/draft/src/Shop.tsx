@@ -14,7 +14,7 @@ function Shop(props: any) {
         setJob(resp)
     })
 
-    let canBuy: number[] = props.canBuy
+    let canBuy: boolean[] = props.canBuy
 
     const selected = (typeATBD: string) => {
         Controller.sendInput("job", {
@@ -43,7 +43,7 @@ function Shop(props: any) {
     let name = ['Mercy', 'Ana', 'Lucio']
     let shopTile = []
     for (let i = 0; i < 3; ++i) {
-        if (canBuy[i])
+        if (canBuy[i] === true)
             shopTile.push(<ShopTile onClick={() => {
                 selected('atbd' + (i + 1))
                 Controller.sendInput('movestate', {
