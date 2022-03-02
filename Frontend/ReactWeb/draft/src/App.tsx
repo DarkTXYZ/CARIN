@@ -15,7 +15,7 @@ class App extends React.Component {
 		m: 0,
 		n: 0,
 		state: 0,		// state of game
-		shopState: [0, 0, 0],
+		shopState: [false, false, false],
 		currency: 0,
 		cost: [],
 		posX: [], // position x of hosts

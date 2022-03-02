@@ -1,4 +1,3 @@
-
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -78,6 +77,13 @@ public class Game {
             throw new GameOverException("Game over");
         }
     }
+    static Queue<Pair<Unit,Pair<Integer,Integer>>>deadList = new LinkedList<>();
+    public static void updateDeadlist(){
+        while(!deadList.isEmpty()){
+            Pair<Unit,Pair<Integer,Integer>> u = deadList.poll();
+            addVirus(u.fst(),u.snd());
+        }
+    }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
@@ -107,11 +113,11 @@ public class Game {
     //this method should init gameUnit
     public static void add(Unit unit, Pair<Integer,Integer> position){
         int y = position.fst(); int x = position.snd();
-          unit.setPos(position);
-          field[y][x] = unit;
-          order.add(unit);
-          String s = String.valueOf(y)+" "+String.valueOf(x);
-          emptySlot.remove(s);
+        unit.setPos(position);
+        field[y][x] = unit;
+        order.add(unit);
+        String s = String.valueOf(y)+" "+String.valueOf(x);
+        emptySlot.remove(s);
     }
 
     public static void remove(Pair<Integer,Integer> position){
@@ -155,8 +161,8 @@ public class Game {
     public static void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        Unit v = new Virus(spawn);
-        addVirus(v,pos);
+        Unit u = new Virus(spawn);
+        deadList.add(new Pair<>(u,pos));
     }
     public static void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
@@ -479,12 +485,12 @@ public class Game {
         return a;
     }
 
-    static Unit gangster = new Virus(75,50,250,"move right",1,3);
-    static Unit pistolDude = new Virus(50,100,200,"move left",1,4);
-    static Unit sniper = new Virus(150,20,160,"move downright",1,5);
+    static Unit gangster = new Virus(75,50,250,"shoot up shoot left shoot right shoot down",1,4);
+    static Unit pistolDude = new Virus(50,100,200,"shoot up shoot left shoot right shoot down",1,5);
+    static Unit sniper = new Virus(150,20,160,"shoot up shoot left shoot right shoot down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(696969,20,69696969,    "virusLoc = virus " +
+    static Unit Merci = new ATBD_(696969,20,1,    "virusLoc = virus " +
             "if (virusLoc / 10 - 1) " +
             "then  " +
             "  if (virusLoc % 10 - 7) then move upleft " +
@@ -506,9 +512,9 @@ public class Game {
             "  else if (virusLoc % 10 - 1) then shoot upright " +
             "  else shoot up " +
             "else {} "
-            ,20,1,0);
-    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,1);
-    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,2);
+            ,20,1,1);
+    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,2);
+    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,3);
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
     static int virustemplate = viruses.length;
@@ -548,7 +554,7 @@ public class Game {
         // ????????????????
     }
 
-    public static void Update() throws InterruptedException, GameOverException {
+    public static void Update() throws InterruptedException, GameOverException, IOException {
         int rand;
         while(gObjective.snd() - gObjective.fst() > 0){
             /*if(ซื้อตัว){
@@ -565,19 +571,21 @@ public class Game {
                     it.remove();
                 }
             }
+            updateDeadlist();
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
                 if( rand == 0 ){
                     addVirus(createNewVirus(0), randomTile());
-//                    spawnCount = spawnCount - rand;
+                    spawnCount = spawnCount - rand;
+                    addATBD(createNewATBD(1),randomTile());
                 }
                 if( rand == 1 ){
                     addVirus(createNewVirus(1), randomTile());
-//                    spawnCount = spawnCount - 2*rand;
+                    spawnCount = spawnCount - 2*rand;
                 }
                 if( rand == 2 ){
                     addVirus(createNewVirus(2), randomTile());
-//                    spawnCount = spawnCount - 3*rand;
+                    spawnCount = spawnCount - 3*rand;
                 }
             }else{
                 spawnCount++;
@@ -590,8 +598,10 @@ public class Game {
             List<Integer> skin =new ArrayList<>();
             int cur = shop.getCurrency();
             int[] obj = {gObjective.fst(),gObjective.snd()};
+            System.out.println("Shop Update");
+            shop.updateStatus();
             List<Boolean> shopStat = shop.getStatus();
-
+            System.out.println(shopStat);
 
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
@@ -600,14 +610,16 @@ public class Game {
                 posy.add(u.getPosition().fst());
                 skin.add(u.getSkin());
             }
-            System.out.println(maxHp);
-            System.out.println(hp);
-            System.out.println(posx);
-            System.out.println(posy);
-            System.out.println(skin);
+//            System.out.println(maxHp);
+//            System.out.println(hp);
+//            System.out.println(posx);
+//            System.out.println(posy);
+//            System.out.println(skin);
 
             Thread.sleep(1000);
             //fetch api
+            Controller.sendGameData(n,m,1,shopStat,cur,Arrays.asList(1, 2, 3) ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
         }
         System.out.println("Ezgaem");
     }
@@ -660,15 +672,15 @@ public class Game {
 //        System.out.println(senseNearby(field[2][2],"down")); //32
 
         //corner case :
-            //topleft - left => pass , upleft => pass , up => pass
-            //topright - right => pass , upright => pass , up ==> pass
-            //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
-            //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
+        //topleft - left => pass , upleft => pass , up => pass
+        //topright - right => pass , upright => pass , up ==> pass
+        //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
+        //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
         //side case :
-            //left side - left => pass , upleft => pass , downleft => pass
-            //right side - right => pass , upright => pass , downright => pass
-            //upper side - up => pass , upleft => pass , upright => pass
-            //bottom side - down => pass , downleft => pass , downright => pass
+        //left side - left => pass , upleft => pass , downleft => pass
+        //right side - right => pass , upright => pass , downright => pass
+        //upper side - up => pass , upleft => pass , upright => pass
+        //bottom side - down => pass , downleft => pass , downright => pass
 
 
 
@@ -782,6 +794,7 @@ public class Game {
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
+            System.exit(0);
         }
     }
 

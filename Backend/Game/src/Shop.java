@@ -7,12 +7,19 @@ public class Shop {
     private static Shop instance;
     private int currency;
     Map<Integer,Boolean> status;
+
     /** update shop*/
     public void  updateStatus(){
         for(int a:status.keySet()){
-            if(a>=currency) {
+
+            if(currency>= a) {
                 status.replace(a,true);
-            }else status.replace(a,false);
+
+            }else {
+                status.replace(a,false);
+
+            }
+
         }
     }
     private Shop(int[] cost){
