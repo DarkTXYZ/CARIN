@@ -619,7 +619,7 @@ public class Game {
             List<Integer> cost = shop.getcostList();
             Thread.sleep(1000);
             //fetch api
-            Controller.sendGameData(n,m,1,shopStat,cur,Arrays.asList(1, 2, 3) ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
         }
         System.out.println("Ezgaem");
