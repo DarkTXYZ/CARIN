@@ -5,7 +5,7 @@ public class Input {
     private int selectedX, selectedY;
 
     private int placeState;
-    private String job;
+    private int job;
     private int posX_place, posY_place;
 
     private int moveState;
@@ -15,7 +15,7 @@ public class Input {
 
     private int pauseState;
 
-    public Input(int selectedX, int selectedY, int placeState, String job, int posX_place, int posY_place, int moveState, int ogX, int ogY, int posX_move, int posY_move, int speedState, int pauseState) {
+    public Input(int selectedX, int selectedY, int placeState, int job, int posX_place, int posY_place, int moveState, int ogX, int ogY, int posX_move, int posY_move, int speedState, int pauseState) {
         this.selectedX = selectedX;
         this.selectedY = selectedY;
         this.placeState = placeState;
@@ -55,11 +55,11 @@ public class Input {
         this.placeState = placeState;
     }
 
-    public String getJob() {
+    public int getJob() {
         return job;
     }
 
-    public void setJob(String job) {
+    public void setJob(int job) {
         this.job = job;
     }
 

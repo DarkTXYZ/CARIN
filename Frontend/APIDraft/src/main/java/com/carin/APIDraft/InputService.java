@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class InputService {
 
-    private static final Input input = new Input(-1, -1, 0, "", -1, -1, 0, -1, -1, -1, -1, 0, 0);
+    private static final Input input = new Input(-1, -1, 0, 0, -1, -1, 0, -1, -1, -1, -1, 0, 0);
 
     public static Input getInput() {
         return input;
@@ -32,7 +32,7 @@ public class InputService {
         InputService.input.setPlaceState(input.getPlaceState());
     }
 
-    public static String getJob() {
+    public static int getJob() {
         return input.getJob();
     }
 

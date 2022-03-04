@@ -52,7 +52,7 @@ public class InputController {
     // Job
     @CrossOrigin
     @GetMapping("/job")
-    public String getJob() {
+    public int getJob() {
         return InputService.getJob();
     }
 
