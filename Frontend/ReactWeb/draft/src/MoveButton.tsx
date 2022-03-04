@@ -4,14 +4,6 @@ import { useState } from 'react'
 
 function MoveButton(props: any) {
 
-    // const [moveState,setMoveState] = useState<number>()
-    // const [selectedX, setSelectedX] = useState<number>(-1)
-    // const [selectedY, setSelectedY] = useState<number>(-1)
-
-    // Controller.getInput("selectedx").then(resp => setSelectedX(resp))
-    // Controller.getInput("selectedy").then(resp => setSelectedY(resp))
-    // Controller.getInput('movestate').then(resp => setMoveState(resp))
-
     let moveState = props.moveState
     let selectedX = props.x
     let selectedY = props.y
@@ -80,7 +72,7 @@ function MoveButton(props: any) {
 
     let modify = ""
 
-    if (moveState !== 0)
+    if (moveState === 1 || moveState === 2 )
         modify += "border-yellow-400 "
     else
         modify += "border-gray-400 "
@@ -103,7 +95,7 @@ function MoveButton(props: any) {
                     </div>
                 </div>
             }
-            {moveState !== 0 &&
+            {(moveState === 1 || moveState === 2) &&
                 <div className="font-bold bg-gradient-to-l from-red-600 to-red-400 p-2 border-2 border-red-300 rounded-md hover:scale-105 duration-300 ease-out" onClick={cancel}>
                     Cancel
                 </div>

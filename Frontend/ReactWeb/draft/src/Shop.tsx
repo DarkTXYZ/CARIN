@@ -5,7 +5,9 @@ import ShopTile from './ShopTile'
 function Shop(props: any) {
 
     const [placeState, setPlaceState] = useState<number>(0)
-    const [job, setJob] = useState<any>('')
+    const [job, setJob] = useState<number>(0)
+    const [selectedX, setSelectedX] = useState<number>(-1)
+    const [selectedY, setSelectedY] = useState<number>(-1)
 
     Controller.getInput("placestate").then(resp => {
         setPlaceState(resp)
@@ -13,10 +15,12 @@ function Shop(props: any) {
     Controller.getInput("job").then(resp => {
         setJob(resp)
     })
+    Controller.getInput("selectedx").then(resp => setSelectedX(resp))
+    Controller.getInput("selectedy").then(resp => setSelectedY(resp))
 
     let canBuy: boolean[] = props.canBuy
 
-    const selected = (typeATBD: string) => {
+    const selected = (typeATBD: number) => {
         Controller.sendInput("job", {
             job: typeATBD
         })
@@ -35,8 +39,24 @@ function Shop(props: any) {
         })
         Controller.sendInput("selected", {
             selectedX: -1,
-            selectedY: -1,
+            selectedY: -1
         })
+    }
+
+    const place = () => {
+        if(placeState === 1 && selectedX !== -1 && selectedY !== -1) {
+            Controller.sendInput("placestate", {
+                placeState: 2
+            })
+            Controller.sendInput("posplace" , {
+                posX_place : selectedX ,
+                posY_place : selectedY
+            })
+            Controller.sendInput("selected", {
+                selectedX: -1,
+                selectedY: -1
+            })
+        }
     }
 
     let cost = props.cost
@@ -45,7 +65,7 @@ function Shop(props: any) {
     for (let i = 0; i < 3; ++i) {
         if (canBuy[i] === true)
             shopTile.push(<ShopTile onClick={() => {
-                selected('atbd' + (i + 1))
+                selected((i + 1))
                 Controller.sendInput('movestate', {
                     moveState: 0
                 })
@@ -67,10 +87,10 @@ function Shop(props: any) {
                 {shopTile[2]}
             </div>
 
-            {placeState !== 0 &&
+            {placeState === 1 &&
                 <div className='flex flex-row justify-between space-x-2 w-40'>
                     <div className='hover:drop-shadow-xl'>
-                        <button className='text-xl font-bold bg-gradient-to-l from-green-600 to-green-400 p-2 border-2 border-green-300 rounded-md hover:scale-105 duration-300 ease-out'>Place</button>
+                        <button className='text-xl font-bold bg-gradient-to-l from-green-600 to-green-400 p-2 border-2 border-green-300 rounded-md hover:scale-105 duration-300 ease-out' onClick={place}>Place</button>
                     </div>
                     <div className='hover:drop-shadow-xl'>
                         <button className='text-xl font-bold bg-gradient-to-l from-red-600 to-red-400 p-2 border-2 border-red-300 rounded-md hover:scale-105 duration-300 ease-out'
