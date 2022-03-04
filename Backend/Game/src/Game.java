@@ -1,3 +1,5 @@
+import org.json.simple.JSONObject;
+
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -552,11 +554,60 @@ public class Game {
     }
     public static void GetInput(){
         // ????????????????
+
+        Controller.getInput();
+
+        int placeState = Controller.getInputData("placeState");
+        int moveState = Controller.getInputData("moveState");
+        int pauseState = Controller.getInputData("pauseState");
+        int speedState = Controller.getInputData("speedState");
+
+        System.out.println(placeState);
+        System.out.println(moveState);
+        System.out.println(pauseState);
+        System.out.println(speedState);
+
+        if(placeState == 2) {
+            JSONObject data = new JSONObject();
+            data.put("placeState" , 0);
+            Controller.putData("http://localhost:8080/input/put/placestate" , data);
+
+            int skin = Controller.getInputData("job");
+            int posx = Controller.getInputData("posX_place");
+            int posy = Controller.getInputData("posY_place");
+
+            // SPAWN ATBD
+        }
+        if(moveState == 3) {
+            JSONObject data = new JSONObject();
+            data.put("moveState" , 0);
+            Controller.putData("http://localhost:8080/input/put/movestate" , data);
+
+            int skin = Controller.getInputData("job");
+            int ogX = Controller.getInputData("ogX");
+            int ogY = Controller.getInputData("ogY");
+            int posx = Controller.getInputData("posX_move");
+            int posy = Controller.getInputData("posY_move");
+
+            // MOVE ATBD
+        }
+        if(pauseState == 1){
+
+        } else {
+
+        }
+
+        if(speedState == 1) {
+
+        } else {
+            
+        }
     }
 
-    public static void Update() throws InterruptedException, GameOverException, IOException {
+    public static void Update() throws GameOverException, InterruptedException {
         int rand;
         while(gObjective.snd() - gObjective.fst() > 0){
+            GetInput();
             /*if(ซื้อตัว){
                 //เสกมา
             }

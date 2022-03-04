@@ -1,4 +1,3 @@
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -8,22 +7,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
-    JSONObject obj;
+    static JSONObject input;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ParseException {
 
         int m = 6, n = 6;
         int state = 1;
@@ -52,11 +46,16 @@ public class Controller {
 
 //        sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
 
+        getInput();
+        int selectedX = getInputData("selectedX");
+        int move = getInputData("moveState");
+        System.out.println(selectedX);
+        System.out.println(move);
     }
 
     @SuppressWarnings("unchecked")
     public static void sendGameData(int m, int n, int state, List<Boolean> shopState, int currency, List<Integer> cost, List<Integer> posX,
-                                    List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<Integer> type, int objective, int objectiveMax) throws IOException {
+                                    List<Integer> posY, List<Integer> hp, List<Integer> hpMax, List<Integer> type, int objective, int objectiveMax){
 
         JSONObject obj = new JSONObject();
         obj.put("m", m);
@@ -77,36 +76,58 @@ public class Controller {
 
     }
 
-    public static void putData(String link , JSONObject data) throws IOException {
-        String rawData = data.toJSONString();
-        System.out.println("Raw GameData PUT:");
-        System.out.println(rawData);
+    public static void putData(String link , JSONObject data) {
+        try {
+            String rawData = data.toJSONString();
+            System.out.println("Raw GameData PUT:");
+            System.out.println(rawData);
 
-        URL url = new URL(link);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("PUT");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-        try (OutputStream os = con.getOutputStream()) {
-            byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        System.out.println("Response:");
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+            URL url = new URL(link);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = rawData.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
             }
-            System.out.println(response);
+
+            System.out.println("Response:");
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                System.out.println(response);
+            }
+            System.out.println("---------------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exit Program");
+            System.exit(0);
         }
-        System.out.println("---------------------");
+
     }
 
-    public void reInit(String link) throws IOException, ParseException {
+    public static void getInput(){
+        try {
+            input = getData("http://localhost:8080/input");
+        } catch(Exception e) {
+            System.out.println("Can't get data");
+            e.printStackTrace();
+            System.out.println("Exit Program");
+            System.exit(0);
+        }
+    }
+
+    public static int getInputData(String key) {
+        return ((Long) input.get(key)).intValue();
+    }
+
+    public static JSONObject getData(String link) throws IOException, ParseException {
         URL url = new URL(link);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -132,25 +153,25 @@ public class Controller {
 
             //Using the JSON simple library parse the string into a json object
             JSONParser parse = new JSONParser();
-            JSONObject data_obj = (JSONObject) parse.parse(inline.toString());
 
-            //Get the required object from the above created object
-            JSONObject obj = (JSONObject) data_obj.get("Global");
-
-            //Get the required data using its key
-            System.out.println(obj.get("TotalRecovered"));
-
-            JSONArray arr = (JSONArray) data_obj.get("Countries");
-
-            for (int i = 0; i < arr.size(); i++) {
-
-                JSONObject new_obj = (JSONObject) arr.get(i);
-
-                if (new_obj.get("Slug").equals("albania")) {
-                    System.out.println("Total Recovered: " + new_obj.get("TotalRecovered"));
-                    break;
-                }
-            }
+            return (JSONObject) parse.parse(inline.toString());
+//            //Get the required object from the above created object
+//            JSONObject obj = (JSONObject) data_obj.get("Global");
+//
+//            //Get the required data using its key
+//            System.out.println(obj.get("TotalRecovered"));
+//
+//            JSONArray arr = (JSONArray) data_obj.get("Countries");
+//
+//            for (int i = 0; i < arr.size(); i++) {
+//
+//                JSONObject new_obj = (JSONObject) arr.get(i);
+//
+//                if (new_obj.get("Slug").equals("albania")) {
+//                    System.out.println("Total Recovered: " + new_obj.get("TotalRecovered"));
+//                    break;
+//                }
+//            }
         }
     }
 }
