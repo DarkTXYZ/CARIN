@@ -88,6 +88,8 @@ public class Game {
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
+        if(a.getCost()>shop.getCurrency()) return;
+        shop.setCurrency(-a.getCost());
         int y = position.fst(); int x = position.snd();
         if(y>m || x>n) {
             System.out.println("out of range");
