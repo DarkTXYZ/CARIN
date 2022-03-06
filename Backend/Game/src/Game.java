@@ -88,12 +88,12 @@ public class Game {
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
-        int x = position.fst(); int y = position.snd();
-        if(x>m || y>n) {
+        int y = position.fst(); int x = position.snd();
+        if(y>m || x>n) {
             System.out.println("out of range");
             return;
         }
-        if(Objects.equals(field[x][y],null)) {
+        if(Objects.equals(field[y][x],null)) {
             add(a,position);
             atbdOrder.add(a);
             shop.setCurrency(-a.getCost());
@@ -101,12 +101,12 @@ public class Game {
 
     }
     public static void addVirus(Unit v, Pair<Integer,Integer> position){
-        int x = position.fst(); int y = position.snd();
-        if(x>m || y>n) {
+        int y = position.fst(); int x = position.snd();
+        if(y>m || x>n) {
             System.out.println("out of range");
             return;
         }
-        if(Objects.equals(field[x][y],null)) {
+        if(Objects.equals(field[y][x],null)) {
             add(v,position);
             virusOrder.add(v);
         }else System.out.println("can't add; This tile already has a gameUnit");
@@ -134,6 +134,7 @@ public class Game {
 
     }
     public static void moveATBD(Unit u,Pair<Integer,Integer> destination){
+        if(Objects.equals(u,null)) return;
         if(!Objects.equals(u.getClass().getName(),"ATBD_")) return;
         u.setHP(-atbdMoveCost);
         try {
