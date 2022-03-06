@@ -23,39 +23,63 @@ function Shop(props: any) {
     const selected = (typeATBD: number) => {
         Controller.sendInput("job", {
             job: typeATBD
+        }).then(() => {
+            Controller.sendInput("selected", {
+                selectedX: -1,
+                selectedY: -1,
+            }).then(() => {
+                Controller.sendInput("pausestate", {
+                    pauseState: 1
+                }).then(() => {
+                    Controller.sendInput("placestate", {
+                        placeState: 1
+                    })
+                })
+            })
         })
-        Controller.sendInput("placestate", {
-            placeState: 1
-        })
-        Controller.sendInput("selected", {
-            selectedX: -1,
-            selectedY: -1,
-        })
+
     }
 
     const cancel = () => {
-        Controller.sendInput("placestate", {
-            placeState: 0
-        })
+
         Controller.sendInput("selected", {
             selectedX: -1,
             selectedY: -1
+        }).then(() => {
+            Controller.sendInput("pausestate", {
+                pauseState: 0
+            }).then(() => {
+                Controller.sendInput("placestate", {
+                    placeState: 0
+                })
+            })
         })
+
+
     }
 
     const place = () => {
         if(placeState === 1 && selectedX !== -1 && selectedY !== -1) {
-            Controller.sendInput("placestate", {
-                placeState: 2
+
+            Controller.sendInput("pausestate", {
+                pauseState: 0
+            }).then(() => {
+                Controller.sendInput("posplace" , {
+                    posX_place : selectedY ,
+                    posY_place : selectedX
+                }).then(() => {
+                    Controller.sendInput("selected", {
+                        selectedX: -1,
+                        selectedY: -1
+                    }).then(() => {
+                        Controller.sendInput("placestate", {
+                            placeState: 2
+                        })
+                    })
+                })
             })
-            Controller.sendInput("posplace" , {
-                posX_place : selectedX ,
-                posY_place : selectedY
-            })
-            Controller.sendInput("selected", {
-                selectedX: -1,
-                selectedY: -1
-            })
+
+
         }
     }
 

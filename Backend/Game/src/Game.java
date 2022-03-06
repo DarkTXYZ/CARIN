@@ -88,12 +88,12 @@ public class Game {
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
-        int x = position.fst(); int y = position.snd();
+        int y = position.fst(); int x = position.snd();
         if(x>m || y>n) {
             System.out.println("out of range");
             return;
         }
-        if(Objects.equals(field[x][y],null)) {
+        if(Objects.equals(field[y][x],null)) {
             add(a,position);
             atbdOrder.add(a);
             shop.setCurrency(-a.getCost());
@@ -487,10 +487,10 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
-
-    static Unit gangster = new Virus(75,50,250,"shoot up shoot left shoot right shoot down",1,4);
-    static Unit pistolDude = new Virus(50,100,200,"shoot up shoot left shoot right shoot down",1,5);
-    static Unit sniper = new Virus(150,20,160,"shoot up shoot left shoot right shoot down",1,6);
+//    shoot up shoot left shoot right shoot down
+    static Unit gangster = new Virus(75,50,250,"move down",1,4);
+    static Unit pistolDude = new Virus(50,100,200,"move down",1,5);
+    static Unit sniper = new Virus(150,20,160,"move down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
     static Unit Merci = new ATBD_(696969,20,1,    "virusLoc = virus " +
@@ -528,27 +528,27 @@ public class Game {
 
 
 
-    public static void Initialize(){
+    public static void Initialize() {
         config(inFile);
         shop = Shop.getInstance(cost);
         shop.setCurrency(initialATBDCredits);
-        for(int i =0;i<virustemplate;i++){
-            viruses[i].configMod(initVirusATK,initVirusLifeSteal,initVirusHP,atbdPlacementCost,atbdMoveCost);
-            Atbds[i].configMod(initATBDATK,initVirusLifeSteal,initATBDHP,atbdPlacementCost,atbdMoveCost);
+        for (int i = 0; i < virustemplate; i++) {
+            viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP, atbdPlacementCost, atbdMoveCost);
+            Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost);
         }
-        for (int i = 0;i<atbdtemplate;i++){
+        for (int i = 0; i < atbdtemplate; i++) {
             cost[i] = Atbds[i].getCost();
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
         initObjective(10);
-        for(int i = 0;i<m;i++){
-            for(int j = 0;j<n;j++){
-                String s = String.valueOf(i)+" "+String.valueOf(j);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                String s = String.valueOf(i) + " " + String.valueOf(j);
                 emptySlot.add(s);
             }
         }
-        addATBD(createNewATBD(0),new Pair<>(2,2));
+        addATBD(createNewATBD(0), new Pair<>(2, 2));
 //        addATBD(createNewATBD(0),new Pair<>(,10));
 //        addATBD(createNewATBD(0),new Pair<>(19,19));
         System.out.println(emptySlot);
@@ -563,12 +563,9 @@ public class Game {
         int pauseState = Controller.getInputData("pauseState");
         int speedState = Controller.getInputData("speedState");
 
-        System.out.println(placeState);
-        System.out.println(moveState);
-        System.out.println(pauseState);
-        System.out.println(speedState);
-
         if(placeState == 2) {
+            Controller.getInput();
+
             JSONObject data = new JSONObject();
             data.put("placeState" , 0);
             Controller.putData("http://localhost:8080/input/put/placestate" , data);
@@ -577,22 +574,63 @@ public class Game {
             int posx = Controller.getInputData("posX_place");
             int posy = Controller.getInputData("posY_place");
 
+            System.out.println(skin);
+
+            System.out.println("SPAWzN");
             // SPAWN ATBD
             addATBD(createNewATBD(skin-1),new Pair<>(posy,posx));
+//            List<Integer> posx2 =new ArrayList<>();
+//            List<Integer> posy2 =new ArrayList<>();
+//            List<Integer> hp =new ArrayList<>();
+//            List<Integer> maxHp =new ArrayList<>();
+//            List<Integer> skin2 =new ArrayList<>();
+//            int cur = shop.getCurrency();
+//            int[] obj = {gObjective.fst(),gObjective.snd()};
+//            shop.updateStatus();
+//            List<Boolean> shopStat = shop.getStatus();
+//            for(Unit u: order){
+//                maxHp.add(u.getMaxHp());
+//                hp.add(u.getHp());
+//                posx2.add(u.getPosition().snd());
+//                posy2.add(u.getPosition().fst());
+//                skin2.add(u.getSkin());
+//            }
+//            List<Integer> cost = shop.getcostList();
+//            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin2,obj[0],obj[1]);
         }
+
         if(moveState == 3) {
+            Controller.getInput();
+
             JSONObject data = new JSONObject();
             data.put("moveState" , 0);
             Controller.putData("http://localhost:8080/input/put/movestate" , data);
-
-            int skin = Controller.getInputData("job");
             int ogX = Controller.getInputData("ogX");
             int ogY = Controller.getInputData("ogY");
             int posx = Controller.getInputData("posX_move");
             int posy = Controller.getInputData("posY_move");
             moveATBD(field[ogY][ogX],new Pair<>(posy,posx));
             // MOVE ATBD
+//            List<Integer> posx2 =new ArrayList<>();
+//            List<Integer> posy2 =new ArrayList<>();
+//            List<Integer> hp =new ArrayList<>();
+//            List<Integer> maxHp =new ArrayList<>();
+//            List<Integer> skin =new ArrayList<>();
+//            int cur = shop.getCurrency();
+//            int[] obj = {gObjective.fst(),gObjective.snd()};
+//            shop.updateStatus();
+//            List<Boolean> shopStat = shop.getStatus();
+//            for(Unit u: order){
+//                maxHp.add(u.getMaxHp());
+//                hp.add(u.getHp());
+//                posx2.add(u.getPosition().snd());
+//                posy2.add(u.getPosition().fst());
+//                skin.add(u.getSkin());
+//            }
+//            List<Integer> cost = shop.getcostList();
+//            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin,obj[0],obj[1]);
         }
+
         if(pauseState == 1){
             pause = 1;
         } else {
@@ -608,92 +646,103 @@ public class Game {
     static int pause = 0;
     static int speed = 1;
     public static void Update() throws GameOverException, InterruptedException {
+
+        int totalTime = 0;
+        long prevTime = System.currentTimeMillis();
+
         int rand;
         while(gObjective.snd() - gObjective.fst() > 0){
             GetInput();
-            if(pause ==1) continue;
+            if(pause == 1) {
+                continue;
+            }
             /*if(ซื้อตัว){
                 //เสกมา
             }
             */
             //fetch continue
-            Iterator<Unit> it = order.iterator();
-            while (it.hasNext()){
-                Unit y = it.next();
-                try {
-                    y.execute();
-                }catch (DeadException e){
-                    it.remove();
+            long curTime = System.currentTimeMillis();
+            totalTime += curTime - prevTime;
+            prevTime = curTime;
+
+            if(totalTime > 1000) {
+                totalTime = 0;
+                Iterator<Unit> it = order.iterator();
+                while (it.hasNext()){
+                    Unit y = it.next();
+                    try {
+                        y.execute();
+                    }catch (DeadException e){
+                        it.remove();
+                    }
+//
+//                    List<Integer> posx =new ArrayList<>();
+//                    List<Integer> posy =new ArrayList<>();
+//                    List<Integer> hp =new ArrayList<>();
+//                    List<Integer> maxHp =new ArrayList<>();
+//                    List<Integer> skin =new ArrayList<>();
+//                    int cur = shop.getCurrency();
+//                    int[] obj = {gObjective.fst(),gObjective.snd()};
+//                    shop.updateStatus();
+//                    List<Boolean> shopStat = shop.getStatus();
+//                    for(Unit u: order){
+//                        maxHp.add(u.getMaxHp());
+//                        hp.add(u.getHp());
+//                        posx.add(u.getPosition().snd());
+//                        posy.add(u.getPosition().fst());
+//                        skin.add(u.getSkin());
+//                    }
+//                    List<Integer> cost = shop.getcostList();
+//                    Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+//                    Thread.sleep(200/speed);
+
+
+
 
                 }
-
-
-
-                List<Integer> posx =new ArrayList<>();
-                List<Integer> posy =new ArrayList<>();
-                List<Integer> hp =new ArrayList<>();
-                List<Integer> maxHp =new ArrayList<>();
-                List<Integer> skin =new ArrayList<>();
-                int cur = shop.getCurrency();
-                int[] obj = {gObjective.fst(),gObjective.snd()};
-                shop.updateStatus();
-                List<Boolean> shopStat = shop.getStatus();
-                for(Unit u: order){
-                    maxHp.add(u.getMaxHp());
-                    hp.add(u.getHp());
-                    posx.add(u.getPosition().snd());
-                    posy.add(u.getPosition().fst());
-                    skin.add(u.getSkin());
+                updateDeadlist();
+                if( spawnCount >= 1 ){
+                    rand = (int)(Math.random() * 3);
+                    if( rand == 0 ){
+                        addVirus(createNewVirus(0), randomTile());
+                        spawnCount = spawnCount - rand;
+                        addATBD(createNewATBD(1),randomTile());
+                    }
+                    if( rand == 1 ){
+                        addVirus(createNewVirus(1), randomTile());
+                        spawnCount = spawnCount - 2*rand;
+                    }
+                    if( rand == 2 ){
+                        addVirus(createNewVirus(2), randomTile());
+                        spawnCount = spawnCount - 3*rand;
+                    }
+                }else{
+                    spawnCount++;
                 }
-                List<Integer> cost = shop.getcostList();
-                Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-                Thread.sleep(100);
-
-
-
-
+//                visualize();
             }
-            updateDeadlist();
-            if( spawnCount >= 1 ){
-                rand = (int)(Math.random() * 3);
-                if( rand == 0 ){
-                    addVirus(createNewVirus(0), randomTile());
-                    spawnCount = spawnCount - rand;
-                    addATBD(createNewATBD(1),randomTile());
-                }
-                if( rand == 1 ){
-                    addVirus(createNewVirus(1), randomTile());
-                    spawnCount = spawnCount - 2*rand;
-                }
-                if( rand == 2 ){
-                    addVirus(createNewVirus(2), randomTile());
-                    spawnCount = spawnCount - 3*rand;
-                }
-            }else{
-                spawnCount++;
+
+
+
+
+            List<Integer> posx =new ArrayList<>();
+            List<Integer> posy =new ArrayList<>();
+            List<Integer> hp =new ArrayList<>();
+            List<Integer> maxHp =new ArrayList<>();
+            List<Integer> skin =new ArrayList<>();
+            int cur = shop.getCurrency();
+            int[] obj = {gObjective.fst(),gObjective.snd()};
+            shop.updateStatus();
+            List<Boolean> shopStat = shop.getStatus();
+            for(Unit u: order){
+                maxHp.add(u.getMaxHp());
+                hp.add(u.getHp());
+                posx.add(u.getPosition().snd());
+                posy.add(u.getPosition().fst());
+                skin.add(u.getSkin());
             }
-            visualize();
-
-
-
-//            List<Integer> posx =new ArrayList<>();
-//            List<Integer> posy =new ArrayList<>();
-//            List<Integer> hp =new ArrayList<>();
-//            List<Integer> maxHp =new ArrayList<>();
-//            List<Integer> skin =new ArrayList<>();
-//            int cur = shop.getCurrency();
-//            int[] obj = {gObjective.fst(),gObjective.snd()};
-//            shop.updateStatus();
-//            List<Boolean> shopStat = shop.getStatus();
-//            for(Unit u: order){
-//                maxHp.add(u.getMaxHp());
-//                hp.add(u.getHp());
-//                posx.add(u.getPosition().snd());
-//                posy.add(u.getPosition().fst());
-//                skin.add(u.getSkin());
-//            }
-//            List<Integer> cost = shop.getcostList();
-//            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+            List<Integer> cost = shop.getcostList();
+            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
 
 
@@ -704,7 +753,7 @@ public class Game {
 //            System.out.println(posy);
 //            System.out.println(skin);
 
-            Thread.sleep(1000/speed);
+//            Thread.sleep(1000/speed);
             //fetch api
 
 
@@ -871,7 +920,7 @@ public class Game {
             System.out.println("--------7--------");
             System.out.print("Antibody Move Cost : ");
             atbdMoveCost = s.nextInt();
-            if( atbdMoveCost <= 0 || atbdMoveCost > initialATBDCredits ){ throw new IOException(); }
+            if( atbdMoveCost <= 0 ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
             System.out.println("--------8--------");
             System.out.print("Antibody Credits Drop : ");

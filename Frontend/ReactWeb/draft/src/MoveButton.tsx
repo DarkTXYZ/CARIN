@@ -10,62 +10,78 @@ function MoveButton(props: any) {
 
     const clicked = () => {
         if (moveState === 0) {
-            Controller.sendInput('movestate', {
-                moveState: 1
-            })
             Controller.sendInput('selected', {
                 selectedX: -1,
                 selectedY: -1
+            }).then(() => {
+                Controller.sendInput('movestate', {
+                    moveState: 1
+                }).then(() => {
+                    Controller.sendInput("placestate", {
+                        placeState: 0
+                    })
+                })
             })
         }
-        else
+        else{
             Controller.sendInput('movestate', {
                 moveState: 0
+            }).then(() => {
+                Controller.sendInput("placestate", {
+                    placeState: 0
+                })
             })
-        Controller.sendInput("placestate", {
-            placeState: 0
-        })
+        }
     }
 
     const selectATBDClicked = () => {
         if (moveState === 1 && selectedX !== -1 && selectedY !== -1) {
-            Controller.sendInput('movestate', {
-                moveState: 2
-            })
             Controller.sendInput('og', {
-                ogX: selectedX,
-                ogY: selectedY
-            })
-            Controller.sendInput('selected', {
-                selectedX: -1,
-                selectedY: -1
+                ogX: selectedY,
+                ogY: selectedX
+            }).then(() => {
+                Controller.sendInput('selected', {
+                    selectedX: -1,
+                    selectedY: -1
+                }).then(() => {
+                    Controller.sendInput('movestate', {
+                        moveState: 2
+                    })
+                })
             })
         }
     }
 
     const selectTileClicked = () => {
         if (moveState === 2 && selectedX !== -1 && selectedY !== -1) {
-            Controller.sendInput('movestate', {
-                moveState: 3
-            })
-            Controller.sendInput('posmove', {
-                posX_move: selectedX,
-                posY_move: selectedY
-            })
             Controller.sendInput('selected', {
                 selectedX: -1,
                 selectedY: -1
+            }).then(() => {
+                Controller.sendInput('posmove', {
+                    posX_move: selectedY,
+                    posY_move: selectedX
+                }).then(() => {
+                    Controller.sendInput('movestate', {
+                        moveState: 3
+                    }).then(() => {
+                        Controller.sendInput('pausestate', {
+                            pauseState: 0
+                        })
+                    })
+                })
             })
         }
     }
 
     const cancel = () => {
-        Controller.sendInput("movestate", {
-            moveState: 0
-        })
         Controller.sendInput("selected", {
             selectedX: -1,
             selectedY: -1,
+        }).then(() => {
+            Controller.sendInput("movestate", {
+                moveState: 0
+            })
         })
     }
 
