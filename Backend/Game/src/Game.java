@@ -86,6 +86,13 @@ public class Game {
             addVirus(u.fst(),u.snd());
         }
     }
+    static Queue<Pair<Unit,Pair<Integer,Integer>>>addList = new LinkedList<>();
+    public static void updateAddList(){
+        while (!addList.isEmpty()){
+            Pair<Unit,Pair<Integer,Integer>> u = addList.poll();
+            addATBD(u.fst(),u.snd());
+        }
+    }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
         if(a.getCost()>shop.getCurrency()) return;
@@ -119,9 +126,28 @@ public class Game {
         int y = position.fst(); int x = position.snd();
         unit.setPos(position);
         field[y][x] = unit;
-        order.add(unit);
+        addList.add(new Pair<>(unit,new Pair<>(y,x)));
         String s = String.valueOf(y)+" "+String.valueOf(x);
         emptySlot.remove(s);
+
+        List<Integer> posx2 =new ArrayList<>();
+        List<Integer> posy2 =new ArrayList<>();
+        List<Integer> hp =new ArrayList<>();
+        List<Integer> maxHp =new ArrayList<>();
+        List<Integer> skin2 =new ArrayList<>();
+        int cur = shop.getCurrency();
+        int[] obj = {gObjective.fst(),gObjective.snd()};
+        shop.updateStatus();
+        List<Boolean> shopStat = shop.getStatus();
+        for(Unit u: order){
+            maxHp.add(u.getMaxHp());
+            hp.add(u.getHp());
+            posx2.add(u.getPosition().snd());
+            posy2.add(u.getPosition().fst());
+            skin2.add(u.getSkin());
+        }
+        List<Integer> cost = shop.getcostList();
+        Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin2,obj[0],obj[1]);
     }
 
     public static void remove(Pair<Integer,Integer> position){
@@ -612,6 +638,8 @@ public class Game {
             int posx = Controller.getInputData("posX_move");
             int posy = Controller.getInputData("posY_move");
             moveATBD(field[ogY][ogX],new Pair<>(posy,posx));
+
+
             List<Integer> posx2 =new ArrayList<>();
             List<Integer> posy2 =new ArrayList<>();
             List<Integer> hp =new ArrayList<>();
@@ -694,6 +722,7 @@ public class Game {
 
 
             }
+            updateAddList();
             updateDeadlist();
             if( spawnCount >= 1 ){
                 rand = (int)(Math.random() * 3);
