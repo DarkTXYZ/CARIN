@@ -579,11 +579,11 @@ public class Game {
 
             // SPAWN ATBD
             addATBD(createNewATBD(skin-1),new Pair<>(posy,posx));
-            List<Integer> posx =new ArrayList<>();
-            List<Integer> posy =new ArrayList<>();
+            List<Integer> posx2 =new ArrayList<>();
+            List<Integer> posy2 =new ArrayList<>();
             List<Integer> hp =new ArrayList<>();
             List<Integer> maxHp =new ArrayList<>();
-            List<Integer> skin =new ArrayList<>();
+            List<Integer> skin2 =new ArrayList<>();
             int cur = shop.getCurrency();
             int[] obj = {gObjective.fst(),gObjective.snd()};
             shop.updateStatus();
@@ -591,12 +591,12 @@ public class Game {
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
                 hp.add(u.getHp());
-                posx.add(u.getPosition().snd());
-                posy.add(u.getPosition().fst());
-                skin.add(u.getSkin());
+                posx2.add(u.getPosition().snd());
+                posy2.add(u.getPosition().fst());
+                skin2.add(u.getSkin());
             }
             List<Integer> cost = shop.getcostList();
-            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin2,obj[0],obj[1]);
         }
         if(moveState == 3) {
             JSONObject data = new JSONObject();
@@ -609,11 +609,11 @@ public class Game {
             int posx = Controller.getInputData("posX_move");
             int posy = Controller.getInputData("posY_move");
             moveATBD(field[ogY][ogX],new Pair<>(posy,posx));
-            List<Integer> posx =new ArrayList<>();
-            List<Integer> posy =new ArrayList<>();
+            List<Integer> posx2 =new ArrayList<>();
+            List<Integer> posy2 =new ArrayList<>();
             List<Integer> hp =new ArrayList<>();
             List<Integer> maxHp =new ArrayList<>();
-            List<Integer> skin =new ArrayList<>();
+            List<Integer> skin2 =new ArrayList<>();
             int cur = shop.getCurrency();
             int[] obj = {gObjective.fst(),gObjective.snd()};
             shop.updateStatus();
@@ -621,12 +621,12 @@ public class Game {
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
                 hp.add(u.getHp());
-                posx.add(u.getPosition().snd());
-                posy.add(u.getPosition().fst());
-                skin.add(u.getSkin());
+                posx2.add(u.getPosition().snd());
+                posy2.add(u.getPosition().fst());
+                skin2.add(u.getSkin());
             }
             List<Integer> cost = shop.getcostList();
-            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin2,obj[0],obj[1]);
             // MOVE ATBD
         }
         if(pauseState == 1){
