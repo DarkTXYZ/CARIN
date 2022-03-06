@@ -19,6 +19,10 @@ function MoveButton(props: any) {
                 }).then(() => {
                     Controller.sendInput("placestate", {
                         placeState: 0
+                    }).then(() => {
+                        Controller.sendInput('pausestate', {
+                            pauseState: 1
+                        })
                     })
                 })
             })
@@ -29,6 +33,10 @@ function MoveButton(props: any) {
             }).then(() => {
                 Controller.sendInput("placestate", {
                     placeState: 0
+                }).then(() => {
+                    Controller.sendInput('pausestate', {
+                        pauseState: 1
+                    })
                 })
             })
         }
@@ -46,6 +54,10 @@ function MoveButton(props: any) {
                 }).then(() => {
                     Controller.sendInput('movestate', {
                         moveState: 2
+                    }).then(() => {
+                        Controller.sendInput('pausestate', {
+                            pauseState: 1
+                        })
                     })
                 })
             })
@@ -81,6 +93,10 @@ function MoveButton(props: any) {
         }).then(() => {
             Controller.sendInput("movestate", {
                 moveState: 0
+            }).then(() => {
+                Controller.sendInput('pausestate', {
+                    pauseState: 0
+                })
             })
         })
     }
