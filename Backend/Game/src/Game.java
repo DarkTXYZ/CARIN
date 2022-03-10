@@ -88,6 +88,7 @@ public class Game {
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
+        if(a.getCost()>shop.getCurrency()) return;
         int y = position.fst(); int x = position.snd();
         if(x>m || y>n) {
             System.out.println("out of range");
@@ -182,7 +183,7 @@ public class Game {
                 }else
                     System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
-            System.out.print("\n");
+            System.out.print(" ");
         }
         System.out.println("Empty tile: "+emptySlot);
         System.out.println("list order"+order.toString());
@@ -487,35 +488,114 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
-//    shoot up shoot left shoot right shoot down
-    static Unit gangster = new Virus(75,50,250,"move down",1,4);
-    static Unit pistolDude = new Virus(50,100,200,"move down",1,5);
+
+    static Unit gangster = new Virus(75,50,250,"atbdLoc = antibody " +
+            "virusLoc = virus " +
+            "if(atbdLoc / 10 - 1) then { " +
+            "    if (atbdLoc % 10 - 7) then move upleft " +
+            "    else if (atbdLoc % 10 - 6) then move left " +
+            "    else if (atbdLoc % 10 - 5) then move downleft " +
+            "    else if (atbdLoc % 10 - 4) then move down " +
+            "    else if (atbdLoc % 10 - 3) then move downright " +
+            "    else if (atbdLoc % 10 - 2) then move right " +
+            "    else if (atbdLoc % 10 - 1) then move upright " +
+            "    else move up " +
+            "} else if(atbdLoc) then { " +
+            "    if (atbdLoc % 10 - 7) then shoot upleft " +
+            "    else if (atbdLoc % 10 - 6) then shoot left " +
+            "    else if (atbdLoc % 10 - 5) then shoot downleft " +
+            "    else if (atbdLoc % 10 - 4) then shoot down " +
+            "    else if (atbdLoc % 10 - 3) then shoot downright " +
+            "    else if (atbdLoc % 10 - 2) then shoot right " +
+            "    else if (atbdLoc % 10 - 1) then shoot upright " +
+            "    else shoot up " +
+            "} else { " +
+            "    if(virusLoc / 10 - 1) then { " +
+            "        if (virusLoc % 10 - 7) then move upleft " +
+            "        else if (virusLoc % 10 - 6) then move left " +
+            "        else if (virusLoc % 10 - 5) then move downleft " +
+            "        else if (virusLoc % 10 - 4) then move down " +
+            "        else if (virusLoc % 10 - 3) then move downright " +
+            "        else if (virusLoc % 10 - 2) then move right " +
+            "        else if (virusLoc % 10 - 1) then move upright " +
+            "        else move up " +
+            "    } else { " +
+            "        dir = random % 8 " +
+            "        if (dir - 6) then move upleft " +
+            "        else if (dir - 5) then move left " +
+            "        else if (dir - 4) then move downleft " +
+            "        else if (dir - 3) then move down " +
+            "        else if (dir - 2) then move downright " +
+            "        else if (dir - 1) then move right " +
+            "        else if (dir) then move upright " +
+            "        else move up " +
+            "    } " +
+            "}",1,4);
+    static Unit pistolDude = new Virus(50,100,200,"timeUnit = timeUnit + 1 " +
+            "if(timeUnit % 4) then {  " +
+            "    atbdLoc = antibody " +
+            "    if(atbdLoc / 10 - 1) then { " +
+            "        if (atbdLoc % 10 - 7) then move upleft " +
+            "        else if (atbdLoc % 10 - 6) then move left " +
+            "        else if (atbdLoc % 10 - 5) then move downleft " +
+            "        else if (atbdLoc % 10 - 4) then move down " +
+            "        else if (atbdLoc % 10 - 3) then move downright " +
+            "        else if (atbdLoc % 10 - 2) then move right " +
+            "        else if (atbdLoc % 10 - 1) then move upright " +
+            "        else move up " +
+            "    } else if(atbdLoc) then { " +
+            "        if (atbdLoc % 10 - 7) then move downright " +
+            "        else if (atbdLoc % 10 - 6) then move right " +
+            "        else if (atbdLoc % 10 - 5) then move upright " +
+            "        else if (atbdLoc % 10 - 4) then move up " +
+            "        else if (atbdLoc % 10 - 3) then move upleft " +
+            "        else if (atbdLoc % 10 - 2) then move left " +
+            "        else if (atbdLoc % 10 - 1) then move downleft " +
+            "        else move down  " +
+            "    } else { " +
+            "        dir = random % 8 " +
+            "        if (dir - 6) then move upleft " +
+            "        else if (dir - 5) then move left " +
+            "        else if (dir - 4) then move downleft " +
+            "        else if (dir - 3) then move down " +
+            "        else if (dir - 2) then move downright " +
+            "        else if (dir - 1) then move right " +
+            "        else if (dir) then move upright " +
+            "        else move up " +
+            "    } " +
+            "} else { " +
+            "    atbdLoc = antibody " +
+            "    if(atbdLoc / 10 - 3) then { " +
+            " " +
+            "    } else if(atbdLoc) then { " +
+            "        if (atbdLoc % 10 - 7) then shoot upleft " +
+            "        else if (atbdLoc % 10 - 6) then shoot left " +
+            "        else if (atbdLoc % 10 - 5) then shoot downleft " +
+            "        else if (atbdLoc % 10 - 4) then shoot down " +
+            "        else if (atbdLoc % 10 - 3) then shoot downright " +
+            "        else if (atbdLoc % 10 - 2) then shoot right " +
+            "        else if (atbdLoc % 10 - 1) then shoot upright " +
+            "        else shoot up " +
+            "    } else { " +
+            "         " +
+            "    } " +
+            "}",1,5);
     static Unit sniper = new Virus(150,20,160,"move down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(696969,20,1,    "virusLoc = virus " +
-            "if (virusLoc / 10 - 1) " +
-            "then  " +
-            "  if (virusLoc % 10 - 7) then move upleft " +
-            "  else if (virusLoc % 10 - 6) then move left " +
-            "  else if (virusLoc % 10 - 5) then move downleft " +
-            "  else if (virusLoc % 10 - 4) then move down " +
-            "  else if (virusLoc % 10 - 3) then move downright " +
-            "  else if (virusLoc % 10 - 2) then move right " +
-            "  else if (virusLoc % 10 - 1) then move upright " +
-            "  else move up " +
-            "else if (virusLoc) " +
-            "then  " +
-            "  if (virusLoc % 10 - 7) then shoot upleft " +
-            "  else if (virusLoc % 10 - 6) then shoot left " +
-            "  else if (virusLoc % 10 - 5) then shoot downleft " +
-            "  else if (virusLoc % 10 - 4) then shoot down " +
-            "  else if (virusLoc % 10 - 3) then shoot downright " +
-            "  else if (virusLoc % 10 - 2) then shoot right " +
-            "  else if (virusLoc % 10 - 1) then shoot upright " +
-            "  else shoot up " +
-            "else {} "
-            ,20,1,1);
+    static Unit Merci = new ATBD_(10,20,10000,"virusLoc =  virus " +
+            "if(virusLoc / 10 - 3) then { " +
+            " " +
+            "} else { " +
+            "    if (virusLoc % 10 - 7) then shoot upleft " +
+            "    else if (virusLoc % 10 - 6) then shoot left " +
+            "    else if (virusLoc % 10 - 5) then shoot downleft " +
+            "    else if (virusLoc % 10 - 4) then shoot down " +
+            "    else if (virusLoc % 10 - 3) then shoot downright " +
+            "    else if (virusLoc % 10 - 2) then shoot right " +
+            "    else if (virusLoc % 10 - 1) then shoot upright " +
+            "    else shoot up " +
+            "}",20,1,1);
     static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,2);
     static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,3);
     static Unit[] Atbds = {Merci,Ana,Lucio};
@@ -541,17 +621,26 @@ public class Game {
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
-        initObjective(10);
+        initObjective(100);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 String s = String.valueOf(i) + " " + String.valueOf(j);
                 emptySlot.add(s);
             }
         }
-        addATBD(createNewATBD(0), new Pair<>(2, 2));
+//        addATBD(createNewATBD(0), new Pair<>(2, 2));
 //        addATBD(createNewATBD(0),new Pair<>(,10));
 //        addATBD(createNewATBD(0),new Pair<>(19,19));
         System.out.println(emptySlot);
+
+        JSONObject data = new JSONObject();
+        data.put("pauseState" , 0);
+        Controller.putData("http://localhost:8080/input/put/pausestate" , data);
+        data.clear();
+        data.put("speedState" , 0);
+        Controller.putData("http://localhost:8080/input/put/speedstate" , data);
+
+
     }
     public static void GetInput(){
         // ????????????????
@@ -656,16 +745,18 @@ public class Game {
             if(pause == 1) {
                 continue;
             }
-            /*if(ซื้อตัว){
-                //เสกมา
-            }
-            */
-            //fetch continue
+
+            int periodTime = 0;
+            if(speed == 1)
+                periodTime = 1000;
+            else
+                periodTime = 500;
+
             long curTime = System.currentTimeMillis();
             totalTime += curTime - prevTime;
             prevTime = curTime;
 
-            if(totalTime > 1000) {
+            if(totalTime > periodTime) {
                 totalTime = 0;
                 Iterator<Unit> it = order.iterator();
                 while (it.hasNext()){
@@ -694,7 +785,7 @@ public class Game {
 //                    }
 //                    List<Integer> cost = shop.getcostList();
 //                    Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-//                    Thread.sleep(200/speed);
+//                    Thread.sleep(500/ order.size() /speed);
 
 
 
@@ -704,16 +795,16 @@ public class Game {
                 if( spawnCount >= 1 ){
                     rand = (int)(Math.random() * 3);
                     if( rand == 0 ){
-                        addVirus(createNewVirus(0), randomTile());
+                        addVirus(createNewVirus(1), randomTile());
                         spawnCount = spawnCount - rand;
-                        addATBD(createNewATBD(1),randomTile());
+//                        addATBD(createNewATBD(1),randomTile());
                     }
                     if( rand == 1 ){
                         addVirus(createNewVirus(1), randomTile());
                         spawnCount = spawnCount - 2*rand;
                     }
                     if( rand == 2 ){
-                        addVirus(createNewVirus(2), randomTile());
+                        addVirus(createNewVirus(1), randomTile());
                         spawnCount = spawnCount - 3*rand;
                     }
                 }else{

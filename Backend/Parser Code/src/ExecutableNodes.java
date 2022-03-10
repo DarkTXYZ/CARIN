@@ -44,6 +44,7 @@ class AssignmentStatement implements Executable {
 
     @Override
     public void execute() {
+//        System.out.println(identifier + " = " + expression.eval());
         bindings.put(identifier, expression.eval());
     }
 }

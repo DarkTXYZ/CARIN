@@ -28,6 +28,7 @@ public class ATBD_ extends UnitImpl {
         this.attackRange = template.getAttackRange();
         bindings = new HashMap<>();
         skin = template.getSkin();
+        cost = template.getCost();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
         }catch (Exception e) {System.out.println("genethingy");}

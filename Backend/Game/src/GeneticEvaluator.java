@@ -38,11 +38,13 @@ public class GeneticEvaluator implements Evaluator {
 
     @Override
     public Executable evaluate(Unit unit) throws TokenizeErrorException, SyntaxErrorException {
+
         tkz.initialize(unit.getGene());
         this.bindings = unit.getBindings();
         this.unit = unit;
 
         return parseProgram();
+
     }
 
     private Executable parseProgram() throws SyntaxErrorException, TokenizeErrorException {
