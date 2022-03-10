@@ -48,7 +48,7 @@ public class GeneticEvaluator implements Evaluator {
     }
 
     private Executable parseProgram() throws SyntaxErrorException, TokenizeErrorException {
-        Program program = new Program();
+        Program program = new Program(bindings);
 
         program.addStatement(parseStatement());
         while (tkz.hasNext())
@@ -98,7 +98,7 @@ public class GeneticEvaluator implements Evaluator {
         String direction = tkz.consume();
         if (!directionWords.contains(direction))
             throw new SyntaxErrorException("Missing direction word");
-        return new MoveCommand(unit, direction);
+        return new MoveCommand(unit, direction , bindings);
     }
 
     private Executable parseAttackCommand() throws SyntaxErrorException, TokenizeErrorException {
@@ -106,7 +106,7 @@ public class GeneticEvaluator implements Evaluator {
         String direction = tkz.consume();
         if (!directionWords.contains(direction))
             throw new SyntaxErrorException("Missing direction word");
-        return new AttackCommand(unit, direction);
+        return new AttackCommand(unit, direction , bindings);
     }
 
     private Executable parseBlockStatement() throws SyntaxErrorException, TokenizeErrorException {

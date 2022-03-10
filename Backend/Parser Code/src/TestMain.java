@@ -50,13 +50,12 @@ public class TestMain {
                 "         " +
                 "    } " +
                 "}");
-        VirusDummy w = new VirusDummy("b=8 while(b-5) {move down move left b = b-1}");
-        v.setProgram(g.evaluate(v));
+        VirusDummy w = new VirusDummy("if(0) then move up else {move down move up shoot left}");
+//        v.setProgram(g.evaluate(v));
         w.setProgram(g.evaluate(w));
-
         int cnt = 0;
         while(cnt < 10) {
-            v.execute();
+            w.execute();
             cnt++;
         }
 //        w.execute();
