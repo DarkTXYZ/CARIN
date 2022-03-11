@@ -28,35 +28,49 @@ public class Controller {
 //                }
 //            }
 //        }, 0, 1, TimeUnit.SECONDS);
-        while(true) {
-            int m = 6, n = 6;
-            int state = 1;
-            List<Integer> shopState = Arrays.asList(1, 1, 1);
-            int currency = 100;
-            List<Integer> cost = Arrays.asList(20,40,60);
-            List<Integer> posX = Arrays.asList(1,2, 3, 4, 5 ,3,5,2);
-            List<Integer> posY = Arrays.asList(4, 3, 4, 0, 2 , 0 , 5 ,1);
-            List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10,6,10,4562);
-            List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45,10,20,9999);
-            List<Integer> type = Arrays.asList(1,2,3,1,2,5,4,6);
-            int objective = 2 , objectiveMax = 10;
 
-            sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
-            Thread.sleep(10000);
-            shopState = Arrays.asList(1, 1, 1);
-            currency = 300;
-            cost = Arrays.asList(20,40,60);
-            posX = Arrays.asList(1	,5	,4	,4	,2	,2	,1);
-            posY = Arrays.asList(2	,2	,2	,0	,0	,5	,1);
-            hp = Arrays.asList(61,	97,	82,	20	,98,	72,	10);
-            hpMax = Arrays.asList(120,	760,	500	,70,	600,	350,	39);
-            type = Arrays.asList(2	,5,	1	,4	,4	,3	,1);
-            objective = 4 ;
+//        while(true) {
+//            int m = 6, n = 6;
+//            int state = 1;
+//            List<Integer> shopState = Arrays.asList(1, 1, 1);
+//            int currency = 100;
+//            List<Integer> cost = Arrays.asList(20,40,60);
+//            List<Integer> posX = Arrays.asList(1,2, 3, 4, 5 ,3,5,2);
+//            List<Integer> posY = Arrays.asList(4, 3, 4, 0, 2 , 0 , 5 ,1);
+//            List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10,6,10,4562);
+//            List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45,10,20,9999);
+//            List<Integer> type = Arrays.asList(1,2,3,1,2,5,4,6);
+//            int objective = 2 , objectiveMax = 10;
+//
+//            sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
+//            Thread.sleep(10000);
+//            shopState = Arrays.asList(1, 1, 1);
+//            currency = 300;
+//            cost = Arrays.asList(20,40,60);
+//            posX = Arrays.asList(1	,5	,4	,4	,2	,2	,1);
+//            posY = Arrays.asList(2	,2	,2	,0	,0	,5	,1);
+//            hp = Arrays.asList(61,	97,	82,	20	,98,	72,	10);
+//            hpMax = Arrays.asList(120,	760,	500	,70,	600,	350,	39);
+//            type = Arrays.asList(2	,5,	1	,4	,4	,3	,1);
+//            objective = 4 ;
+//
+//            sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
+//            Thread.sleep(10000);
+//        }
 
-            sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
-            Thread.sleep(10000);
-        }
+        int m = 6, n = 6;
+        int state = 1;
+        List<Integer> shopState = Arrays.asList(1, 1, 1);
+        int currency = 100;
+        List<Integer> cost = Arrays.asList(20,40,60);
+        List<Integer> posX = Arrays.asList(1,2, 3, 4, 5 ,3,5,2);
+        List<Integer> posY = Arrays.asList(4, 3, 4, 0, 2 , 0 , 5 ,1);
+        List<Integer> hp = Arrays.asList(10, 20, 30, 40, 10,6,10,4562);
+        List<Integer> hpMax = Arrays.asList(50, 30, 100, 80, 45,10,20,9999);
+        List<Integer> type = Arrays.asList(1,2,3,1,2,5,4,6);
+        int objective = 2 , objectiveMax = 10;
 
+        sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
 
 
 

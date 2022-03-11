@@ -6,6 +6,8 @@ import Shop from './Shop';
 import logo from './lib/logo.png'
 import Objective from './Objective';
 import Tutorial from './Tutorial';
+import WinScene from './WinScene';
+import { url } from 'inspector';
 
 class App extends React.Component {
 
@@ -43,7 +45,7 @@ class App extends React.Component {
 
 	render(): React.ReactNode {
 		return (
-			<div className='fixed select-none w-full h-full bg-gradient-to-l from-sky-600 to-red-600' >
+			<div className='fixed select-none w-full h-full bg-gradient-to-l from-sky-600 to-red-600 bg-BG'>
 				<div className="flex justify-center">
 					<div className='flex flex-col space-y-3'>
 						<div className='flex justify-center my-5'>
@@ -64,6 +66,9 @@ class App extends React.Component {
 						}
 						{this.state.state === 0 &&
 							<Tutorial/>
+						}
+						{this.state.state === 2 &&
+							<WinScene/>
 						}
 					</div>
 				</div>
