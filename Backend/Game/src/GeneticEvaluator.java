@@ -18,7 +18,7 @@ public class GeneticEvaluator implements Evaluator {
     // GeneticEvaluator field
     private final String[] reservedWordList = {"antibody", "down", "downleft", "downright",
             "else", "if", "left", "move", "nearby", "right",
-            "shoot", "then", "up", "upleft", "upright", "virus", "while"};
+            "shoot", "then", "up", "upleft", "upright", "virus", "while" , "isActionTaken"};
     private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
     private final String[] directionWordList = {"up", "left", "right", "down",
             "upleft", "upright", "downleft", "downright"};
