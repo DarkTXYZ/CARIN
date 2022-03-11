@@ -160,8 +160,12 @@ function Field(props: any) {
         )
     }
 
-    let screenWidth = 1232
-    let screenHeight = 686
+    let screenWidth = 1120
+    let screenHeight = 702
+
+    let gameScreenWidth = screenWidth - 16
+    let gameScreenHeight = screenHeight - 16
+
 
     return (
 
@@ -171,11 +175,11 @@ function Field(props: any) {
 
                 <React.Fragment>
                     <div className="flex flex-col space-y-2">
-                        <div className="flex items-center justify-center border-8 border-yellow-400 rounded-xl" style={{ width: 1248, height: 702 }}>
+                        <div className="flex items-center justify-center border-8 border-yellow-400 rounded-xl" style={{ width: screenWidth, height: screenHeight }}>
                             <div className="flex flex-col space-y-2">
                                 <div className="">
                                     <TransformComponent>
-                                        <div className="flex items-center justify-center" style={{ width: screenWidth, height: screenHeight }}>
+                                        <div className="flex items-center justify-center" style={{ width: gameScreenWidth, height: gameScreenHeight }}>
                                             {createGrid()}
                                         </div>
                                     </TransformComponent>
@@ -185,7 +189,7 @@ function Field(props: any) {
                         <div className="flex flex-row justify-between space-x-2">
                             <div className="tools">
                                 <button className='text-xl font-bold rounded-xl p-2 hover:scale-105 duration-300 ease-out hover:drop-shadow-xl bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400' onClick={() => {
-                                    centerView(0.9)
+                                    centerView(0.85)
                                 }}>Reset View</button>
                             </div>
                             <div className="flex flex-row space-x-2">

@@ -11,7 +11,7 @@ function ShopTile(props: any) {
     }
     let canBuy: boolean = props.canBuy
     let cost = props.cost
-    let tileImg : any = null
+    let tileImg: any = null
     let selected = props.selected // props.selected
     let type = props.type
 
@@ -20,39 +20,43 @@ function ShopTile(props: any) {
     else if (type === 3) tileImg = tile3
 
     let modify = ""
+    let modifyDesc = ""
 
     if (!canBuy) {
         modify = "opacity-70 border-4 border-gray-400"
     } else {
-        if (selected === type && props.placeState === 1){
-            if(type === 1) {
+        if (selected === type && props.placeState === 1) {
+            if (type === 1) {
                 modify = 'opacity-100 border-4 border-yellow-300'
-            } else if(type === 2) {
+            } else if (type === 2) {
                 modify = 'opacity-100 border-4 border-blue-400'
             } else {
                 modify = 'opacity-100 border-4 border-green-400'
             }
-        }   
+        }
         else
             modify += 'opacity-100 border-4 border-gray-400'
     }
 
-    if(type === 1) {
+    if (type === 1) {
         modify += ' bg-gradient-to-b from-orange-500 to-yellow-300'
-    } else if(type === 2) {
-        modify += ' bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800'
+        modifyDesc += ' bg-gradient-to-b from-orange-500 to-yellow-300'
+    } else if (type === 2) {
+        modify += ' bg-gradient-to-l from-blue-100 via-blue-300 to-blue-500'
+        modifyDesc += ' bg-gradient-to-l from-blue-100 via-blue-300 to-blue-500'
     } else {
         modify += ' bg-gradient-to-r from-green-500 to-green-700'
+        modifyDesc += ' bg-gradient-to-r from-green-500 to-green-700'
     }
 
     let color = ""
-    if(canBuy)
+    if (canBuy)
         color = 'text-green-400'
-    else 
+    else
         color = 'text-red-400'
 
     return (
-        <div className="flex flex-row items-center space-x-10" onClick={props.onClick}>
+        <div className="flex flex-row items-center space-x-4" onClick={props.onClick}>
             <div className={modify + " w-40 flex flex-col rounded-2xl bg-white hover:drop-shadow-xl duration-300 ease-out hover:scale-105 "} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
                 <div className="self-center">
                     <img src={tileImg} className="rounded-t-xl h-44 opacity-100" />
@@ -61,7 +65,17 @@ function ShopTile(props: any) {
                     Cost: {cost}
                 </div>
             </div>
-            <div>{hover && <p className='select-none fixed text-4xl text-gray-600 font-semibold'>{props.name}</p>}</div>
+            {
+                hover &&
+                <div className="fixed translate-x-40">
+                    <div className={'select-none text-white text-transparent bg-clip-text'+modifyDesc}>
+                        <div className="text-4xl font-bold mb-5">{props.name}</div>
+                        <div className="text-lg font-semibold">Fire Range : 3</div>
+                        <div className="text-lg font-semibold">ATK : 3</div>
+                        <div className="text-lg font-semibold">HP : 3</div>
+                    </div>
+                </div>
+            }
         </div>
 
     )
