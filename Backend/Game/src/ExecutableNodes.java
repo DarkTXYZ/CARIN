@@ -123,6 +123,7 @@ class AttackCommand implements Executable {
     @Override
     public void execute() {
         if(bindings.get("isActionTaken") == 0) {
+            System.out.println(this.toString() + " Shoot " + direction);
             unit.shoot(direction);
             bindings.put("isActionTaken" , 1);
         }

@@ -59,7 +59,7 @@ public class Controller {
 //        }
 
         int m = 6, n = 6;
-        int state = 1;
+        int state = 3;
         List<Integer> shopState = Arrays.asList(1, 1, 1);
         int currency = 100;
         List<Integer> cost = Arrays.asList(20,40,60);

@@ -531,7 +531,7 @@ public class Game {
             "        else move up " +
             "    } " +
             "}",1,4);
-    static Unit pistolDude = new Virus(50,100,200,"timeUnit = timeUnit + 1 " +
+    static Unit pistolDude = new Virus(150,100,200,"timeUnit = timeUnit + 1 " +
             "if(timeUnit % 4) then {  " +
             "    atbdLoc = antibody " +
             "    if(atbdLoc / 10 - 1) then { " +
@@ -579,11 +579,11 @@ public class Game {
             "    } else { " +
             "         " +
             "    } " +
-            "}",1,5);
+            "}",3,5);
     static Unit sniper = new Virus(150,20,160,"move down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(10,20,10000,"virusLoc =  virus " +
+    static Unit Merci = new ATBD_(10,20,1000,"virusLoc =  virus " +
             "if(virusLoc / 10 - 3) then { " +
             " " +
             "} else { " +
@@ -795,7 +795,7 @@ public class Game {
                 if( spawnCount >= 1 ){
                     rand = (int)(Math.random() * 3);
                     if( rand == 0 ){
-                        addVirus(createNewVirus(1), randomTile());
+                        addVirus(createNewVirus(0), randomTile());
                         spawnCount = spawnCount - rand;
 //                        addATBD(createNewATBD(1),randomTile());
                     }
@@ -804,7 +804,7 @@ public class Game {
                         spawnCount = spawnCount - 2*rand;
                     }
                     if( rand == 2 ){
-                        addVirus(createNewVirus(1), randomTile());
+                        addVirus(createNewVirus(0), randomTile());
                         spawnCount = spawnCount - 3*rand;
                     }
                 }else{
