@@ -68,7 +68,7 @@ function ShopTile(props: any) {
             {
                 hover &&
                 <div className="fixed translate-x-40">
-                    <div className={'select-none text-white text-transparent bg-clip-text'+modifyDesc}>
+                    <div className={'select-none text-transparent bg-clip-text'+modifyDesc}>
                         <div className="text-4xl font-bold mb-5">{props.name}</div>
                         <div className="text-lg font-semibold">Fire Range : 3</div>
                         <div className="text-lg font-semibold">ATK : 3</div>

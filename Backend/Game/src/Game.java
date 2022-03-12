@@ -190,7 +190,7 @@ public class Game {
                 }else
                     System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
-            System.out.print(" \n");
+            System.out.print(" ");
         }
         System.out.println("Empty tile: "+emptySlot);
         System.out.println("list order"+order.toString());
@@ -922,16 +922,23 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game g = Game.getInstance();
-        g.Initialize();
+        while(true) {
+            Game gay = Game.getInstance();
+            gay.Initialize();
 
 //        GetInput();
-        try {
-            g.Update();
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());}
+            try {
+                gay.Update();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            }
 
+            while(!canWeExitNow)
+                getInput()
+                break;
+
+        }
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][3])); //17
