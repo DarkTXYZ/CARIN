@@ -214,7 +214,7 @@ public class Game {
                 }else
                     System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
-            System.out.print(" ");
+            System.out.print(" \n");
         }
         System.out.println("Empty tile: "+emptySlot);
         System.out.println("list order"+order.toString());
@@ -929,6 +929,7 @@ public class Game {
                 } else {
                     spawnCount++;
                 }
+                Game.getInstance().visualize();
             }
 
 
@@ -970,12 +971,13 @@ public class Game {
         System.out.println("Ezgaem");
     }
 
-    public  void main(String[] args) {
-        Initialize();
+    public static void main(String[] args) {
+        Game g = Game.getInstance();
+        g.Initialize();
 
 //        GetInput();
         try {
-            Update();
+            g.Update();
         }catch (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());}
