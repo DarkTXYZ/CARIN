@@ -665,7 +665,7 @@ public class Game {
 
 
 
-
+    int lowestcost = Integer.MAX_VALUE;
     public  void Initialize() {
         config(inFile);
         shop = Shop.getInstance(cost);
@@ -676,6 +676,7 @@ public class Game {
         }
         for (int i = 0; i < atbdtemplate; i++) {
             cost[i] = Atbds[i].getCost();
+            if(lowestcost>cost[i]) lowestcost = cost[i];
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
@@ -875,7 +876,10 @@ public class Game {
                         spawnCount++;
                     }
                 }
-//                visualize();
+                Game.getInstance().visualize();
+                if(shop.getCurrency()<lowestcost){
+                    throw new GameOverException("Game over can not place anymore ATBD");
+                }
             }
 
 
