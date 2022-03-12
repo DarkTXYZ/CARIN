@@ -6,16 +6,22 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Game {
-
-    static int m = 20,n = 20;
-    static Unit[][] field= new Unit[m][n];
-    protected static final String inFile = "src/configfile.in";
-    static int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
+    public Game(){}
+    public static Game instance;
+    public static Game getInstance(){
+        if(Game.instance == null) Game.instance = new Game();
+        return Game.instance;
+    }
+//    static int m = 20,n = 20;
+    private int m,n;
+    private Unit[][] field= new Unit[m][n];
+    protected  final String inFile = "src/configfile.in";
+    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
             , atbdMoveCost , atbdCreditsDrop;
-    static double spawnCount = 0;
-    static double virusSpawnRate;
-    static SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
+    private double spawnCount = 0;
+    private double virusSpawnRate;
+    private SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
         @Override
         public int compare(String o1, String o2) {
             String[] arr1 = o1.split(" ");
@@ -27,23 +33,23 @@ public class Game {
         }
     });
 
-    static GeneticEvaluator g  = GeneticEvaluator.getInstance();
-    static List<Unit> order = new ArrayList<>();
-    static List<Unit> virusOrder = new ArrayList<>();
-    static List<Unit> atbdOrder = new ArrayList<>();
-    static Objective gObjective;
-    static int virusLimit;
-    static int limitCount;
-    static Shop shop;
+    private GeneticEvaluator g  = GeneticEvaluator.getInstance();
+    private List<Unit> order = new ArrayList<>();
+    private List<Unit> virusOrder = new ArrayList<>();
+    private List<Unit> atbdOrder = new ArrayList<>();
+    private Objective gObjective;
+    private int virusLimit;
+    private int limitCount;
+    private Shop shop;
 
-    public static void initObjective(int maxElim){
+    public  void initObjective(int maxElim){
         gObjective = new Objective(0,maxElim);
     }
     //tell if we win
-    public static void notifyReachElim(){
+    public  void notifyReachElim(){
         System.out.println("All viruses have been eliminated");
     }
-    public static Pair<Integer,Integer> randomTile()throws GameOverException{
+    public  Pair<Integer,Integer> randomTile()throws GameOverException{
         try {
             //write random here
             Random r = new Random();
@@ -80,15 +86,15 @@ public class Game {
             throw new GameOverException("Game over");
         }
     }
-    static Queue<Pair<Unit,Pair<Integer,Integer>>>deadList = new LinkedList<>();
-    public static void updateDeadlist(){
+    Queue<Pair<Unit,Pair<Integer,Integer>>>deadList = new LinkedList<>();
+    public  void updateDeadlist(){
         while(!deadList.isEmpty()){
             Pair<Unit,Pair<Integer,Integer>> u = deadList.poll();
             addVirus(u.fst(),u.snd());
         }
     }
 
-    public static void addATBD(Unit a, Pair<Integer,Integer> position){
+    public  void addATBD(Unit a, Pair<Integer,Integer> position){
         if(a.getCost()>shop.getCurrency()) return;
         int y = position.fst(); int x = position.snd();
         if(x>m || y>n) {
@@ -102,7 +108,7 @@ public class Game {
         }else System.out.println("can't add; This tile already has a gameUnit");
 
     }
-    public static void addVirus(Unit v, Pair<Integer,Integer> position){
+    public void addVirus(Unit v, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
         if(x>m || y>n) {
             System.out.println("out of range");
@@ -115,7 +121,7 @@ public class Game {
 
     }
     //this method should init gameUnit
-    public static void add(Unit unit, Pair<Integer,Integer> position){
+    public  void add(Unit unit, Pair<Integer,Integer> position){
         int y = position.fst(); int x = position.snd();
         unit.setPos(position);
         field[y][x] = unit;
@@ -124,7 +130,7 @@ public class Game {
         emptySlot.remove(s);
     }
 
-    public static void remove(Pair<Integer,Integer> position){
+    public  void remove(Pair<Integer,Integer> position){
 
         int y = position.fst(); int x = position.snd();
 //        order.remove(field[y][x]);
@@ -135,7 +141,7 @@ public class Game {
         emptySlot.add(s);
 
     }
-    public static void moveATBD(Unit u,Pair<Integer,Integer> destination){
+    public  void moveATBD(Unit u,Pair<Integer,Integer> destination){
         u.setHP(-atbdMoveCost);
         if(!Objects.equals(u.getClass().getName(),"ATBD_")) return;
         try {
@@ -144,7 +150,7 @@ public class Game {
             System.out.println("can't execute move");
         }
     }
-    public static void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
+    public  void move (Unit u, Pair<Integer,Integer> destination) throws UnexecutableCommandException{
         //field [x][y]
         int y = destination.fst(); int x = destination.snd();
         if(y< 0|| x<0) throw new UnexecutableCommandException("Out of field range");
@@ -163,19 +169,19 @@ public class Game {
             throw new UnexecutableCommandException("gameUnit occupied in destination tile");
         }
     }
-    public static void destroyATBD(Unit unit, Unit spawn){
+    public  void destroyATBD(Unit unit, Unit spawn){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
         Unit u = new Virus(spawn);
         deadList.add(new Pair<>(u,pos));
     }
-    public static void destroyVirus(Unit unit){
+    public  void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
         shop.setCurrency(atbdCreditsDrop);
         gObjective.modfst(1);
     }
-    public static void visualize(){
+    public  void visualize(){
         System.out.println("-------------------------------");
         for(int i =0; i<m;i++){
             for (int j= 0;j<n;j++){
@@ -242,88 +248,19 @@ public class Game {
 //        }
 //        return  getATBDFromPos(ans);
 //    }
-
-    public static int senseClosestVirus(Unit u){
+    public int senseClosestEnemy(Unit u, int type){
+        List<Unit> toItr = null;
+        if(type == 2){
+            toItr = atbdOrder;
+        }else if(type == 1){
+            toItr = virusOrder;
+        }else return -69;
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
         int tempans = Integer.MAX_VALUE;
         int ans = Integer.MAX_VALUE;
-        for(int i = 0 ; i < virusOrder.size() ; ++i) {
-            int y = virusOrder.get(i).getPosition().fst();
-            int x = virusOrder.get(i).getPosition().snd();
-            int xdiff = x-hx;
-            int ydiff = y-hy;
-            if(Math.abs(xdiff) == Math.abs(ydiff)){ //diagonal
-                if(xdiff < 0 && ydiff<0 ){//upleft
-                    tempans =  xdiff*-10+8;
-                }
-                if(xdiff>0 && ydiff > 0) {// downright
-                    tempans =  xdiff*10+4;
-                }
-                if(xdiff>0 && ydiff <0 ){ //upright
-                    tempans = xdiff*10+2;
-                }
-                if(xdiff<0 && ydiff>0 ){ // downleft
-                    tempans = ydiff*10+6;
-                }
-            }else { //line
-                if(ydiff == 0 && xdiff>0){ // right
-                    tempans = xdiff*10+3;
-                }
-                if(ydiff == 0 && xdiff<0){// left
-                    tempans = xdiff*-10+7;
-                }
-                if(xdiff == 0 &&ydiff<0){// up
-                    tempans = ydiff*-10+1;
-                }
-                if(xdiff == 0 && ydiff>0){// down
-                    tempans = ydiff*10+5;
-                }
-            }
-            ans = Math.min(ans,tempans);
-//
-//            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
-//            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
-//                if(Objects.equals(xydiff.fst(), xydiff.snd())){
-//                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
-//
-//                    }
-//                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
-//
-//                    }
-//                }
-//
-//                if( xydiff.fst() > xydiff.snd()){ // up right
-//
-//                }
-//                if( xydiff.fst() < xydiff.snd()){ // down left
-//
-//                }
-//            }else{ // straight
-//                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
-//
-//                }
-//                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
-//
-//                }
-//                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
-//
-//                }
-//                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
-//
-//                }
-//            }
-//        }
-        }
-        if(ans == Integer.MAX_VALUE) ans =0;
-        return ans;
-    }
-    public static int senseClosestATBD(Unit u){
-        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
-        int tempans = Integer.MAX_VALUE;
-        int ans = Integer.MAX_VALUE;
-        for(int i = 0 ; i < atbdOrder.size() ; ++i) {
-            int y = atbdOrder.get(i).getPosition().fst();
-            int x = atbdOrder.get(i).getPosition().snd();
+        for(int i = 0 ; i < toItr.size() ; ++i) {
+            int y = toItr.get(i).getPosition().fst();
+            int x = toItr.get(i).getPosition().snd();
             int xdiff = x - hx;
             int ydiff = y - hy;
             if (Math.abs(xdiff) == Math.abs(ydiff)) { //diagonal
@@ -358,7 +295,127 @@ public class Game {
         if(ans == Integer.MAX_VALUE) ans = 0;
         return ans;
     }
-    public static int senseNearby(Unit u, String direction){
+
+    public  int senseClosestVirus(Unit u) {
+        return senseClosestEnemy(u,1);
+//        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+//        int tempans = Integer.MAX_VALUE;
+//        int ans = Integer.MAX_VALUE;
+//        for(int i = 0 ; i < virusOrder.size() ; ++i) {
+//            int y = virusOrder.get(i).getPosition().fst();
+//            int x = virusOrder.get(i).getPosition().snd();
+//            int xdiff = x-hx;
+//            int ydiff = y-hy;
+//            if(Math.abs(xdiff) == Math.abs(ydiff)){ //diagonal
+//                if(xdiff < 0 && ydiff<0 ){//upleft
+//                    tempans =  xdiff*-10+8;
+//                }
+//                if(xdiff>0 && ydiff > 0) {// downright
+//                    tempans =  xdiff*10+4;
+//                }
+//                if(xdiff>0 && ydiff <0 ){ //upright
+//                    tempans = xdiff*10+2;
+//                }
+//                if(xdiff<0 && ydiff>0 ){ // downleft
+//                    tempans = ydiff*10+6;
+//                }
+//            }else { //line
+//                if(ydiff == 0 && xdiff>0){ // right
+//                    tempans = xdiff*10+3;
+//                }
+//                if(ydiff == 0 && xdiff<0){// left
+//                    tempans = xdiff*-10+7;
+//                }
+//                if(xdiff == 0 &&ydiff<0){// up
+//                    tempans = ydiff*-10+1;
+//                }
+//                if(xdiff == 0 && ydiff>0){// down
+//                    tempans = ydiff*10+5;
+//                }
+//            }
+//            ans = Math.min(ans,tempans);
+
+
+//
+//            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
+//            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
+//                if(Objects.equals(xydiff.fst(), xydiff.snd())){
+//                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
+//
+//                    }
+//                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
+//
+//                    }
+//                }
+//
+//                if( xydiff.fst() > xydiff.snd()){ // up right
+//
+//                }
+//                if( xydiff.fst() < xydiff.snd()){ // down left
+//
+//                }
+//            }else{ // straight
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
+//
+//                }
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
+//
+//                }
+//            }
+//        }
+//    }
+//        if(ans == Integer.MAX_VALUE) ans =0;
+//        return ans;
+    }
+    public  int senseClosestATBD(Unit u){
+        return senseClosestEnemy(u,2);
+//        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+//        int tempans = Integer.MAX_VALUE;
+//        int ans = Integer.MAX_VALUE;
+//        for(int i = 0 ; i < atbdOrder.size() ; ++i) {
+//            int y = atbdOrder.get(i).getPosition().fst();
+//            int x = atbdOrder.get(i).getPosition().snd();
+//            int xdiff = x - hx;
+//            int ydiff = y - hy;
+//            if (Math.abs(xdiff) == Math.abs(ydiff)) { //diagonal
+//                if (xdiff < 0 && ydiff < 0) {//upleft
+//                    tempans = xdiff * -10 + 8;
+//                }
+//                if (xdiff > 0 && ydiff > 0) {// downright
+//                    tempans = xdiff * 10 + 4;
+//                }
+//                if (xdiff > 0 && ydiff < 0) { //upright
+//                    tempans = xdiff * 10 + 2;
+//                }
+//                if (xdiff < 0 && ydiff > 0) { // downleft
+//                    tempans = ydiff * 10 + 6;
+//                }
+//            } else { //line
+//                if (ydiff == 0 && xdiff > 0) { // right
+//                    tempans = xdiff * 10 + 3;
+//                }
+//                if (ydiff == 0 && xdiff < 0) {// left
+//                    tempans = xdiff * -10 + 7;
+//                }
+//                if (xdiff == 0 && ydiff < 0) {// up
+//                    tempans = ydiff * -10 + 1;
+//                }
+//                if (xdiff == 0 && ydiff > 0) {// down
+//                    tempans = ydiff * 10 + 5;
+//                }
+//            }
+//            ans = Math.min(ans, tempans);
+//        }
+//        if(ans == Integer.MAX_VALUE) ans = 0;
+//        return ans;
+    }
+    public  int senseNearby(Unit u, String direction){
         int ans =  0;
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
         int x = hx; int y = hy;
@@ -460,13 +517,13 @@ public class Game {
         }
         return -99;
     }
-    public static void gShoot(Pair<Integer,Integer> pos, Unit u){
+    public  void gShoot(Pair<Integer,Integer> pos, Unit u){
         int y = pos.fst(); int x = pos.snd();
         if(y<0 || x < 0 || y>=m || x>=n) System.out.println("can't shoot out of range"); // should not happen
         field[y][x].takingDamage(u);
     }
 
-    public static void updateShop(){
+    public  void updateShop(){
         shop.updateStatus();
     }
 
@@ -481,11 +538,11 @@ public class Game {
         }
     */
 
-    static Unit createNewVirus(int n){
+    Unit createNewVirus(int n){
         Unit virus = new Virus(viruses[n]);
         return virus;
     }
-    static Unit createNewATBD(int n){
+     Unit createNewATBD(int n){
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
@@ -609,7 +666,7 @@ public class Game {
 
 
 
-    public static void Initialize() {
+    public  void Initialize() {
         config(inFile);
         shop = Shop.getInstance(cost);
         shop.setCurrency(initialATBDCredits);
@@ -645,7 +702,7 @@ public class Game {
 
 
     }
-    public static void GetInput(){
+    public  void GetInput(){
         // ????????????????
 
         Controller.getInput();
@@ -737,7 +794,7 @@ public class Game {
     }
     static int pause = 0;
     static int speed = 1;
-    public static void Update() throws GameOverException, InterruptedException {
+    public  void Update() throws GameOverException, InterruptedException {
 
         int totalTime = 0;
         long prevTime = System.currentTimeMillis();
@@ -860,7 +917,7 @@ public class Game {
         System.out.println("Ezgaem");
     }
 
-    public static void main(String[] args) {
+    public  void main(String[] args) {
         Initialize();
 
 //        GetInput();
@@ -965,7 +1022,7 @@ public class Game {
 
 
 
-    public static void config(String inFile){
+    public  void config(String inFile){
         try(FileReader fr = new FileReader(inFile);
             Scanner s = new Scanner(fr)){
             System.out.println("--------1--------");

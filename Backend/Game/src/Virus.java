@@ -37,12 +37,12 @@ public class Virus extends UnitImpl {
     @Override
     public void destruct() {
         previousAttacker.setHP(previousAttacker.getLifeSteal());
-        Game.destroyVirus(this);
+        Game.getInstance().destroyVirus(this);
     }
 
     @Override
     public void shoot(String direction) {
-        int target = Game.senseNearby(this,direction);
+        int target = Game.getInstance().senseNearby(this,direction);
         if(target == 0) return;
         if(target%10 == 1){return;}
         // 12 12 12 12 12
@@ -62,7 +62,7 @@ public class Virus extends UnitImpl {
             if(direction.equals("upleft")) targetPos = new Pair<>(y-coord,x-coord);
             if(direction.equals("downleft")) targetPos = new Pair<>(y+coord,x-coord);
 
-            Game.gShoot(targetPos,this);
+            Game.getInstance().gShoot(targetPos,this);
         }
         return;
     }

@@ -61,7 +61,7 @@ public abstract class UnitImpl implements Unit {
 
     public void gmove(Pair<Integer, Integer> destination) {
         try {
-            Game.move(this, destination);
+            Game.getInstance().move(this, destination);
         }catch (UnexecutableCommandException e){
 
         }
