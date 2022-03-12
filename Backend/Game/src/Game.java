@@ -33,6 +33,7 @@ public class Game {
     static List<Unit> atbdOrder = new ArrayList<>();
     static Objective gObjective;
     static int virusLimit;
+    static int limitCount;
     static Shop shop;
 
     public static void initObjective(int maxElim){
@@ -622,6 +623,8 @@ public class Game {
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
         initObjective(100);
+        virusLimit= gObjective.snd();
+        limitCount =0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 String s = String.valueOf(i) + " " + String.valueOf(j);
@@ -792,23 +795,28 @@ public class Game {
 
                 }
                 updateDeadlist();
-                if( spawnCount >= 1 ){
-                    rand = (int)(Math.random() * 3);
-                    if( rand == 0 ){
-                        addVirus(createNewVirus(0), randomTile());
-                        spawnCount = spawnCount - rand;
-//                        addATBD(createNewATBD(1),randomTile());
+                if(limitCount<virusLimit) {
+                    if (spawnCount >= 1) {
+                        rand = (int) (Math.random() * 3);
+                        if (rand == 0) {
+                            addVirus(createNewVirus(0), randomTile());
+                            spawnCount = spawnCount - rand;
+                            limitCount++;
+
+                        }
+                        if (rand == 1) {
+                            addVirus(createNewVirus(1), randomTile());
+                            spawnCount = spawnCount - 2 * rand;
+                            limitCount++;
+                        }
+                        if (rand == 2) {
+                            addVirus(createNewVirus(0), randomTile());
+                            spawnCount = spawnCount - 3 * rand;
+                            limitCount++;
+                        }
+                    } else {
+                        spawnCount++;
                     }
-                    if( rand == 1 ){
-                        addVirus(createNewVirus(1), randomTile());
-                        spawnCount = spawnCount - 2*rand;
-                    }
-                    if( rand == 2 ){
-                        addVirus(createNewVirus(0), randomTile());
-                        spawnCount = spawnCount - 3*rand;
-                    }
-                }else{
-                    spawnCount++;
                 }
 //                visualize();
             }
