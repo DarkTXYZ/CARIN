@@ -248,88 +248,19 @@ public class Game {
 //        }
 //        return  getATBDFromPos(ans);
 //    }
-
-    public  int senseClosestVirus(Unit u){
+    public int senseClosestEnemy(Unit u, int type){
+        List<Unit> toItr = null;
+        if(type == 2){
+            toItr = atbdOrder;
+        }else if(type == 1){
+            toItr = virusOrder;
+        }else return -69;
         int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
         int tempans = Integer.MAX_VALUE;
         int ans = Integer.MAX_VALUE;
-        for(int i = 0 ; i < virusOrder.size() ; ++i) {
-            int y = virusOrder.get(i).getPosition().fst();
-            int x = virusOrder.get(i).getPosition().snd();
-            int xdiff = x-hx;
-            int ydiff = y-hy;
-            if(Math.abs(xdiff) == Math.abs(ydiff)){ //diagonal
-                if(xdiff < 0 && ydiff<0 ){//upleft
-                    tempans =  xdiff*-10+8;
-                }
-                if(xdiff>0 && ydiff > 0) {// downright
-                    tempans =  xdiff*10+4;
-                }
-                if(xdiff>0 && ydiff <0 ){ //upright
-                    tempans = xdiff*10+2;
-                }
-                if(xdiff<0 && ydiff>0 ){ // downleft
-                    tempans = ydiff*10+6;
-                }
-            }else { //line
-                if(ydiff == 0 && xdiff>0){ // right
-                    tempans = xdiff*10+3;
-                }
-                if(ydiff == 0 && xdiff<0){// left
-                    tempans = xdiff*-10+7;
-                }
-                if(xdiff == 0 &&ydiff<0){// up
-                    tempans = ydiff*-10+1;
-                }
-                if(xdiff == 0 && ydiff>0){// down
-                    tempans = ydiff*10+5;
-                }
-            }
-            ans = Math.min(ans,tempans);
-//
-//            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
-//            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
-//                if(Objects.equals(xydiff.fst(), xydiff.snd())){
-//                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
-//
-//                    }
-//                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
-//
-//                    }
-//                }
-//
-//                if( xydiff.fst() > xydiff.snd()){ // up right
-//
-//                }
-//                if( xydiff.fst() < xydiff.snd()){ // down left
-//
-//                }
-//            }else{ // straight
-//                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
-//
-//                }
-//                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
-//
-//                }
-//                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
-//
-//                }
-//                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
-//
-//                }
-//            }
-//        }
-        }
-        if(ans == Integer.MAX_VALUE) ans =0;
-        return ans;
-    }
-    public  int senseClosestATBD(Unit u){
-        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
-        int tempans = Integer.MAX_VALUE;
-        int ans = Integer.MAX_VALUE;
-        for(int i = 0 ; i < atbdOrder.size() ; ++i) {
-            int y = atbdOrder.get(i).getPosition().fst();
-            int x = atbdOrder.get(i).getPosition().snd();
+        for(int i = 0 ; i < toItr.size() ; ++i) {
+            int y = toItr.get(i).getPosition().fst();
+            int x = toItr.get(i).getPosition().snd();
             int xdiff = x - hx;
             int ydiff = y - hy;
             if (Math.abs(xdiff) == Math.abs(ydiff)) { //diagonal
@@ -363,6 +294,126 @@ public class Game {
         }
         if(ans == Integer.MAX_VALUE) ans = 0;
         return ans;
+    }
+
+    public  int senseClosestVirus(Unit u) {
+        return senseClosestEnemy(u,1);
+//        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+//        int tempans = Integer.MAX_VALUE;
+//        int ans = Integer.MAX_VALUE;
+//        for(int i = 0 ; i < virusOrder.size() ; ++i) {
+//            int y = virusOrder.get(i).getPosition().fst();
+//            int x = virusOrder.get(i).getPosition().snd();
+//            int xdiff = x-hx;
+//            int ydiff = y-hy;
+//            if(Math.abs(xdiff) == Math.abs(ydiff)){ //diagonal
+//                if(xdiff < 0 && ydiff<0 ){//upleft
+//                    tempans =  xdiff*-10+8;
+//                }
+//                if(xdiff>0 && ydiff > 0) {// downright
+//                    tempans =  xdiff*10+4;
+//                }
+//                if(xdiff>0 && ydiff <0 ){ //upright
+//                    tempans = xdiff*10+2;
+//                }
+//                if(xdiff<0 && ydiff>0 ){ // downleft
+//                    tempans = ydiff*10+6;
+//                }
+//            }else { //line
+//                if(ydiff == 0 && xdiff>0){ // right
+//                    tempans = xdiff*10+3;
+//                }
+//                if(ydiff == 0 && xdiff<0){// left
+//                    tempans = xdiff*-10+7;
+//                }
+//                if(xdiff == 0 &&ydiff<0){// up
+//                    tempans = ydiff*-10+1;
+//                }
+//                if(xdiff == 0 && ydiff>0){// down
+//                    tempans = ydiff*10+5;
+//                }
+//            }
+//            ans = Math.min(ans,tempans);
+
+
+//
+//            Pair<Integer,Integer> xydiff = new Pair<>(pos.fst()-virusPos.fst(), pos.snd()-virusPos.snd());
+//            if( Math.abs(xydiff.fst()) == Math.abs(xydiff.snd())){ // diagonal
+//                if(Objects.equals(xydiff.fst(), xydiff.snd())){
+//                    if(xydiff.fst() < 0 && xydiff.snd() < 0){ // up left
+//
+//                    }
+//                    if(xydiff.fst() > 0 && xydiff.snd() > 0){ // down right
+//
+//                    }
+//                }
+//
+//                if( xydiff.fst() > xydiff.snd()){ // up right
+//
+//                }
+//                if( xydiff.fst() < xydiff.snd()){ // down left
+//
+//                }
+//            }else{ // straight
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.snd() == 0){ // right
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.snd() == 0){ // left
+//
+//                }
+//                if ( xydiff.fst() > xydiff.snd() && xydiff.fst() == 0){ // up
+//
+//                }
+//                if ( xydiff.fst() < xydiff.snd() && xydiff.fst() == 0){ // down
+//
+//                }
+//            }
+//        }
+//    }
+//        if(ans == Integer.MAX_VALUE) ans =0;
+//        return ans;
+    }
+    public  int senseClosestATBD(Unit u){
+        return senseClosestEnemy(u,2);
+//        int hy = u.getPosition().fst(); int hx = u.getPosition().snd();
+//        int tempans = Integer.MAX_VALUE;
+//        int ans = Integer.MAX_VALUE;
+//        for(int i = 0 ; i < atbdOrder.size() ; ++i) {
+//            int y = atbdOrder.get(i).getPosition().fst();
+//            int x = atbdOrder.get(i).getPosition().snd();
+//            int xdiff = x - hx;
+//            int ydiff = y - hy;
+//            if (Math.abs(xdiff) == Math.abs(ydiff)) { //diagonal
+//                if (xdiff < 0 && ydiff < 0) {//upleft
+//                    tempans = xdiff * -10 + 8;
+//                }
+//                if (xdiff > 0 && ydiff > 0) {// downright
+//                    tempans = xdiff * 10 + 4;
+//                }
+//                if (xdiff > 0 && ydiff < 0) { //upright
+//                    tempans = xdiff * 10 + 2;
+//                }
+//                if (xdiff < 0 && ydiff > 0) { // downleft
+//                    tempans = ydiff * 10 + 6;
+//                }
+//            } else { //line
+//                if (ydiff == 0 && xdiff > 0) { // right
+//                    tempans = xdiff * 10 + 3;
+//                }
+//                if (ydiff == 0 && xdiff < 0) {// left
+//                    tempans = xdiff * -10 + 7;
+//                }
+//                if (xdiff == 0 && ydiff < 0) {// up
+//                    tempans = ydiff * -10 + 1;
+//                }
+//                if (xdiff == 0 && ydiff > 0) {// down
+//                    tempans = ydiff * 10 + 5;
+//                }
+//            }
+//            ans = Math.min(ans, tempans);
+//        }
+//        if(ans == Integer.MAX_VALUE) ans = 0;
+//        return ans;
     }
     public  int senseNearby(Unit u, String direction){
         int ans =  0;
