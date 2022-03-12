@@ -921,16 +921,24 @@ public class Game {
         System.out.println("Ezgaem");
     }
 
-    public  void main(String[] args) {
-        Initialize();
+    public static void main(String[] args) {
+        while(true) {
+            Game gay = Game.getInstance();
+            gay.Initialize();
 
 //        GetInput();
-        try {
-            Update();
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());}
+            try {
+                gay.Update();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            }
 
+            while(!canWeExitNow)
+                getInput()
+                break;
+
+        }
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][3])); //17
