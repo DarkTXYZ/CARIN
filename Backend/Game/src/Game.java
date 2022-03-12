@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Game {
+    
 
     static int m = 20,n = 20;
     static Unit[][] field= new Unit[m][n];
@@ -33,6 +34,7 @@ public class Game {
     static List<Unit> atbdOrder = new ArrayList<>();
     static Objective gObjective;
     static int virusLimit;
+    static int virusLimitCount;
     static Shop shop;
 
     public static void initObjective(int maxElim){
@@ -86,17 +88,16 @@ public class Game {
             addVirus(u.fst(),u.snd());
         }
     }
-    static Queue<Pair<Unit,Pair<Integer,Integer>>>addList = new LinkedList<>();
+    static Queue<Unit>addList = new LinkedList<>();
     public static void updateAddList(){
         while (!addList.isEmpty()){
-            Pair<Unit,Pair<Integer,Integer>> u = addList.poll();
-            addATBD(u.fst(),u.snd());
+           Unit u = addList.poll();
+           order.add(u);
         }
     }
 
     public static void addATBD(Unit a, Pair<Integer,Integer> position){
         if(a.getCost()>shop.getCurrency()) return;
-        shop.setCurrency(-a.getCost());
         int y = position.fst(); int x = position.snd();
         if(y>m || x>n) {
             System.out.println("out of range");
@@ -126,7 +127,9 @@ public class Game {
         int y = position.fst(); int x = position.snd();
         unit.setPos(position);
         field[y][x] = unit;
-        addList.add(new Pair<>(unit,new Pair<>(y,x)));
+//        addList.add(new Pair<>(unit,new Pair<>(y,x)));
+//        order.add(unit);
+        addList.add(unit);
         String s = String.valueOf(y)+" "+String.valueOf(x);
         emptySlot.remove(s);
 
@@ -544,7 +547,7 @@ public class Game {
             "  else if (virusLoc % 10 - 1) then shoot upright " +
             "  else shoot up " +
             "else {} "
-            ,20,1,1);
+            ,20,2,1);
     static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,2);
     static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,3);
     static Unit[] Atbds = {Merci,Ana,Lucio};
@@ -570,7 +573,8 @@ public class Game {
         }
         Shop.updateCost(cost);
         System.out.println(shop.getMap().keySet());
-        initObjective(10);
+        initObjective(100);
+        virusLimit = gObjective.snd();
         for(int i = 0;i<m;i++){
             for(int j = 0;j<n;j++){
                 String s = String.valueOf(i)+" "+String.valueOf(j);
@@ -592,10 +596,10 @@ public class Game {
         int pauseState = Controller.getInputData("pauseState");
         int speedState = Controller.getInputData("speedState");
 
-        System.out.println(placeState);
-        System.out.println(moveState);
-        System.out.println(pauseState);
-        System.out.println(speedState);
+//        System.out.println(placeState);
+//        System.out.println(moveState);
+//        System.out.println(pauseState);
+//        System.out.println(speedState);
 
         if(placeState == 2) {
             JSONObject data = new JSONObject();
@@ -608,6 +612,7 @@ public class Game {
 
             // SPAWN ATBD
             addATBD(createNewATBD(skin-1),new Pair<>(posy,posx));
+
             List<Integer> posx2 =new ArrayList<>();
             List<Integer> posy2 =new ArrayList<>();
             List<Integer> hp =new ArrayList<>();
@@ -684,6 +689,8 @@ public class Game {
             }
             */
             //fetch continue
+            updateAddList();
+            updateDeadlist();
             Iterator<Unit> it = order.iterator();
             while (it.hasNext()){
                 GetInput();
@@ -716,7 +723,7 @@ public class Game {
                     }
                     List<Integer> cost = shop.getcostList();
                     Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-                Thread.sleep(100);
+                Thread.sleep(100/order.size());
 
 
 
@@ -724,23 +731,27 @@ public class Game {
             }
             updateAddList();
             updateDeadlist();
-            if( spawnCount >= 1 ){
-                rand = (int)(Math.random() * 3);
-                if( rand == 0 ){
-                    addVirus(createNewVirus(0), randomTile());
-                    spawnCount = spawnCount - rand;
-                    addATBD(createNewATBD(1),randomTile());
+            if(virusLimitCount<virusLimit) {
+                if (spawnCount >= 1) {
+                    rand = (int) (Math.random() * 3);
+                    if (rand == 0) {
+                        addVirus(createNewVirus(0), randomTile());
+                        spawnCount = spawnCount - rand;
+                        virusLimitCount++;
+                    }
+                    if (rand == 1) {
+                        addVirus(createNewVirus(1), randomTile());
+                        spawnCount = spawnCount - 2 * rand;
+                        virusLimitCount++;
+                    }
+                    if (rand == 2) {
+                        addVirus(createNewVirus(2), randomTile());
+                        spawnCount = spawnCount - 3 * rand;
+                        virusLimitCount++;
+                    }
+                } else {
+                    spawnCount++;
                 }
-                if( rand == 1 ){
-                    addVirus(createNewVirus(1), randomTile());
-                    spawnCount = spawnCount - 2*rand;
-                }
-                if( rand == 2 ){
-                    addVirus(createNewVirus(2), randomTile());
-                    spawnCount = spawnCount - 3*rand;
-                }
-            }else{
-                spawnCount++;
             }
             visualize();
 
@@ -774,7 +785,7 @@ public class Game {
 //            System.out.println(posy);
 //            System.out.println(skin);
 
-            Thread.sleep(1000/speed);
+            Thread.sleep(500/speed);
             //fetch api
 
 
@@ -941,7 +952,7 @@ public class Game {
             System.out.println("--------7--------");
             System.out.print("Antibody Move Cost : ");
             atbdMoveCost = s.nextInt();
-            if( atbdMoveCost <= 0 || atbdMoveCost > initialATBDCredits ){ throw new IOException(); }
+            if( atbdMoveCost <= 0 ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
             System.out.println("--------8--------");
             System.out.print("Antibody Credits Drop : ");
