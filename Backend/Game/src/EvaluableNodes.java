@@ -61,15 +61,15 @@ class SensorExpression implements Evaluable {
     public int eval() {
         if (Objects.equals(command, "virus")) {
             System.out.println("Finding Closest Virus");
-            return Game.senseClosestVirus(u);
+            return Game.getInstance().senseClosestVirus(u);
 
         } else if (Objects.equals(command, "antibody")) {
             System.out.println("Finding Closest ATBD");
 
-            return Game.senseClosestATBD(u);
+            return Game.getInstance().senseClosestATBD(u);
         } else {
             System.out.println("Finding Closest Unit in " + direction + " direction");
-            return Game.senseNearby(u,direction);
+            return Game.getInstance().senseNearby(u,direction);
         }
     }
 }

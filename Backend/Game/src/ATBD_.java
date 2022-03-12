@@ -36,7 +36,7 @@ public class ATBD_ extends UnitImpl {
 
     @Override
     public void shoot(String direction) {
-        int target = Game.senseNearby(this,direction);
+        int target = Game.getInstance().senseNearby(this,direction);
         if(target == 0) return;
         if(target%10 == 2){return;} //11 /11 21 31 41
         int attckdistance = (attackRange+1)*10;
@@ -54,13 +54,13 @@ public class ATBD_ extends UnitImpl {
             if(direction.equals("downright")) targetPos = new Pair<>(y+coord,x+coord);
             if(direction.equals("upleft")) targetPos = new Pair<>(y-coord,x-coord);
             if(direction.equals("downleft")) targetPos = new Pair<>(y+coord,x-coord);
-            Game.gShoot(targetPos,this);
+            Game.getInstance().gShoot(targetPos,this);
         }
         return;
     }
 
     @Override
     public void destruct() {
-        Game.destroyATBD(this,previousAttacker);
+        Game.getInstance().destroyATBD(this,previousAttacker);
     }
 }

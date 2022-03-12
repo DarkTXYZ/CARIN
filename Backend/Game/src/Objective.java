@@ -4,6 +4,6 @@ public class Objective extends Pair<Integer,Integer>{
     }
     public void modfst(int mod){
         fst+=mod;
-        if(fst == snd) Game.notifyReachElim();
+        if(fst == snd) Game.getInstance().notifyReachElim();
     }
 }
