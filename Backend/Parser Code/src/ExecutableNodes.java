@@ -44,6 +44,7 @@ class AssignmentStatement implements Executable {
 
     @Override
     public void execute() {
+//        System.out.println(identifier + " = " + expression.eval());
         bindings.put(identifier, expression.eval());
     }
 }
@@ -89,22 +90,41 @@ class BlockStatement implements Executable {
 
 class Program extends BlockStatement {
 
+    Map<String, Integer> bindings;
+
+    public Program(Map<String, Integer> bindings) {
+        this.bindings = bindings;
+        statements = new LinkedList<>();
+    }
+
+    @Override
+    public void execute() {
+        bindings.put("isActionTaken" , 0);
+        for (Executable statement : statements)
+            statement.execute();
+    }
 }
+
 
 
 class AttackCommand implements Executable {
 
     Unit unit;
     String direction;
+    Map<String, Integer> bindings;
 
-    public AttackCommand(Unit unit, String direction) {
+    public AttackCommand(Unit unit, String direction , Map<String, Integer> bindings) {
         this.unit = unit;
         this.direction = direction;
+        this.bindings = bindings;
     }
 
     @Override
     public void execute() {
-        unit.shoot(direction);
+        if(bindings.get("isActionTaken") == 0) {
+            unit.shoot(direction);
+            bindings.put("isActionTaken" , 1);
+        }
     }
 }
 
@@ -112,14 +132,19 @@ class MoveCommand implements Executable {
 
     Unit unit;
     String direction;
+    Map<String, Integer> bindings;
 
-    public MoveCommand(Unit unit, String direction) {
+    public MoveCommand(Unit unit, String direction, Map<String, Integer> bindings) {
         this.unit = unit;
         this.direction = direction;
+        this.bindings = bindings;
     }
 
     @Override
     public void execute() {
-        unit.move(direction);
+        if(bindings.get("isActionTaken") == 0) {
+            unit.move(direction);
+            bindings.put("isActionTaken" , 1);
+        }
     }
 }

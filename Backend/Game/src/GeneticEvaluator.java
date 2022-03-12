@@ -18,7 +18,7 @@ public class GeneticEvaluator implements Evaluator {
     // GeneticEvaluator field
     private final String[] reservedWordList = {"antibody", "down", "downleft", "downright",
             "else", "if", "left", "move", "nearby", "right",
-            "shoot", "then", "up", "upleft", "upright", "virus", "while"};
+            "shoot", "then", "up", "upleft", "upright", "virus", "while" , "isActionTaken"};
     private final Set<String> reservedWords = new HashSet<>(List.of(reservedWordList));
     private final String[] directionWordList = {"up", "left", "right", "down",
             "upleft", "upright", "downleft", "downright"};
@@ -38,15 +38,17 @@ public class GeneticEvaluator implements Evaluator {
 
     @Override
     public Executable evaluate(Unit unit) throws TokenizeErrorException, SyntaxErrorException {
+
         tkz.initialize(unit.getGene());
         this.bindings = unit.getBindings();
         this.unit = unit;
 
         return parseProgram();
+
     }
 
     private Executable parseProgram() throws SyntaxErrorException, TokenizeErrorException {
-        Program program = new Program();
+        Program program = new Program(bindings);
 
         program.addStatement(parseStatement());
         while (tkz.hasNext())
@@ -96,7 +98,7 @@ public class GeneticEvaluator implements Evaluator {
         String direction = tkz.consume();
         if (!directionWords.contains(direction))
             throw new SyntaxErrorException("Missing direction word");
-        return new MoveCommand(unit, direction);
+        return new MoveCommand(unit, direction , bindings);
     }
 
     private Executable parseAttackCommand() throws SyntaxErrorException, TokenizeErrorException {
@@ -104,7 +106,7 @@ public class GeneticEvaluator implements Evaluator {
         String direction = tkz.consume();
         if (!directionWords.contains(direction))
             throw new SyntaxErrorException("Missing direction word");
-        return new AttackCommand(unit, direction);
+        return new AttackCommand(unit, direction , bindings);
     }
 
     private Executable parseBlockStatement() throws SyntaxErrorException, TokenizeErrorException {

@@ -58,13 +58,13 @@ class SensorExpression implements Evaluable {
     public int eval() {
         if (Objects.equals(command, "virus")) {
             System.out.println("Finding Closest Virus");
-            return 69;
+            return 11;
         } else if (Objects.equals(command, "antibody")) {
             System.out.println("Finding Closest ATBD");
-            return 420;
+            return 12;
         } else {
             System.out.println("Finding Closest Unit in " + direction + " direction");
-            return 748;
+            return 13;
         }
     }
 }

@@ -3,7 +3,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: theme => ({
+        'BG': "url('./lib/DarkSunrise.jpg')"
+      }),
+    },
   },
   plugins: [],
 }

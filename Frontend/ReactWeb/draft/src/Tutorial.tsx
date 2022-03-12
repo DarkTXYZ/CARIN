@@ -1,4 +1,4 @@
-function Tutorial(props: any) {
+function Tutorial() {
     return (
         <div className="select-none bg-gradient-to-r from-gray-100 to-gray-300 w-3/4 to-blue-500 flex flex-col items-center self-center rounded-xl p-2 text-2xl">
             <div className="border-2">

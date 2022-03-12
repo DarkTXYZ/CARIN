@@ -1,0 +1,36 @@
+gangster
+	- just normal creep (low stat) 
+	- fire range : 1
+	- senseATBD and go that way
+	- senseATBD < 1 shoot that way
+pistolDude
+ 	- heavy damage 
+	- fire range : 3
+	- move : senseATBD and go that way if not nearby
+ 	- else go opoosite way
+	- move move move shoot
+
+
+
+
+
+sniper
+	- super heavy damage
+	- fire range : 6
+	- move cooldown : 4 
+		- senseATBD and go the opposite way
+	- shoot cooldown : 8
+
+Merci
+	- gunner
+	- senseVirus and shoot that way
+	- fireRange: 3
+Ana
+	- sniper 
+	- fire range : 8
+	- senseVirus and shoot that way
+	- senseNearby < 3 -> dont shoot
+Lucio
+	- 
+
+
