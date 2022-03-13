@@ -46,11 +46,13 @@ public class Controller {
 
 //        sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
 
-        getInput();
-        int selectedX = getInputData("selectedX");
-        int move = getInputData("moveState");
-        System.out.println(selectedX);
-        System.out.println(move);
+//        getInput();
+//        int selectedX = getInputData("selectedX");
+//        int move = getInputData("moveState");
+//        System.out.println(selectedX);
+//        System.out.println(move);
+
+        sendGameState(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -76,11 +78,29 @@ public class Controller {
 
     }
 
+    public static void sendGameState(int state){
+
+        JSONObject obj = new JSONObject();
+        obj.put("state", state);
+
+        putData("http://localhost:8080/gamedata/put" , obj);
+
+    }
+
+    public static void sendPlaceState(int state){
+
+        JSONObject obj = new JSONObject();
+        obj.put("placeState", state);
+
+        putData("http://localhost:8080/input/put/placestate" , obj);
+
+    }
+
     public static void putData(String link , JSONObject data) {
         try {
             String rawData = data.toJSONString();
-//            System.out.println("Raw GameData PUT:");
-//            System.out.println(rawData);
+            System.out.println("Raw GameData PUT:");
+            System.out.println(rawData);
 
             URL url = new URL(link);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -93,7 +113,7 @@ public class Controller {
                 os.write(input, 0, input.length);
             }
 
-//            System.out.println("Response:");
+            System.out.println("Response:");
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 StringBuilder response = new StringBuilder();
@@ -101,9 +121,9 @@ public class Controller {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
-//                System.out.println(response);
+                System.out.println(response);
             }
-//            System.out.println("---------------------");
+            System.out.println("---------------------");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Exit Program");

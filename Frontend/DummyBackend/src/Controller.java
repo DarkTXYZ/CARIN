@@ -72,6 +72,11 @@ public class Controller {
 
         sendGameData(m, n, state, shopState, currency, cost, posX, posY, hp, hpMax, type, objective, objectiveMax);
 
+        JSONObject obj = new JSONObject();
+        obj.put("placeState", 8128);
+
+        putData("http://localhost:8080/input/put/placestate" , obj);
+
 
 
     }

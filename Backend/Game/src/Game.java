@@ -625,7 +625,7 @@ public class Game {
     static Unit sniper = new Virus(150,20,160,"move down",1,6);
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(10,20,1000,"virusLoc =  virus " +
+    static Unit Merci = new ATBD_(10,20,1,"virusLoc =  virus " +
             "if(virusLoc / 10 - 3) then { " +
             " " +
             "} else { " +
@@ -747,6 +747,15 @@ public class Game {
             int posx = Controller.getInputData("posX_move");
             int posy = Controller.getInputData("posY_move");
             moveATBD(field[ogY][ogX],new Pair<>(posy,posx));
+        }
+
+        if(placeState == 69) {
+            how2Play = true;
+            Controller.sendPlaceState(0);
+        }
+        if(placeState == 999) {
+            waitingRestart = true;
+            Controller.sendPlaceState(0);
         }
 
         if(pauseState == 1){
@@ -884,6 +893,9 @@ public class Game {
 
             Game gay = Game.getInstance();
             gay.how2Play = false;
+            Controller.sendGameState(0);
+            Controller.sendPlaceState(0);
+
             while (!gay.how2Play){
                 gay.GetInput();
             }
@@ -894,14 +906,56 @@ public class Game {
             } catch (GameOverException e) {
                 gay.lose = true;
                 //tell api
+                List<Integer> posx =new ArrayList<>();
+                List<Integer> posy =new ArrayList<>();
+                List<Integer> hp =new ArrayList<>();
+                List<Integer> maxHp =new ArrayList<>();
+                List<Integer> skin =new ArrayList<>();
+                int cur = gay.shop.getCurrency();
+                int[] obj = {gay.gObjective.fst(),gay.gObjective.snd()};
+                gay.shop.updateStatus();
+                List<Boolean> shopStat = gay.shop.getStatus();
+                for(Unit u: gay.order){
+                    maxHp.add(u.getMaxHp());
+                    hp.add(u.getHp());
+                    posx.add(u.getPosition().snd());
+                    posy.add(u.getPosition().fst());
+                    skin.add(u.getSkin());
+                }
+                List<Integer> cost = gay.shop.getcostList();
+                Controller.sendGameData(gay.n,gay.m,3,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
+
                 System.out.println(e.getMessage());
 
             }catch (GameWinException e){
                 gay.win = true;
                 //tell api
+                List<Integer> posx =new ArrayList<>();
+                List<Integer> posy =new ArrayList<>();
+                List<Integer> hp =new ArrayList<>();
+                List<Integer> maxHp =new ArrayList<>();
+                List<Integer> skin =new ArrayList<>();
+                int cur = gay.shop.getCurrency();
+                int[] obj = {gay.gObjective.fst(),gay.gObjective.snd()};
+                gay.shop.updateStatus();
+                List<Boolean> shopStat = gay.shop.getStatus();
+                for(Unit u: gay.order){
+                    maxHp.add(u.getMaxHp());
+                    hp.add(u.getHp());
+                    posx.add(u.getPosition().snd());
+                    posy.add(u.getPosition().fst());
+                    skin.add(u.getSkin());
+                }
+                List<Integer> cost = gay.shop.getcostList();
+                Controller.sendGameData(gay.n,gay.m,2,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
+
                 System.out.println(e.getMessage());
             }
             gay.waitingRestart = false;
+
+            Controller.sendPlaceState(0);
             while (!gay.waitingRestart) {
                 gay.GetInput();
             }

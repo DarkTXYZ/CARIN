@@ -38,6 +38,7 @@ public class Shop {
             instance.status.put(cost[i],false);
         }
     }
+    
     public Map<Integer, Boolean> getMap(){
         return status;
     }
