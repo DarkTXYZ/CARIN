@@ -12,7 +12,6 @@ public class Game {
         if(Game.instance == null) Game.instance = new Game();
         return Game.instance;
     }
-//    static int m = 20,n = 20;
     private int m,n;
     private Unit[][] field= new Unit[m][n];
     protected  final String inFile = "src/configfile.in";
@@ -48,43 +47,28 @@ public class Game {
     //tell if we win
     public  void notifyReachElim(){
         System.out.println("All viruses have been eliminated");
+
     }
     public  Pair<Integer,Integer> randomTile()throws GameOverException{
-        try {
             //write random here
             Random r = new Random();
             int area;
+            if(emptySlot.size() == 0 && !atbdOrder.isEmpty()) return new Pair<>(-1,-1);
+            if(emptySlot.size() == 0 && atbdOrder.isEmpty()){
+                throw new GameOverException("You lose");
+            }
             if (emptySlot.size() == 1) {
                 area = 1;
             } else {
                 area = emptySlot.size() / 2;
             }
             int rand = r.nextInt(area);
-
             String s = emptySlot.toArray(new String[emptySlot.size()])[rand];
-//            int length = s.length()/2;
-//            if(length %2 ==1&&s.length()>2) length++;
-//            //1 2
-//            //2 1
-//            // 01 0
-//            int runner = 0;
-//            String posY =""; String posX="";
-//            while (runner<s.length()) {
-//                if (runner < length) {
-//                    posY += s.charAt(runner);
-//                }else{
-//                    posX+=s.charAt(runner);
-//                }
-//                runner++;
-//            }
             String[] arr = s.split(" ");
             int y = Integer.parseInt(arr[0]);
             int x = Integer.parseInt(arr[1]);
             System.out.println("y = " + y+" x = "+x);
             return new Pair<>(y, x);
-        }catch (Exception e){
-            throw new GameOverException("Game over");
-        }
     }
     Queue<Pair<Unit,Pair<Integer,Integer>>>deadList = new LinkedList<>();
     public  void updateDeadlist(){
@@ -795,11 +779,9 @@ public class Game {
     }
     static int pause = 0;
     static int speed = 1;
-    public  void Update() throws GameOverException, InterruptedException {
-
+    public  void Update() throws GameOverException,GameWinException{
         int totalTime = 0;
         long prevTime = System.currentTimeMillis();
-
         int rand;
         while(gObjective.snd() - gObjective.fst() > 0){
             GetInput();
@@ -878,7 +860,7 @@ public class Game {
                 }
                 Game.getInstance().visualize();
                 if(shop.getCurrency()<lowestcost){
-                    throw new GameOverException("Game over can not place anymore ATBD");
+                    throw new GameOverException("You lose");
                 }
             }
 
@@ -919,26 +901,39 @@ public class Game {
 
         }
         System.out.println("Ezgaem");
+        throw new GameWinException("You win");
     }
 
+    boolean how2Play = false;
+    boolean waitingRestart;
+    boolean lose = false;
+    boolean win = false;
+
     public static void main(String[] args) {
-        while(true) {
+        while (true) {
             Game gay = Game.getInstance();
             gay.Initialize();
 
 //        GetInput();
             try {
                 gay.Update();
-            } catch (Exception e) {
+            } catch (GameOverException e) {
                 e.printStackTrace();
+                gay.lose = true;
+                System.out.println(e.getMessage());
+            }catch (GameWinException e){
+                gay.win = true;
                 System.out.println(e.getMessage());
             }
 
-            while(!canWeExitNow)
-                getInput()
-                break;
+//            while (!canWeExitNow) {
+//                getInput();
+//                break;
+//
+//            }
 
         }
+    }
 //        System.out.println(Game.senseClosestVirus(field[2][2])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][1])); //13
 //        System.out.println(Game.senseClosestATBD(field[2][3])); //17
@@ -1029,7 +1024,7 @@ public class Game {
 //            visualize();
 //            field[des1.fst()][des1.snd()].destruct();
 //            visualize();
-    }
+
 
 
 
