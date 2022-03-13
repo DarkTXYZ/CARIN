@@ -644,7 +644,8 @@ public class Game {
 
     static int virustemplate = viruses.length;
     static int atbdtemplate = Atbds.length;
-    static int[] cost = {Merci.getCost(),Ana.getCost(),Lucio.getCost()};
+    static int[] cost;
+
 
 
 
@@ -652,6 +653,10 @@ public class Game {
     int lowestcost = Integer.MAX_VALUE;
     public  void Initialize() {
         config(inFile);
+        for(int i=0;i<Atbds.length;i++){
+            cost[i] = Atbds[i].getCost();
+        }
+
         shop = Shop.getInstance(cost);
         shop.setCurrency(initialATBDCredits);
         for (int i = 0; i < virustemplate; i++) {
@@ -831,7 +836,7 @@ public class Game {
                     }
                 }
                 Game.getInstance().visualize();
-                if(shop.getCurrency()<lowestcost){
+                if(shop.getCurrency()<lowestcost&&atbdOrder.size() == 0){
                     throw new GameOverException("You lose");
                 }
             }
@@ -848,6 +853,7 @@ public class Game {
             int[] obj = {gObjective.fst(),gObjective.snd()};
             shop.updateStatus();
             List<Boolean> shopStat = shop.getStatus();
+            System.out.println("shopStat"+ shopStat);
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
                 hp.add(u.getHp());

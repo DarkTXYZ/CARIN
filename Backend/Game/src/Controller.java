@@ -99,8 +99,8 @@ public class Controller {
     public static void putData(String link , JSONObject data) {
         try {
             String rawData = data.toJSONString();
-            System.out.println("Raw GameData PUT:");
-            System.out.println(rawData);
+//            System.out.println("Raw GameData PUT:");
+//            System.out.println(rawData);
 
             URL url = new URL(link);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -113,7 +113,7 @@ public class Controller {
                 os.write(input, 0, input.length);
             }
 
-            System.out.println("Response:");
+//            System.out.println("Response:");
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 StringBuilder response = new StringBuilder();
@@ -121,12 +121,12 @@ public class Controller {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
-                System.out.println(response);
+//                System.out.println(response);
             }
-            System.out.println("---------------------");
+//            System.out.println("---------------------");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Exit Program");
+//            System.out.println("Exit Program");
             System.exit(0);
         }
 
@@ -136,9 +136,9 @@ public class Controller {
         try {
             input = getData("http://localhost:8080/input");
         } catch(Exception e) {
-            System.out.println("Can't get data");
+//            System.out.println("Can't get data");
             e.printStackTrace();
-            System.out.println("Exit Program");
+//            System.out.println("Exit Program");
             System.exit(0);
         }
     }

@@ -111,11 +111,11 @@ public abstract class UnitImpl implements Unit {
     }
 
     public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost){
-        maxHp=cHp;
-        Hp=cHp;
-        Atk = cAtk;
-        lifeSteal =cLs;
-        cost = ccost;
-        moveCost=cmoveCost;
+        maxHp+=cHp;
+        Hp+=cHp;
+        Atk += cAtk;
+        lifeSteal +=cLs;
+        cost += ccost;
+        moveCost+=cmoveCost;
     }
 }
