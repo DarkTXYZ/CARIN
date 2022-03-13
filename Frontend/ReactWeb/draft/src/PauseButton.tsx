@@ -21,9 +21,6 @@ function PauseButton(){
                 pauseState : 0
             })
         }
-        Controller.sendInput("speedstate",{
-            speedState: 0
-        })
     }
 
     let modify = ""

@@ -21,9 +21,6 @@ function SpeedButton(){
                 speedState : 0
             })
         }
-        Controller.sendInput("pausestate",{
-            pauseState: 0
-        })
 
     }
 
