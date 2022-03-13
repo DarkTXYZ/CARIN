@@ -662,7 +662,13 @@ public class Game {
             cost[i] = Atbds[i].getCost();
             if(lowestcost>cost[i]) lowestcost = cost[i];
         }
+        field = new Unit[m][n];
+        order = new ArrayList<>();
+        virusOrder = new ArrayList<>();
+        atbdOrder = new ArrayList<>();
+
         Shop.updateCost(cost);
+
         System.out.println(shop.getMap().keySet());
         initObjective(100);
         virusLimit= gObjective.snd();
@@ -673,9 +679,6 @@ public class Game {
                 emptySlot.add(s);
             }
         }
-//        addATBD(createNewATBD(0), new Pair<>(2, 2));
-//        addATBD(createNewATBD(0),new Pair<>(,10));
-//        addATBD(createNewATBD(0),new Pair<>(19,19));
         System.out.println(emptySlot);
 
         JSONObject data = new JSONObject();
@@ -744,25 +747,6 @@ public class Game {
             int posx = Controller.getInputData("posX_move");
             int posy = Controller.getInputData("posY_move");
             moveATBD(field[ogY][ogX],new Pair<>(posy,posx));
-            // MOVE ATBD
-//            List<Integer> posx2 =new ArrayList<>();
-//            List<Integer> posy2 =new ArrayList<>();
-//            List<Integer> hp =new ArrayList<>();
-//            List<Integer> maxHp =new ArrayList<>();
-//            List<Integer> skin =new ArrayList<>();
-//            int cur = shop.getCurrency();
-//            int[] obj = {gObjective.fst(),gObjective.snd()};
-//            shop.updateStatus();
-//            List<Boolean> shopStat = shop.getStatus();
-//            for(Unit u: order){
-//                maxHp.add(u.getMaxHp());
-//                hp.add(u.getHp());
-//                posx2.add(u.getPosition().snd());
-//                posy2.add(u.getPosition().fst());
-//                skin.add(u.getSkin());
-//            }
-//            List<Integer> cost = shop.getcostList();
-//            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin,obj[0],obj[1]);
         }
 
         if(pauseState == 1){
@@ -777,6 +761,9 @@ public class Game {
             speed = 1;
         }
     }
+
+
+
     static int pause = 0;
     static int speed = 1;
     public  void Update() throws GameOverException,GameWinException{
@@ -809,30 +796,6 @@ public class Game {
                     }catch (DeadException e){
                         it.remove();
                     }
-//
-//                    List<Integer> posx =new ArrayList<>();
-//                    List<Integer> posy =new ArrayList<>();
-//                    List<Integer> hp =new ArrayList<>();
-//                    List<Integer> maxHp =new ArrayList<>();
-//                    List<Integer> skin =new ArrayList<>();
-//                    int cur = shop.getCurrency();
-//                    int[] obj = {gObjective.fst(),gObjective.snd()};
-//                    shop.updateStatus();
-//                    List<Boolean> shopStat = shop.getStatus();
-//                    for(Unit u: order){
-//                        maxHp.add(u.getMaxHp());
-//                        hp.add(u.getHp());
-//                        posx.add(u.getPosition().snd());
-//                        posy.add(u.getPosition().fst());
-//                        skin.add(u.getSkin());
-//                    }
-//                    List<Integer> cost = shop.getcostList();
-//                    Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-//                    Thread.sleep(500/ order.size() /speed);
-
-
-
-
                 }
                 updateDeadlist();
                 if(limitCount<virusLimit) {
@@ -905,32 +868,43 @@ public class Game {
     }
 
     boolean how2Play = false;
-    boolean waitingRestart;
+    boolean waitingRestart = false;
+
+
+
     boolean lose = false;
     boolean win = false;
+    public void reset(){
+
+    }
 
     public static void main(String[] args) {
         while (true) {
+
+
             Game gay = Game.getInstance();
+            gay.how2Play = false;
+            while (!gay.how2Play){
+                gay.GetInput();
+            }
             gay.Initialize();
 
-//        GetInput();
             try {
                 gay.Update();
             } catch (GameOverException e) {
-                e.printStackTrace();
                 gay.lose = true;
+                //tell api
                 System.out.println(e.getMessage());
+
             }catch (GameWinException e){
                 gay.win = true;
+                //tell api
                 System.out.println(e.getMessage());
             }
-
-//            while (!canWeExitNow) {
-//                getInput();
-//                break;
-//
-//            }
+            gay.waitingRestart = false;
+            while (!gay.waitingRestart) {
+                gay.GetInput();
+            }
 
         }
     }
@@ -1035,7 +1009,6 @@ public class Game {
             System.out.println("--------1--------");
             m = s.nextInt();
             n = s.nextInt();
-            field= new Unit[m][n];
             if( m <= 0 || n <= 0){ throw new IOException(); }
             System.out.println("m : " + m);
             System.out.println("n : " + n);

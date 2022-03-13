@@ -42,13 +42,8 @@ public class Shop {
         return status;
     }
 
-
-    private void updateCurrency(){
-        currency ++;
-    }
-
     public void setCurrency(int mod){
-        currency+=mod;
+        currency=mod;
     }
     public int getCurrency(){return currency;}
     public List<Boolean> getStatus(){
