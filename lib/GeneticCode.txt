@@ -1,4 +1,49 @@
-// gangster
+gvb  ew // Merci
+virusLoc =  virus
+if(virusLoc / 10 - 1) then {
+
+} else if(virusLoc) {
+    if (virusLoc % 10 - 7) then shoot upleft
+    else if (virusLoc % 10 - 6) then shoot left
+    else if (virusLoc % 10 - 5) then shoot downleft
+    else if (virusLoc % 10 - 4) then shoot down
+    else if (virusLoc % 10 - 3) then shoot downright
+    else if (virusLoc % 10 - 2) then shoot right
+    else if (virusLoc % 10 - 1) then shoot upright
+    else shoot up
+}
+
+//Ana
+virusLoc =  virus
+if(virusLoc / 10 - 4) then {
+
+} else if(virusLoc) {
+    if (virusLoc % 10 - 7) then shoot upleft
+    else if (virusLoc % 10 - 6) then shoot left
+    else if (virusLoc % 10 - 5) then shoot downleft
+    else if (virusLoc % 10 - 4) then shoot down
+    else if (virusLoc % 10 - 3) then shoot downright
+    else if (virusLoc % 10 - 2) then shoot right
+    else if (virusLoc % 10 - 1) then shoot upright
+    else shoot up
+}
+
+//Lucio
+virusLoc =  virus
+if(virusLoc / 10 - 2) then {
+
+} else if(virusLoc) {
+    if (virusLoc % 10 - 7) then shoot upleft
+    else if (virusLoc % 10 - 6) then shoot left
+    else if (virusLoc % 10 - 5) then shoot downleft
+    else if (virusLoc % 10 - 4) then shoot down
+    else if (virusLoc % 10 - 3) then shoot downright
+    else if (virusLoc % 10 - 2) then shoot right
+    else if (virusLoc % 10 - 1) then shoot upright
+    else shoot up
+}
+
+// Gangster
 atbdLoc = antibody
 if(atbdLoc / 10 - 1) then {
     if (atbdLoc % 10 - 7) then move upleft
@@ -20,7 +65,7 @@ if(atbdLoc / 10 - 1) then {
     else shoot up
 } else {
     virusLoc = virus
-    if(virusLoc / 10 - 1) then {
+    if(virusLoc) then {
         if (virusLoc % 10 - 7) then move upleft
         else if (virusLoc % 10 - 6) then move left
         else if (virusLoc % 10 - 5) then move downleft
@@ -91,26 +136,4 @@ if(timeUnit % 4) then {
     } else {
         
     }
-}
-
-
-
-
-
-
-
-
-// Merci
-virusLoc =  virus
-if(virusLoc / 10 - 3) then {
-
-} else if(virusLoc) {
-    if (virusLoc % 10 - 7) then shoot upleft
-    else if (virusLoc % 10 - 6) then shoot left
-    else if (virusLoc % 10 - 5) then shoot downleft
-    else if (virusLoc % 10 - 4) then shoot down
-    else if (virusLoc % 10 - 3) then shoot downright
-    else if (virusLoc % 10 - 2) then shoot right
-    else if (virusLoc % 10 - 1) then shoot upright
-    else shoot up
 }
