@@ -644,7 +644,7 @@ public class Game {
 
     static int virustemplate = viruses.length;
     static int atbdtemplate = Atbds.length;
-    static int[] cost;
+    static int[] cost = new int[3];
 
 
 
