@@ -14,7 +14,7 @@ public class Game {
     }
 
     protected  final String inFile = "src/configfile.in";
-
+    protected  final String geneinFile = "src/geneticcodeInput.in";
     private double spawnCount = 0;
     private double virusSpawnRate;
     private SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
@@ -37,7 +37,8 @@ public class Game {
     private int virusLimit;
     private int limitCount;
     private Shop shop;
-
+    protected String[] geneATBD = new String[3]; // init genetic code for each ATBD
+    protected String[] geneVirus = new String[3]; // init genetic code for each Virus
     public  void initObjective(int maxElim){
         gObjective = new Objective(0,maxElim);
     }
@@ -714,6 +715,7 @@ public class Game {
     int lowestcost = Integer.MAX_VALUE;
     public  void Initialize() {
         config(inFile);
+        geneticReader(geneinFile);
         for(int i=0;i<Atbds.length;i++){
             cost[i] = Atbds[i].getCost();
         }
@@ -1124,6 +1126,43 @@ public class Game {
 
 
 
+    public void geneticReader(String geneinFile){
+        try(FileReader fr = new FileReader(geneinFile);
+            Scanner s = new Scanner(fr)){
+            int geneATBDCount = 0;
+            int geneVirusCount = 0;
+            String temp = "";
+            while( geneATBDCount < 3){
+                while (true){
+                    String lastS = s.nextLine();
+                    if( lastS.equals("-")) break;
+//                    System.out.println( temp);
+                    temp = temp + " " + lastS;
+                }
+                geneATBD[geneATBDCount] = temp;
+                geneATBDCount++;
+                temp = "";
+            }
+            while ( geneVirusCount < 3){
+                while (true){
+                    String lastS = s.nextLine();
+                    if( lastS.equals("-")) break;
+                    temp = temp + " " + lastS;
+                }
+                geneVirus[geneVirusCount] = temp;
+                geneVirusCount++;
+                temp = "";
+            }
+            System.out.println("ATBD A : " + geneATBD[0] + " end");
+            System.out.println("ATBD B : " + geneATBD[1] + " end");
+            System.out.println("ATBD C : " + geneATBD[2] + " end");
+            System.out.println("Virus A : " + geneVirus[0] + " end");
+            System.out.println("Virus B : " + geneVirus[1] + " end");
+            System.out.println("Virus C : " + geneVirus[2] + " end");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public  void config(String inFile){
         try(FileReader fr = new FileReader(inFile);
