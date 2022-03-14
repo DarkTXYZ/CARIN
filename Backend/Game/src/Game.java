@@ -17,7 +17,8 @@ public class Game {
     protected  final String geneinFile = "src/geneticcodeInput.in";
     private double spawnCount = 0;
     private double virusSpawnRate;
-    private SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
+
+    Comparator<String> comp = new Comparator<String>() {
         @Override
         public int compare(String o1, String o2) {
             String[] arr1 = o1.split(" ");
@@ -27,7 +28,9 @@ public class Game {
             }
             return Integer.parseInt(arr1[0])-Integer.parseInt(arr2[0]);
         }
-    });
+    };
+
+    private SortedSet<String> emptySlot = new TreeSet<>(comp);
 
     private GeneticEvaluator g  = GeneticEvaluator.getInstance();
     private List<Unit> order = new ArrayList<>();
@@ -124,6 +127,7 @@ public class Game {
 
     }
     public  void moveATBD(Unit u,Pair<Integer,Integer> destination){
+        if(u.getHp() == 1) return;
         u.setHP(-atbdMoveCost);
         if(!Objects.equals(u.getClass().getName(),"ATBD_")) return;
         try {
@@ -583,6 +587,7 @@ public class Game {
     //field
     static int dff_m;
     static int dff_n;
+    static int df_drops;
 
     private int m,n;
     private Unit[][] field= new Unit[m][n];
@@ -593,7 +598,7 @@ public class Game {
 
 
 
-    static Unit gangster = new Virus(75,50,250,"atbdLoc = antibody " +
+    static Unit gangster = new Virus(75,50,250,1,4,"atbdLoc = antibody " +
             "virusLoc = virus " +
             "if(atbdLoc / 10 - 1) then { " +
             "    if (atbdLoc % 10 - 7) then move upleft " +
@@ -634,8 +639,8 @@ public class Game {
             "        else if (dir) then move upright " +
             "        else move up " +
             "    } " +
-            "}",1,4);
-    static Unit pistolDude = new Virus(150,100,200,"timeUnit = timeUnit + 1 " +
+            "}");
+    static Unit pistolDude = new Virus(150,100,200,3,5,"timeUnit = timeUnit + 1 " +
             "if(timeUnit % 4) then {  " +
             "    atbdLoc = antibody " +
             "    if(atbdLoc / 10 - 1) then { " +
@@ -683,11 +688,11 @@ public class Game {
             "    } else { " +
             "         " +
             "    } " +
-            "}",3,5);
-    static Unit sniper = new Virus(150,20,160,"move down",1,6);
+            "}");
+    static Unit sniper = new Virus(150,20,160,1,6,"move down");
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(10,20,1,"virusLoc =  virus " +
+    static Unit Merci = new ATBD_(1696969,20,696969,20,1,1,1,"virusLoc =  virus " +
             "if(virusLoc / 10 - 3) then { " +
             " " +
             "} else { " +
@@ -699,9 +704,9 @@ public class Game {
             "    else if (virusLoc % 10 - 2) then shoot right " +
             "    else if (virusLoc % 10 - 1) then shoot upright " +
             "    else shoot up " +
-            "}",20,1,1);
-    static Unit Ana = new ATBD_(80,50,600,"anaaa",12,2,2);
-    static Unit Lucio = new ATBD_(150,50,1000,"lucio",18,1,3);
+            "}");
+    static Unit Ana = new ATBD_(80,50,600,12,2,2,1,"anaaa");
+    static Unit Lucio = new ATBD_(150,50,1000,18,1,3,1,"lucio");
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
     static int virustemplate = viruses.length;
@@ -709,11 +714,13 @@ public class Game {
     static int[] cost = new int[3];
 
 
-
+//    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
+//            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
+//            , atbdMoveCost , atbdCreditsDrop;
 
 
     int lowestcost = Integer.MAX_VALUE;
-    public  void Initialize() {
+    public void Initialize() {
         config(inFile);
         geneticReader(geneinFile);
         for(int i=0;i<Atbds.length;i++){
@@ -723,8 +730,8 @@ public class Game {
         shop = Shop.getInstance(cost);
         shop.setCurrency(initialATBDCredits);
         for (int i = 0; i < virustemplate; i++) {
-            viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP, atbdPlacementCost, atbdMoveCost);
-            Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost);
+            viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP, atbdPlacementCost, atbdMoveCost,geneVirus[i]);
+            Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost,geneATBD[i]);
         }
         for (int i = 0; i < atbdtemplate; i++) {
             cost[i] = Atbds[i].getCost();
@@ -741,6 +748,7 @@ public class Game {
         initObjective(100);
         virusLimit= gObjective.snd();
         limitCount =0;
+        emptySlot = new TreeSet<>(comp);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 String s = String.valueOf(i) + " " + String.valueOf(j);
@@ -916,7 +924,7 @@ public class Game {
             int[] obj = {gObjective.fst(),gObjective.snd()};
             shop.updateStatus();
             List<Boolean> shopStat = shop.getStatus();
-            System.out.println("shopStat"+ shopStat);
+//            System.out.println("shopStat"+ shopStat);
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
                 hp.add(u.getHp());

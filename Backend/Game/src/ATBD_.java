@@ -3,20 +3,20 @@ import java.util.HashMap;
 public class ATBD_ extends UnitImpl {
 
 
-    public ATBD_(int atk, int lifeSteal, int hp, String gene, int cost,int attackRange, int skin){
+    public ATBD_(int atk, int lifeSteal, int hp, int cost,int attackRange, int skin, int moveCost, String gene){
         this.Atk = atk;
         this.maxHp = hp;
         this.Hp = hp;
         this.lifeSteal = lifeSteal;
         this.cost = cost;
-        this.moveCost = 2;
+        this.moveCost = moveCost;
         this.attackRange = attackRange;
         geneticCode = gene;
         this.skin = skin;
         bindings = new HashMap<>();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("genethingy");}
+        }catch (Exception e) {System.out.println("ATBD gene can't eval");}
     }
 
     public ATBD_(Unit template){
@@ -29,9 +29,10 @@ public class ATBD_ extends UnitImpl {
         bindings = new HashMap<>();
         skin = template.getSkin();
         cost = template.getCost();
+        moveCost = template.getMoveCost();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("genethingy");}
+        }catch (Exception e) {System.out.println("ATBD gene can't eval");}
     }
 
     @Override
