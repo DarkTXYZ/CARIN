@@ -884,7 +884,8 @@ public class Game {
                 }
                 updateDeadlist();
                 if(limitCount<virusLimit) {
-                    if (spawnCount >= 1) {
+                    double period = 1 / virusSpawnRate;
+                    if (spawnCount >= period) {
                         rand = (int) (Math.random() * 3);
                         if (rand == 0) {
                             addVirus(createNewVirus(0), randomTile());
@@ -955,7 +956,6 @@ public class Game {
 
     boolean how2Play = false;
     boolean waitingRestart = false;
-
 
 
     boolean lose = false;
