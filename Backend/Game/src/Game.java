@@ -533,6 +533,46 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
+
+    /*
+    gangster HP = 100
+    gangster attack = 40
+    gangster ls = 15
+    gangster atkRange = 1
+
+    pistolDude HP = 100
+    pistolDude attack = 50
+    pistolDude ls = 30
+    pistolDude atkRange = 2
+
+    sniper HP = 60
+    sniper attack = 80
+    sniper ls = 5
+    sniper atkRange = 5
+
+    Merci attack = 60
+    Merci HP = 200
+    Merci ls = 40
+    Merci atkRange = 1
+    Merci cost = 100
+
+    Ana HP = 130
+    Ana attack = 85
+    Ana ls = 35
+    Ana atkRange = 6
+    Ana cost = 200
+
+    Lucio HP = 450
+    Lucio attack = 40
+    Lucio ls = 45
+    Lucio atkRange = 1
+    Lucio cost = 230
+
+    ATBD credit gain = [95 , 140 , 190]
+    ATBD move cost = [25 ,45 ,50]
+    Initial ATBD Credit = 150
+     */
+
     //ganster
     static int dfv1_atk;
     static int dfv1_ls;
