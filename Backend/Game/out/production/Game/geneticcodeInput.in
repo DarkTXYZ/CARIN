@@ -38,7 +38,7 @@ if(virusLoc / 10 - 2) then {
     else if (virusLoc % 10 - 2) then shoot right
     else if (virusLoc % 10 - 1) then shoot upright
     else shoot up
-} bobo
+}
 -
 atbdLoc = antibody
 if(atbdLoc / 10 - 1) then {
