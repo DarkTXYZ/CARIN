@@ -82,7 +82,7 @@ public class Game {
     public  void addATBD(Unit a, Pair<Integer,Integer> position){
         if(a.getCost()>shop.getCurrency()) return;
         int y = position.fst(); int x = position.snd();
-        if(x>m || y>n) {
+        if(x>m || y>n|| y<0 || x<0) {
             System.out.println("out of range");
             return;
         }
@@ -95,7 +95,7 @@ public class Game {
     }
     public void addVirus(Unit v, Pair<Integer,Integer> position){
         int x = position.fst(); int y = position.snd();
-        if(x>m || y>n) {
+        if(x>m || y>n || y<0 || x<0) {
             System.out.println("out of range");
             return;
         }
@@ -899,7 +899,7 @@ public class Game {
                             limitCount++;
                         }
                         if (rand == 2) {
-                            addVirus(createNewVirus(0), randomTile());
+                            addVirus(createNewVirus(2), randomTile());
                             spawnCount = spawnCount - 3 * rand;
                             limitCount++;
                         }
@@ -1184,7 +1184,7 @@ public class Game {
             System.out.println("--------2--------");
             System.out.print("Virus spawn rate : ");
             virusSpawnRate = s.nextDouble();
-            if ( virusSpawnRate <= 0 || virusSpawnRate > 1 ){ throw new IOException(); }
+            if ( virusSpawnRate <= 0  ){ throw new IOException(); }
             System.out.println(virusSpawnRate);
             System.out.println("--------3--------");
             System.out.print("Initial antibody credits : ");
