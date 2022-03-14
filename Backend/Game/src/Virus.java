@@ -20,7 +20,7 @@ public class Virus extends UnitImpl {
 
         Hp = template.getHp();
         maxHp = template.getMaxHp();
-
+        cost = template.getCost();
         geneticCode = template.getGene();
         lifeSteal = template.getLifeSteal();
         bindings = new HashMap<>();

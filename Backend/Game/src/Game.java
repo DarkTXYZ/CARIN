@@ -779,7 +779,7 @@ public class Game {
             Atbds[i].setDf(dfaatk[i],dfals[i],dfahp[i],dfacost[i],dfaatkR[i],dfamoveCost[i]);
         }
         shop = Shop.getInstance(cost);
-        shop.setCurrency(dfShop_cur);
+        shop.setdf(dfShop_cur);
         shop.setCurrency(initialATBDCredits);
         for (int i = 0; i < virustemplate; i++) {
             viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP,atbdCreditsDrop, atbdMoveCost,geneVirus[i]);
