@@ -61,4 +61,7 @@ public class Shop {
         }
         return ret;
     }
+    public void setdf(int cur){
+        currency = cur;
+    }
 }

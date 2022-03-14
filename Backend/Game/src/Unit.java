@@ -36,4 +36,5 @@ public interface Unit {
     void setHP(int mod);
     void setAttack(int mod);
     public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost, String gene);
+    public void setDf(int datk, int dls,int dhp, int dcost,int datkrange, int dmovecost);
 }

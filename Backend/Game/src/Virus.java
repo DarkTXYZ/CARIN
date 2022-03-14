@@ -2,10 +2,6 @@ import java.util.HashMap;
 
 public class Virus extends UnitImpl {
 
-    public Virus(){
-        System.out.println("Virus created");
-        geneticCode = "dfalt";
-    }
     public Virus(int atk, int lifeSteal, int hp, int attackRange, int skin, String gene){
         this.Atk = atk;
         this.maxHp = hp;
