@@ -55,6 +55,12 @@ function ShopTile(props: any) {
     else
         color = 'text-red-400'
 
+    let h = ['■■','■','■■■■■']
+    let a = ['■■■','■■■■','■■']
+    let ls = ['■■','■■■','■']
+    let r = ['■','■■■■■■','■']
+    let m = ['■','■■','■■']
+
     return (
         <div className="flex flex-row items-center space-x-4" onClick={props.onClick}>
             <div className={modify + " w-40 flex flex-col rounded-2xl bg-white hover:drop-shadow-xl duration-300 ease-out hover:scale-105 "} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
@@ -70,9 +76,11 @@ function ShopTile(props: any) {
                 <div className="fixed translate-x-40">
                     <div className={'select-none text-transparent bg-clip-text'+modifyDesc}>
                         <div className="text-4xl font-bold mb-5">{props.name}</div>
-                        <div className="text-lg font-semibold">Fire Range : 3</div>
-                        <div className="text-lg font-semibold">ATK : 3</div>
-                        <div className="text-lg font-semibold">HP : 3</div>
+                        <div className="text-lg font-semibold">HP : {h[type-1]}</div>
+                        <div className="text-lg font-semibold">ATK : {a[type-1]}</div>
+                        <div className="text-lg font-semibold">Lifesteal : {ls[type-1]}</div>
+                        <div className="text-lg font-semibold">Range : {r[type-1]}</div>
+                        <div className="text-lg font-semibold">MoveCost : {m[type-1]}</div>
                     </div>
                 </div>
             }
