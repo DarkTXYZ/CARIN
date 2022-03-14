@@ -6,18 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Game {
-    public Game(){}
+    private Game(){}
     public static Game instance;
     public static Game getInstance(){
         if(Game.instance == null) Game.instance = new Game();
         return Game.instance;
     }
-    private int m,n;
-    private Unit[][] field= new Unit[m][n];
+
     protected  final String inFile = "src/configfile.in";
-    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
-            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
-            , atbdMoveCost , atbdCreditsDrop;
+
     private double spawnCount = 0;
     private double virusSpawnRate;
     private SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
@@ -530,6 +527,70 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
+    //ganster
+    static int dfv1_atk;
+    static int dfv1_ls;
+    static int dfv1_hp;
+    static int dfv1_gene;
+    static int dfv1_cost;
+    static int dfv1_atkRange;
+    static int dfv1_skin;
+    //pistoldude
+    static int dfv2_atk;
+    static int dfv2_ls;
+    static int dfv2_hp;
+    static int dfv2_gene;
+    static int dfv2_cost;
+    static int dfv2_atkRange;
+    static int dfv2_skin;
+    //sniper
+    static int dfv3_atk;
+    static int dfv3_ls;
+    static int dfv3_hp;
+    static int dfv3_gene;
+    static int dfv3_cost;
+    static int dfv3_atkRange;
+    static int dfv3_skin;
+
+    //merci
+    static int dfm_atk;
+    static int dfm_ls;
+    static int dfm_hp;
+    static int dfm_gene;
+    static int dfm_cost;
+    static int dfm_atkRange;
+    static int dfm_skin;
+    //ana
+    static int dfa_atk;
+    static int dfa_ls;
+    static int dfa_hp;
+    static int dfa_gene;
+    static int dfa_cost;
+    static int dfa_atkRange;
+    static int dfa_skin;
+    //lucio
+    static int dfl_atk;
+    static int dfl_ls;
+    static int dfl_hp;
+    static int dfl_gene;
+    static int dfl_cost;
+    static int dfl_atkRange;
+    static int dfl_skin;
+    //shop n movecost
+    static int dfShop_cur;
+    static int dfmoveCost;
+    //field
+    static int dff_m;
+    static int dff_n;
+
+    private int m,n;
+    private Unit[][] field= new Unit[m][n];
+
+    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
+            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
+            , atbdMoveCost , atbdCreditsDrop;
+
+
 
     static Unit gangster = new Virus(75,50,250,"atbdLoc = antibody " +
             "virusLoc = virus " +
@@ -892,6 +953,7 @@ public class Game {
     public void reset(){
 
     }
+
 
     public static void main(String[] args) {
         while (true) {
