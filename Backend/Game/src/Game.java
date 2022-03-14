@@ -54,6 +54,7 @@ public class Game {
             //write random here
             Random r = new Random();
             int area;
+            System.out.println("empty"+emptySlot.size());
             if(emptySlot.size() == 0 && !atbdOrder.isEmpty()) return new Pair<>(-1,-1);
             if(emptySlot.size() == 0 && atbdOrder.isEmpty()){
                 throw new GameOverException("You lose");
@@ -692,7 +693,7 @@ public class Game {
     static Unit sniper = new Virus(150,20,160,1,6,"move down");
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(1696969,20,696969,20,1,1,1,"virusLoc =  virus " +
+    static Unit Merci = new ATBD_(1696969,20,10000,20,1,1,1,"virusLoc =  virus " +
             "if(virusLoc / 10 - 3) then { " +
             " " +
             "} else { " +
@@ -852,6 +853,7 @@ public class Game {
     static int pause = 0;
     static int speed = 1;
     public  void Update() throws GameOverException,GameWinException{
+
         int totalTime = 0;
         long prevTime = System.currentTimeMillis();
         int rand;
@@ -883,6 +885,7 @@ public class Game {
                     }
                 }
                 updateDeadlist();
+                if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
                 if(limitCount<virusLimit) {
                     double period = 1 / virusSpawnRate;
                     if (spawnCount >= period) {
@@ -911,6 +914,7 @@ public class Game {
                 if(shop.getCurrency()<lowestcost&&atbdOrder.size() == 0){
                     throw new GameOverException("You lose");
                 }
+
             }
 
 
