@@ -122,4 +122,14 @@ public abstract class UnitImpl implements Unit {
             System.out.println("success fully config gene");
         }catch (Exception e) {System.out.println("can't eval in config");}
     }
+    public void setDf(int datk, int dls,int dhp, int dcost,int datkrange, int dmovecost){
+        Hp = dhp;
+        maxHp = Hp;
+        Atk = datk;
+        lifeSteal = dls;
+        cost = dcost;
+        attackRange = datkrange;
+        moveCost = dmovecost;
+    }
+
 }

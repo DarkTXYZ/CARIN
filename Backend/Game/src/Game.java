@@ -33,9 +33,9 @@ public class Game {
     private SortedSet<String> emptySlot = new TreeSet<>(comp);
 
     private GeneticEvaluator g  = GeneticEvaluator.getInstance();
-    private List<Unit> order = new ArrayList<>();
-    private List<Unit> virusOrder = new ArrayList<>();
-    private List<Unit> atbdOrder = new ArrayList<>();
+    private List<Unit> order;
+    private List<Unit> virusOrder;
+    private List<Unit> atbdOrder;
     private Objective gObjective;
     private int virusLimit;
     private int limitCount;
@@ -165,7 +165,7 @@ public class Game {
     public  void destroyVirus(Unit unit){
         Pair<Integer,Integer> pos = unit.getPosition();
         remove(pos);
-        shop.setCurrency(atbdCreditsDrop);
+        shop.setCurrency(unit.getCost());
         gObjective.modfst(1);
     }
     public  void visualize(){
@@ -534,64 +534,78 @@ public class Game {
         return a;
     }
     //ganster
-    static int dfv1_atk;
-    static int dfv1_ls;
-    static int dfv1_hp;
-    static int dfv1_gene;
-    static int dfv1_cost;
-    static int dfv1_atkRange;
-    static int dfv1_skin;
+    static int dfv1_atk = 40;
+    static int dfv1_ls  = 15;
+    static int dfv1_hp  = 100;
+    static int dfv1_cost = 1;
+    static int dfv1_atkRange = 1;
+    static int dfv1_gain = 25;
     //pistoldude
-    static int dfv2_atk;
-    static int dfv2_ls;
-    static int dfv2_hp;
-    static int dfv2_gene;
-    static int dfv2_cost;
-    static int dfv2_atkRange;
-    static int dfv2_skin;
+    static int dfv2_atk = 50;
+    static int dfv2_ls = 30;
+    static int dfv2_hp = 100;
+    static int dfv2_cost = 1;
+    static int dfv2_atkRange =2;
+    static int dfv2_gain = 30;
     //sniper
-    static int dfv3_atk;
-    static int dfv3_ls;
-    static int dfv3_hp;
+    static int dfv3_atk = 80;
+    static int dfv3_ls = 5;
+    static int dfv3_hp = 60;
     static int dfv3_gene;
-    static int dfv3_cost;
-    static int dfv3_atkRange;
+    static int dfv3_cost =1;
+    static int dfv3_atkRange=5;
     static int dfv3_skin;
+    static int dfv3_gain = 50;
 
     //merci
-    static int dfm_atk;
-    static int dfm_ls;
-    static int dfm_hp;
+    static int dfm_atk = 60;
+    static int dfm_ls = 40;
+    static int dfm_hp = 200;
     static int dfm_gene;
-    static int dfm_cost;
-    static int dfm_atkRange;
+    static int dfm_cost = 100;
+    static int dfm_atkRange = 1;
     static int dfm_skin;
+    static int dfm_moveCost =25;
     //ana
-    static int dfa_atk;
-    static int dfa_ls;
-    static int dfa_hp;
+    static int dfa_atk = 85;
+    static int dfa_ls = 40;
+    static int dfa_hp = 130;
     static int dfa_gene;
-    static int dfa_cost;
-    static int dfa_atkRange;
+    static int dfa_cost = 200;
+    static int dfa_atkRange = 6;
     static int dfa_skin;
+    static int dfa_moveCost =30 ;
     //lucio
-    static int dfl_atk;
-    static int dfl_ls;
-    static int dfl_hp;
+    static int dfl_atk = 40;
+    static int dfl_ls = 45;
+    static int dfl_hp = 450;
     static int dfl_gene;
-    static int dfl_cost;
-    static int dfl_atkRange;
+    static int dfl_cost = 230;
+    static int dfl_atkRange =1;
     static int dfl_skin;
+    static int dfl_moveCost =50;
     //shop n movecost
-    static int dfShop_cur;
-    static int dfmoveCost;
+    static int dfShop_cur = 150;
     //field
     static int dff_m;
     static int dff_n;
     static int df_drops;
 
+    static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
+    static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
+    static int[] dfvhp= {dfv1_hp,dfv2_hp,dfv3_hp};
+    static int[] dfvatkR = {dfv1_atkRange,dfv2_atkRange,dfv3_atkRange};
+    static int[] dfvgain = {dfv1_gain,dfv2_gain,dfv3_gain};
+
+    static int[] dfaatk = {dfm_atk,dfa_atk,dfl_atk};
+    static int[] dfals = {dfm_ls,dfa_ls,dfl_ls};
+    static int[] dfahp = {dfm_hp,dfa_hp,dfl_ls};
+    static int[] dfaatkR = {dfm_atkRange,dfa_atkRange,dfl_atkRange};
+    static int[] dfacost = {dfm_cost,dfa_cost,dfl_cost};
+    static int[] dfamoveCost = {dfm_moveCost,dfa_moveCost,dfl_moveCost};
+
     private int m,n;
-    private Unit[][] field= new Unit[m][n];
+    private Unit[][] field;
 
     private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
             , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
@@ -715,23 +729,20 @@ public class Game {
     static int[] cost = new int[3];
 
 
-//    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
-//            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
-//            , atbdMoveCost , atbdCreditsDrop;
-
-
     int lowestcost = Integer.MAX_VALUE;
     public void Initialize() {
         config(inFile);
         geneticReader(geneinFile);
-        for(int i=0;i<Atbds.length;i++){
-            cost[i] = Atbds[i].getCost();
-        }
 
+        for (int i = 0; i < virustemplate; i++) {
+            viruses[i].setDf(dfvatk[i],dfvls[i],dfvhp[i],dfvgain[i],dfvatkR[i],1);
+            Atbds[i].setDf(dfaatk[i],dfals[i],dfahp[i],dfacost[i],dfaatkR[i],dfamoveCost[i]);
+        }
         shop = Shop.getInstance(cost);
+        shop.setCurrency(dfShop_cur);
         shop.setCurrency(initialATBDCredits);
         for (int i = 0; i < virustemplate; i++) {
-            viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP, atbdPlacementCost, atbdMoveCost,geneVirus[i]);
+            viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP,atbdCreditsDrop, atbdMoveCost,geneVirus[i]);
             Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost,geneATBD[i]);
         }
         for (int i = 0; i < atbdtemplate; i++) {
@@ -1188,7 +1199,7 @@ public class Game {
             System.out.println("--------2--------");
             System.out.print("Virus spawn rate : ");
             virusSpawnRate = s.nextDouble();
-            if ( virusSpawnRate <= 0  ){ throw new IOException(); }
+            if ( virusSpawnRate <= 0 || virusSpawnRate>1){ throw new IOException(); }
             System.out.println(virusSpawnRate);
             System.out.println("--------3--------");
             System.out.print("Initial antibody credits : ");
