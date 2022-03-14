@@ -6,7 +6,7 @@ public class Virus extends UnitImpl {
         System.out.println("Virus created");
         geneticCode = "dfalt";
     }
-    public Virus(int atk, int lifeSteal, int hp, String gene,int attackRange,int skin){
+    public Virus(int atk, int lifeSteal, int hp, int attackRange, int skin, String gene){
         this.Atk = atk;
         this.maxHp = hp;
         this.Hp = hp;
@@ -17,12 +17,14 @@ public class Virus extends UnitImpl {
         this.skin = skin;
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("genethingy");}
+        }catch (Exception e) {System.out.println("Virus gene can't eval");}
     }
     public Virus(Unit template){
+        Atk = template.getAtk();
+
         Hp = template.getHp();
         maxHp = template.getMaxHp();
-        Atk = template.getAtk();
+
         geneticCode = template.getGene();
         lifeSteal = template.getLifeSteal();
         bindings = new HashMap<>();
@@ -30,7 +32,7 @@ public class Virus extends UnitImpl {
         skin = template.getSkin();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("genethingy");}
+        }catch (Exception e) {System.out.println("Virus gene can't eval");}
 
     }
 
@@ -45,8 +47,7 @@ public class Virus extends UnitImpl {
         int target = Game.getInstance().senseNearby(this,direction);
         if(target == 0) return;
         if(target%10 == 1){return;}
-        // 12 12 12 12 12
-        // 22
+
         if(target<(attackRange+1)*10){
             Pair<Integer,Integer> targetPos = new Pair<>(-1,-1);
 

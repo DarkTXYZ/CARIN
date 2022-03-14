@@ -20,9 +20,7 @@ public abstract class UnitImpl implements Unit {
     Unit previousAttacker;
     Executable program;
     protected UnitImpl(){System.out.println("gameUnit created");}
-    protected UnitImpl(String geneticCode){
-        this.geneticCode = geneticCode;
-    }
+
 
     @Override
     public void setProgram(Executable program) {
@@ -100,6 +98,7 @@ public abstract class UnitImpl implements Unit {
     public int getCost(){return cost;}
     public int getAttackRange() {return attackRange;}
     public int getSkin(){return skin;}
+    public int getMoveCost(){return moveCost;}
 
     public void setAttack(int mod){Atk+=mod;}
     public Pair<Integer,Integer> getPosition(){return position;}
@@ -110,12 +109,17 @@ public abstract class UnitImpl implements Unit {
         return bindings;
     }
 
-    public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost){
+    public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost,String cgene){
         maxHp+=cHp;
         Hp+=cHp;
         Atk += cAtk;
         lifeSteal +=cLs;
         cost += ccost;
         moveCost+=cmoveCost;
+        geneticCode = cgene;
+        try {
+            setProgram(GeneticEvaluator.getInstance().evaluate( this));
+            System.out.println("success fully config gene");
+        }catch (Exception e) {System.out.println("can't eval in config");}
     }
 }

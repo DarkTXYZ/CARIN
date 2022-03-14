@@ -23,6 +23,7 @@ public interface Unit {
     int getCost();
     int getAttackRange();
     int getSkin();
+    int getMoveCost();
 
 
     String getGene();
@@ -34,5 +35,5 @@ public interface Unit {
     void setPos(Pair<Integer,Integer> pos);
     void setHP(int mod);
     void setAttack(int mod);
-    public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost);
+    public void configMod(int cAtk, int cLs, int cHp, int ccost, int cmoveCost, String gene);
 }
