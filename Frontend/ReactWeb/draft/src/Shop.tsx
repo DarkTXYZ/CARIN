@@ -102,7 +102,7 @@ function Shop(props: any) {
 
         <div className='flex flex-col space-y-4'>
 
-            <div className='select-none flex justify-center bg-gradient-to-b from-yellow-500 to-yellow-300 w-40 p-2 font-bold text-lg rounded-xl'>
+            <div className='hover:scale-105 duration-300 ease-out select-none flex justify-center bg-gradient-to-b from-yellow-500 to-yellow-300 w-40 p-2 font-bold text-lg rounded-xl'>
                 Currency : {props.currency}
             </div>
             <div className='flex flex-col space-y-2 justify-center'>

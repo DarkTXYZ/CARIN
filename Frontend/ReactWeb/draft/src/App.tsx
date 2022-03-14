@@ -48,7 +48,7 @@ class App extends React.Component {
 
 	render(): React.ReactNode {
 		return (
-			<div className='fixed select-none w-full h-full bg-gradient-to-l from-sky-600 to-red-600 bg-BG'>
+			<div className='fixed select-none h-full w-full bg-BG'>
 				{/* <ReactAudioPlayer className='fixed'
 					src={this.state.sound}
 					autoPlay = {true}
@@ -68,7 +68,7 @@ class App extends React.Component {
 									<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
 									<div className='w-40'>
 										{/* <ReactSoundcloud hideRelated={true} autoPlay={true} height='200px' url="https://soundcloud.com/zz_music_jpn/yoitoyakoun-zaza-flip" /> */}
-										<img width="200" height="544" src="https://movie2uhd.com/wp-content/uploads/2020/12/200x544-B7B9.gif" className="h-full w-full image wp-image-13763  attachment-full size-full" alt="" title="B7+9"></img>
+										<img width="200" height="544" src="https://movie2uhd.com/wp-content/uploads/2020/12/200x544-B7B9.gif" className="h-full w-full image wp-image-13763  attachment-full size-full"></img>
 									</div>
 								</div>
 								<div className='flex flex-col'>
