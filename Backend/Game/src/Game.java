@@ -6,19 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Game {
-    public Game(){}
+    private Game(){}
     public static Game instance;
     public static Game getInstance(){
         if(Game.instance == null) Game.instance = new Game();
         return Game.instance;
     }
-    private int m,n;
-    private Unit[][] field= new Unit[m][n];
+
     protected  final String inFile = "src/configfile.in";
-    protected  final String geneinFile = "src/geneticcodeInput.in";
-    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
-            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
-            , atbdMoveCost , atbdCreditsDrop;
+
     private double spawnCount = 0;
     private double virusSpawnRate;
     private SortedSet<String> emptySlot = new TreeSet<>(new Comparator<String>() {
@@ -41,8 +37,7 @@ public class Game {
     private int virusLimit;
     private int limitCount;
     private Shop shop;
-    protected String[] geneATBD = new String[3]; // init genetic code for each ATBD
-    protected String[] geneVirus = new String[3]; // init genetic code for each Virus
+
     public  void initObjective(int maxElim){
         gObjective = new Objective(0,maxElim);
     }
@@ -532,6 +527,70 @@ public class Game {
         Unit a = new ATBD_(Atbds[n]);
         return a;
     }
+    //ganster
+    static int dfv1_atk;
+    static int dfv1_ls;
+    static int dfv1_hp;
+    static int dfv1_gene;
+    static int dfv1_cost;
+    static int dfv1_atkRange;
+    static int dfv1_skin;
+    //pistoldude
+    static int dfv2_atk;
+    static int dfv2_ls;
+    static int dfv2_hp;
+    static int dfv2_gene;
+    static int dfv2_cost;
+    static int dfv2_atkRange;
+    static int dfv2_skin;
+    //sniper
+    static int dfv3_atk;
+    static int dfv3_ls;
+    static int dfv3_hp;
+    static int dfv3_gene;
+    static int dfv3_cost;
+    static int dfv3_atkRange;
+    static int dfv3_skin;
+
+    //merci
+    static int dfm_atk;
+    static int dfm_ls;
+    static int dfm_hp;
+    static int dfm_gene;
+    static int dfm_cost;
+    static int dfm_atkRange;
+    static int dfm_skin;
+    //ana
+    static int dfa_atk;
+    static int dfa_ls;
+    static int dfa_hp;
+    static int dfa_gene;
+    static int dfa_cost;
+    static int dfa_atkRange;
+    static int dfa_skin;
+    //lucio
+    static int dfl_atk;
+    static int dfl_ls;
+    static int dfl_hp;
+    static int dfl_gene;
+    static int dfl_cost;
+    static int dfl_atkRange;
+    static int dfl_skin;
+    //shop n movecost
+    static int dfShop_cur;
+    static int dfmoveCost;
+    //field
+    static int dff_m;
+    static int dff_n;
+
+    private int m,n;
+    private Unit[][] field= new Unit[m][n];
+
+    private int initialATBDCredits,atbdPlacementCost,initVirusHP,initATBDHP
+            , initVirusATK , initVirusLifeSteal, initATBDATK, initATBDLifeSteal
+            , atbdMoveCost , atbdCreditsDrop;
+
+
 
     static Unit gangster = new Virus(75,50,250,"atbdLoc = antibody " +
             "virusLoc = virus " +
@@ -655,7 +714,6 @@ public class Game {
     int lowestcost = Integer.MAX_VALUE;
     public  void Initialize() {
         config(inFile);
-        geneticReader(geneinFile);
         for(int i=0;i<Atbds.length;i++){
             cost[i] = Atbds[i].getCost();
         }
@@ -896,6 +954,7 @@ public class Game {
 
     }
 
+
     public static void main(String[] args) {
         while (true) {
 
@@ -1063,44 +1122,7 @@ public class Game {
 //            visualize();
 
 
-    public void geneticReader(String geneinFile){
-        try(FileReader fr = new FileReader(geneinFile);
-            Scanner s = new Scanner(fr)){
-            int geneATBDCount = 0;
-            int geneVirusCount = 0;
-            String temp = "";
-            while( geneATBDCount < 3){
-                while (true){
-                    String lastS = s.nextLine();
-                    if( lastS.equals("-")) break;
-//                    System.out.println( temp);
-                    temp = temp + " " + lastS;
-                }
-                geneATBD[geneATBDCount] = temp;
-                geneATBDCount++;
-                temp = "";
-            }
-            while ( geneVirusCount < 3){
-                while (true){
-                    String lastS = s.nextLine();
-                    if( lastS.equals("-")) break;
-                    temp = temp + " " + lastS;
-                }
-                geneVirus[geneVirusCount] = temp;
-                geneVirusCount++;
-                temp = "";
-            }
-            System.out.println("ATBD A : " + geneATBD[0] + " end");
-            System.out.println("ATBD B : " + geneATBD[1] + " end");
-            System.out.println("ATBD C : " + geneATBD[2] + " end");
-            System.out.println("Virus A : " + geneVirus[0] + " end");
-            System.out.println("Virus B : " + geneVirus[1] + " end");
-            System.out.println("Virus C : " + geneVirus[2] + " end");
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
 
     public  void config(String inFile){
