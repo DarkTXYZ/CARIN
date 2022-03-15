@@ -16,7 +16,7 @@ public class ATBD_ extends UnitImpl {
         bindings = new HashMap<>();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("ATBD gene can't eval");}
+        }catch (Exception e) {e.printStackTrace();System.out.println("ATBD gene can't eval");}
     }
 
     public ATBD_(Unit template){
@@ -32,7 +32,7 @@ public class ATBD_ extends UnitImpl {
         moveCost = template.getMoveCost();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("ATBD gene can't eval");}
+        }catch (Exception e) {e.printStackTrace();System.out.println("ATBD gene can't eval");}
     }
 
     @Override

@@ -13,7 +13,10 @@ public class Virus extends UnitImpl {
         this.skin = skin;
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("Virus gene can't eval");}
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Virus gene can't eval");
+        }
     }
     public Virus(Unit template){
         Atk = template.getAtk();
@@ -28,7 +31,7 @@ public class Virus extends UnitImpl {
         skin = template.getSkin();
         try {
             setProgram(GeneticEvaluator.getInstance().evaluate( this));
-        }catch (Exception e) {System.out.println("Virus gene can't eval");}
+        }catch (Exception e) {e.printStackTrace();System.out.println("Virus gene can't eval");}
 
     }
 
