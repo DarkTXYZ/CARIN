@@ -86,7 +86,7 @@ public class Game {
         visualize();
         System.out.println("field" +m+" "+n);
         System.out.println("y"+y +" x"+x);
-        if(x>m || y>n|| y<0 || x<0) {
+        if(y>=m || x>=n|| y<0 || x<0) {
             System.out.println("out of range");
             return;
         }
@@ -99,7 +99,7 @@ public class Game {
     }
     public void addVirus(Unit v, Pair<Integer,Integer> position){
         int y = position.fst(); int x = position.snd();
-        if(x>m || y>n || y<0 || x<0) {
+        if(y>=m || x>=n || y<0 || x<0) {
             System.out.println("out of range");
             return;
         }
@@ -817,6 +817,7 @@ public class Game {
                 Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
                 if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
+                if(emptySlot.size() == 0&& virusOrder.isEmpty()) throw new GameWinException("EZ");
                 if(limitCount<virusLimit) {
 
 //                    double period = 1 / virusSpawnRate;
