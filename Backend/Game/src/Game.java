@@ -598,6 +598,7 @@ public class Game {
 
 
     int lowestcost = Integer.MAX_VALUE;
+    int highestcost = 0;
     public void Initialize() {
         config(inFile);
         geneticReader(geneinFile);
@@ -606,7 +607,7 @@ public class Game {
             viruses[i].setDf(dfvatk[i],dfvls[i],dfvhp[i],dfvgain[i],dfvatkR[i],1);
             Atbds[i].setDf(dfaatk[i],dfals[i],dfahp[i],dfacost[i],dfaatkR[i],dfamoveCost[i]);
         }
-        shop = Shop.getInstance(cost);
+        shop = Shop.getInstance(cost,highestcost);
         shop.setdf(dfShop_cur);
         shop.setCurrency(initialATBDCredits);
         for (int i = 0; i < virustemplate; i++) {
@@ -616,13 +617,14 @@ public class Game {
         for (int i = 0; i < atbdtemplate; i++) {
             cost[i] = Atbds[i].getCost();
             if(lowestcost>cost[i]) lowestcost = cost[i];
+            if(highestcost<cost[i]) highestcost = cost[i];
         }
         field = new Unit[m][n];
         order = new ArrayList<>();
         virusOrder = new ArrayList<>();
         atbdOrder = new ArrayList<>();
 
-        Shop.updateCost(cost);
+        Shop.updateCost(cost,highestcost);
 
         System.out.println(shop.getMap().keySet());
         initObjective(100);
