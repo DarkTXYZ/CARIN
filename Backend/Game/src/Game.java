@@ -786,7 +786,7 @@ public class Game {
                         skin.add(u.getSkin());
                     }
                     List<Integer> cost = shop.getcostList();
-                    Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+                    Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
 //                    try{
 //                        Thread.sleep(100);
@@ -814,7 +814,7 @@ public class Game {
                     skin.add(u.getSkin());
                 }
                 List<Integer> cost = shop.getcostList();
-                Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+                Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
                 if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
                 if(limitCount<virusLimit) {
@@ -906,7 +906,7 @@ public class Game {
                 skin.add(u.getSkin());
             }
             List<Integer> cost = shop.getcostList();
-            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+            Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
 
 
 
