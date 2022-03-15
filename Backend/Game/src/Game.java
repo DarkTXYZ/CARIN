@@ -917,9 +917,9 @@ public class Game {
 
             int periodTime = 0;
             if(speed == 1)
-                periodTime = 1200;
+                periodTime = 1300;
             else
-                periodTime = 600;
+                periodTime = 650;
 
             long curTime = System.currentTimeMillis();
             totalTime += curTime - prevTime;

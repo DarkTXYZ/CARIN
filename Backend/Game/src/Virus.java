@@ -62,6 +62,7 @@ public class Virus extends UnitImpl {
             if(direction.equals("downleft")) targetPos = new Pair<>(y+coord,x-coord);
 
             Game.getInstance().gShoot(targetPos,this);
+            setHP(lifeSteal);
         }
         return;
     }
