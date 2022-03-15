@@ -575,13 +575,13 @@ public class Game {
 
     //ganster
     static int dfv1_atk = 40;
-    static int dfv1_ls  = 15;
-    static int dfv1_hp  = 100;
+    static int dfv1_ls  = 12;
+    static int dfv1_hp  = 115;
     static int dfv1_cost = 1;
     static int dfv1_atkRange = 1;
 
     //pistoldude
-    static int dfv2_atk = 50;
+    static int dfv2_atk = 30;
     static int dfv2_ls = 30;
     static int dfv2_hp = 100;
     static int dfv2_cost = 1;
@@ -593,26 +593,26 @@ public class Game {
     static int dfv3_hp = 60;
     static int dfv3_gene;
     static int dfv3_cost =1;
-    static int dfv3_atkRange=5;
+    static int dfv3_atkRange=4;
     static int dfv3_skin;
 
 
     //merci
     static int dfm_atk = 60;
-    static int dfm_ls = 40;
-    static int dfm_hp = 200;
+    static int dfm_ls = 20;
+    static int dfm_hp = 140;
     static int dfm_gene;
-    static int dfm_cost = 100;
+    static int dfm_cost = 90;
     static int dfm_atkRange = 1;
     static int dfm_skin;
     static int dfm_moveCost =25;
     //ana
-    static int dfa_atk = 85;
-    static int dfa_ls = 35;
-    static int dfa_hp = 130;
+    static int dfa_atk = 40;
+    static int dfa_ls = 15;
+    static int dfa_hp = 10;
     static int dfa_gene;
-    static int dfa_cost = 200;
-    static int dfa_atkRange = 6;
+    static int dfa_cost = 300;
+    static int dfa_atkRange = 5;
     static int dfa_skin;
     static int dfa_moveCost =45 ;
     //lucio
@@ -620,17 +620,17 @@ public class Game {
     static int dfl_ls = 45;
     static int dfl_hp = 450;
     static int dfl_gene;
-    static int dfl_cost = 230;
-    static int dfl_atkRange =1;
+    static int dfl_cost = 200;
+    static int dfl_atkRange =2;
     static int dfl_skin;
     static int dfl_moveCost =50;
     //shop n movecost
     static int dfShop_cur = 150;
     //field
 
-    static int dfv1_gain = 95;
-    static int dfv2_gain = 140;
-    static int dfv3_gain = 190;
+    static int dfv1_gain = 40;
+    static int dfv2_gain = 80;
+    static int dfv3_gain = 100;
 
     static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
     static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
@@ -640,7 +640,7 @@ public class Game {
 
     static int[] dfaatk = {dfm_atk,dfa_atk,dfl_atk};
     static int[] dfals = {dfm_ls,dfa_ls,dfl_ls};
-    static int[] dfahp = {dfm_hp,dfa_hp,dfl_ls};
+    static int[] dfahp = {dfm_hp,dfa_hp,dfl_hp};
     static int[] dfaatkR = {dfm_atkRange,dfa_atkRange,dfl_atkRange};
     static int[] dfacost = {dfm_cost,dfa_cost,dfl_cost};
     static int[] dfamoveCost = {dfm_moveCost,dfa_moveCost,dfl_moveCost};
@@ -917,9 +917,9 @@ public class Game {
 
             int periodTime = 0;
             if(speed == 1)
-                periodTime = 1000;
+                periodTime = 1200;
             else
-                periodTime = 500;
+                periodTime = 600;
 
             long curTime = System.currentTimeMillis();
             totalTime += curTime - prevTime;
@@ -935,26 +935,106 @@ public class Game {
                     }catch (DeadException e){
                         it.remove();
                     }
+                    List<Integer> posx =new ArrayList<>();
+                    List<Integer> posy =new ArrayList<>();
+                    List<Integer> hp =new ArrayList<>();
+                    List<Integer> maxHp =new ArrayList<>();
+                    List<Integer> skin =new ArrayList<>();
+                    int cur = shop.getCurrency();
+                    int[] obj = {gObjective.fst(),gObjective.snd()};
+                    shop.updateStatus();
+                    List<Boolean> shopStat = shop.getStatus();
+//            System.out.println("shopStat"+ shopStat);
+                    for(Unit u: order){
+                        maxHp.add(u.getMaxHp());
+                        hp.add(u.getHp());
+                        posx.add(u.getPosition().snd());
+                        posy.add(u.getPosition().fst());
+                        skin.add(u.getSkin());
+                    }
+                    List<Integer> cost = shop.getcostList();
+                    Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
+//                    try{
+//                        Thread.sleep(100);
+//                    } catch (Exception ignored){
+//
+//                    }
                 }
                 updateDeadlist();
+
+                List<Integer> posx =new ArrayList<>();
+                List<Integer> posy =new ArrayList<>();
+                List<Integer> hp =new ArrayList<>();
+                List<Integer> maxHp =new ArrayList<>();
+                List<Integer> skin =new ArrayList<>();
+                int cur = shop.getCurrency();
+                int[] obj = {gObjective.fst(),gObjective.snd()};
+                shop.updateStatus();
+                List<Boolean> shopStat = shop.getStatus();
+//            System.out.println("shopStat"+ shopStat);
+                for(Unit u: order){
+                    maxHp.add(u.getMaxHp());
+                    hp.add(u.getHp());
+                    posx.add(u.getPosition().snd());
+                    posy.add(u.getPosition().fst());
+                    skin.add(u.getSkin());
+                }
+                List<Integer> cost = shop.getcostList();
+                Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
+
                 if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
                 if(limitCount<virusLimit) {
 
+//                    double period = 1 / virusSpawnRate;
+//                    if (spawnCount >= period) {
+//                        rand = (int) (Math.random() * 3);
+//                        if (rand == 0) {
+//                            addVirus(createNewVirus(0), randomTile());
+//                            spawnCount = spawnCount - rand;
+//                            limitCount++;
+//
+//                        }
+//                        if (rand == 1) {
+//                            addVirus(createNewVirus(1), randomTile());
+//                            spawnCount = spawnCount - 2 * rand;
+//                            limitCount++;
+//                        }
+//                        if (rand == 2) {
+//                            addVirus(createNewVirus(2), randomTile());
+//                            spawnCount = spawnCount - 3 * rand;
+//                            limitCount++;
+//                        }
+//                    } else {
+//                        spawnCount++;
+//                    }
+
+                    // Second Type
+
                     double period = 1 / virusSpawnRate;
+//                    int spawnChance = (int) (1000.0 * virusSpawnRate);
+                    Random r = new Random();
+//                    int isSpawn = r.nextInt(1001);
                     if (spawnCount >= period) {
+                        int virusType = 1;
                         rand = (int) (Math.random() * 3);
-                        if (rand == 0) {
+                        if ((double) gObjective.fst() / gObjective.snd() > 0.2)
+                            virusType++;
+                        if ((double) gObjective.fst() / gObjective.snd() > 0.35)
+                            virusType++;
+
+                        int randomVirus = r.nextInt(virusType);
+                        if (randomVirus == 0) {
                             addVirus(createNewVirus(0), randomTile());
                             spawnCount = spawnCount - rand;
                             limitCount++;
-
                         }
-                        if (rand == 1) {
+                        if (randomVirus == 1) {
                             addVirus(createNewVirus(1), randomTile());
                             spawnCount = spawnCount - 2 * rand;
                             limitCount++;
                         }
-                        if (rand == 2) {
+                        if (randomVirus == 2) {
                             addVirus(createNewVirus(2), randomTile());
                             spawnCount = spawnCount - 3 * rand;
                             limitCount++;
@@ -962,32 +1042,6 @@ public class Game {
                     } else {
                         spawnCount++;
                     }
-
-                    // Second Type
-//                    int spawnChance = (int) (1000.0 * virusSpawnRate);
-//                    Random r = new Random();
-//                    int isSpawn = r.nextInt(1001);
-//                    if (isSpawn < spawnChance) {
-//                        int virusType = 1;
-//                        if ((double) gObjective.fst() / gObjective.snd() > 1.0 / 3)
-//                            virusType++;
-//                        if ((double) gObjective.fst() / gObjective.snd() > 2.0 / 3)
-//                            virusType++;
-//
-//                        int randomVirus = r.nextInt(virusType);
-//                        if (randomVirus == 0) {
-//                            addVirus(createNewVirus(0), randomTile());
-//                            limitCount++;
-//                        }
-//                        if (randomVirus == 1) {
-//                            addVirus(createNewVirus(1), randomTile());
-//                            limitCount++;
-//                        }
-//                        if (randomVirus == 2) {
-//                            addVirus(createNewVirus(2), randomTile());
-//                            limitCount++;
-//                        }
-//                    }
                 }
 
 
