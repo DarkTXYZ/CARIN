@@ -67,8 +67,7 @@ class App extends React.Component {
 								<div className='flex flex-col space-y-4 h-full'>
 									<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
 									<div className='w-40'>
-										{/* <ReactSoundcloud hideRelated={true} autoPlay={true} height='200px' url="https://soundcloud.com/zz_music_jpn/yoitoyakoun-zaza-flip" /> */}
-										<img width="200" height="544" src="https://movie2uhd.com/wp-content/uploads/2020/12/200x544-B7B9.gif" className="h-full w-full image wp-image-13763  attachment-full size-full"></img>
+										<ReactSoundcloud hideRelated={true} autoPlay={true} height='640px' url="https://soundcloud.com/zz_music_jpn/yoitoyakoun-zaza-flip" />
 									</div>
 								</div>
 								<div className='flex flex-col'>
