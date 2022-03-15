@@ -129,7 +129,7 @@ public class Game {
     }
     public  void moveATBD(Unit u,Pair<Integer,Integer> destination){
         if(u.getHp() == 1) return;
-        u.setHP(-atbdMoveCost);
+        u.setHP(-u.getMoveCost());
         if(!Objects.equals(u.getClass().getName(),"ATBD_")) return;
         try {
             move(u,destination);
@@ -579,14 +579,14 @@ public class Game {
     static int dfv1_hp  = 100;
     static int dfv1_cost = 1;
     static int dfv1_atkRange = 1;
-    static int dfv1_gain = 25;
+
     //pistoldude
     static int dfv2_atk = 50;
     static int dfv2_ls = 30;
     static int dfv2_hp = 100;
     static int dfv2_cost = 1;
     static int dfv2_atkRange =2;
-    static int dfv2_gain = 30;
+
     //sniper
     static int dfv3_atk = 80;
     static int dfv3_ls = 5;
@@ -595,7 +595,7 @@ public class Game {
     static int dfv3_cost =1;
     static int dfv3_atkRange=5;
     static int dfv3_skin;
-    static int dfv3_gain = 50;
+
 
     //merci
     static int dfm_atk = 60;
@@ -608,13 +608,13 @@ public class Game {
     static int dfm_moveCost =25;
     //ana
     static int dfa_atk = 85;
-    static int dfa_ls = 40;
+    static int dfa_ls = 35;
     static int dfa_hp = 130;
     static int dfa_gene;
     static int dfa_cost = 200;
     static int dfa_atkRange = 6;
     static int dfa_skin;
-    static int dfa_moveCost =30 ;
+    static int dfa_moveCost =45 ;
     //lucio
     static int dfl_atk = 40;
     static int dfl_ls = 45;
@@ -627,9 +627,10 @@ public class Game {
     //shop n movecost
     static int dfShop_cur = 150;
     //field
-    static int dff_m;
-    static int dff_n;
-    static int df_drops;
+
+    static int dfv1_gain = 95;
+    static int dfv2_gain = 140;
+    static int dfv3_gain = 190;
 
     static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
     static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
@@ -1233,7 +1234,7 @@ public class Game {
             System.out.println("--------1--------");
             m = s.nextInt();
             n = s.nextInt();
-            if( m <= 0 || n <= 0){ throw new IOException(); }
+            if( m <= 0 || n <= 0 || m+n ==2){ throw new IOException(); }
             System.out.println("m : " + m);
             System.out.println("n : " + n);
             System.out.println("--------2--------");
@@ -1248,21 +1249,22 @@ public class Game {
             System.out.println(initialATBDCredits);
             System.out.print("ATBD placement cost : ");
             atbdPlacementCost = s.nextInt();
-            if ( atbdPlacementCost > initialATBDCredits ){ throw new IOException(); }
+            if ( atbdPlacementCost + dfm_cost <=0 ){ throw new IOException(); }
+            if(initialATBDCredits+dfShop_cur<atbdPlacementCost+dfm_cost) {throw new IOException();}
             System.out.println(atbdPlacementCost);
             System.out.println("--------4--------");
             System.out.print("Initial Virus Health : ");
             initVirusHP = s.nextInt();
-            if( initVirusHP < 0 ){ throw new IOException(); }
+            if( initVirusHP +dfv3_hp<=0 ){ throw new IOException(); }
             System.out.println(initVirusHP);
             System.out.print("Initial ATBD Health : ");
             initATBDHP = s.nextInt();
-            if( initATBDHP < 0 ){ throw new IOException(); }
+            if( initATBDHP +dfa_hp<=0 ){ throw new IOException(); }
             System.out.println(initATBDHP);
             System.out.println("--------5--------");
             System.out.print("Virus Attack Damage : ");
             initVirusATK = s.nextInt();
-            if( initVirusATK < 0 ){ throw new IOException(); }
+            if( initVirusATK +dfv1_atk <=0 ){ throw new IOException(); }
             System.out.println(initVirusATK);
             System.out.print("Virus Lifesteal : ");
             initVirusLifeSteal = s.nextInt();
@@ -1271,7 +1273,7 @@ public class Game {
             System.out.println("--------6--------");
             System.out.print("Antibody Attack Damage : ");
             initATBDATK = s.nextInt();
-            if( initATBDATK < 0 ){ throw new IOException(); }
+            if( initATBDATK +dfl_atk<=0){ throw new IOException(); }
             System.out.println(initATBDATK);
             System.out.print("Antibody Lifesteal : ");
             initATBDLifeSteal = s.nextInt();
@@ -1280,13 +1282,13 @@ public class Game {
             System.out.println("--------7--------");
             System.out.print("Antibody Move Cost : ");
             atbdMoveCost = s.nextInt();
-            if( atbdMoveCost < 0 ){ throw new IOException(); }
+            if( atbdMoveCost +dfm_moveCost <0 ){ throw new IOException(); }
             System.out.println(atbdMoveCost);
             System.out.println("--------8--------");
             System.out.print("Antibody Credits Drop : ");
             atbdCreditsDrop = s.nextInt();
             System.out.println(atbdCreditsDrop);
-            if( atbdCreditsDrop < 0 ) throw new IOException();
+            if( atbdCreditsDrop + dfv1_gain <=0 ) throw new IOException();
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException e){
