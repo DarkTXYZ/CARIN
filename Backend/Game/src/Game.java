@@ -938,6 +938,7 @@ public class Game {
                 updateDeadlist();
                 if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
                 if(limitCount<virusLimit) {
+
                     double period = 1 / virusSpawnRate;
                     if (spawnCount >= period) {
                         rand = (int) (Math.random() * 3);
@@ -960,7 +961,35 @@ public class Game {
                     } else {
                         spawnCount++;
                     }
+
+                    // Second Type
+//                    int spawnChance = (int) (1000.0 * virusSpawnRate);
+//                    Random r = new Random();
+//                    int isSpawn = r.nextInt(1001);
+//                    if (isSpawn < spawnChance) {
+//                        int virusType = 1;
+//                        if ((double) gObjective.fst() / gObjective.snd() > 1.0 / 3)
+//                            virusType++;
+//                        if ((double) gObjective.fst() / gObjective.snd() > 2.0 / 3)
+//                            virusType++;
+//
+//                        int randomVirus = r.nextInt(virusType);
+//                        if (randomVirus == 0) {
+//                            addVirus(createNewVirus(0), randomTile());
+//                            limitCount++;
+//                        }
+//                        if (randomVirus == 1) {
+//                            addVirus(createNewVirus(1), randomTile());
+//                            limitCount++;
+//                        }
+//                        if (randomVirus == 2) {
+//                            addVirus(createNewVirus(2), randomTile());
+//                            limitCount++;
+//                        }
+//                    }
                 }
+
+
                 Game.getInstance().visualize();
                 if(shop.getCurrency()<lowestcost&&atbdOrder.size() == 0){
                     throw new GameOverException("You lose");
