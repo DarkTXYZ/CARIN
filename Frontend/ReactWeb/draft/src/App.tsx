@@ -49,13 +49,17 @@ class App extends React.Component {
 	render(): React.ReactNode {
 		return (
 			<div className='fixed select-none h-full w-full bg-BG'>
-				{/* <ReactAudioPlayer className='fixed'
-					src={this.state.sound}
-					autoPlay = {true}
-					controls={true} 
-					loop={true}
-					volume={0.4}
-				/> */}
+				{
+					this.state.state !== 3 && this.state.state !== 2 &&
+					<ReactAudioPlayer className='fixed'
+						src={this.state.sound}
+						autoPlay={true}
+						controls={true}
+						loop={true}
+						volume={0.2}
+					/>
+				}
+
 
 				<div className="flex justify-center">
 					<div className='flex flex-col space-y-3'>
@@ -66,9 +70,9 @@ class App extends React.Component {
 							<div className='flex flex-row justify-center space-x-10'>
 								<div className='flex flex-col space-y-4 h-full'>
 									<Objective objective={this.state.objective} objectiveMax={this.state.objectiveMax} />
-									<div className='w-40'>
+									{/* <div className='w-40'>
 										<ReactSoundcloud hideRelated={true} autoPlay={true} height='640px' url="https://soundcloud.com/zz_music_jpn/yoitoyakoun-zaza-flip" />
-									</div>
+									</div> */}
 								</div>
 								<div className='flex flex-col'>
 									<Field m={this.state.n} n={this.state.m} px={this.state.posX} py={this.state.posY} t={this.state.type} hp={this.state.hp} hpMax={this.state.hpMax} />

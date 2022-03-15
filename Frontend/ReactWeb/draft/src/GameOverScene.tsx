@@ -1,3 +1,4 @@
+import ReactAudioPlayer from "react-audio-player"
 import Controller from "./Controller"
 
 function GameOverScene() {
@@ -7,10 +8,18 @@ function GameOverScene() {
         })
     }
 
+    const sound = require('./lib/gameover.mp3')
+
     return (
         <div>
             <div className="fixed left-0 bottom-0 opacity-60 w-full h-full bg-gray-400">
-
+                <ReactAudioPlayer className='fixed'
+                    src={sound}
+                    autoPlay={true}
+                    controls={false}
+                    loop={false}
+                    volume={1}
+                />
             </div>
             <div className=" fixed -translate-x-1/2 bottom-1/2 left-1/2 flex flex-col items-center">
                 <div className="flex flex-col items-center">

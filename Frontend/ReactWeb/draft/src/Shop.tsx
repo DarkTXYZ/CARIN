@@ -58,6 +58,10 @@ function Shop(props: any) {
 
     }
 
+    const merci = require('./lib/merci.mp3')
+    const ana = require('./lib/ana.mp3')
+    const lucio = require('./lib/lucio.mp3')
+
     const place = () => {
         if(placeState === 1 && selectedX !== -1 && selectedY !== -1) {
 
@@ -78,8 +82,13 @@ function Shop(props: any) {
                     })
                 })
             })
-
-
+            
+            if(job === 1)
+                new Audio(merci).play()
+            if(job === 2)
+                new Audio(ana).play()
+            if(job === 3)
+                new Audio(lucio).play()
         }
     }
 
