@@ -83,6 +83,9 @@ public class Game {
     public  void addATBD(Unit a, Pair<Integer,Integer> position){
         if(a.getCost()>shop.getCurrency()) return;
         int y = position.fst(); int x = position.snd();
+        visualize();
+        System.out.println("field" +m+" "+n);
+        System.out.println("y"+y +" x"+x);
         if(x>m || y>n|| y<0 || x<0) {
             System.out.println("out of range");
             return;
@@ -95,12 +98,12 @@ public class Game {
 
     }
     public void addVirus(Unit v, Pair<Integer,Integer> position){
-        int x = position.fst(); int y = position.snd();
+        int y = position.fst(); int x = position.snd();
         if(x>m || y>n || y<0 || x<0) {
             System.out.println("out of range");
             return;
         }
-        if(Objects.equals(field[x][y],null)) {
+        if(Objects.equals(field[y][x],null)) {
             add(v,position);
             virusOrder.add(v);
         }else System.out.println("can't add; This tile already has a gameUnit");
@@ -177,7 +180,7 @@ public class Game {
                 }else
                     System.out.print("|"+field[i][j].getClass().getName()+"|");
             }
-            System.out.print(" ");
+            System.out.println(" ");
         }
         System.out.println("Empty tile: "+emptySlot);
         System.out.println("list order"+order.toString());
@@ -1088,7 +1091,7 @@ public class Game {
             System.out.println(initVirusATK);
             System.out.print("Virus Lifesteal : ");
             initVirusLifeSteal = s.nextInt();
-            if( initVirusLifeSteal < 0 ){ throw new IOException(); }
+            if( initVirusLifeSteal +dfv3_ls <=0 ){ throw new IOException(); }
             System.out.println(initVirusLifeSteal);
             System.out.println("--------6--------");
             System.out.print("Antibody Attack Damage : ");
@@ -1097,7 +1100,7 @@ public class Game {
             System.out.println(initATBDATK);
             System.out.print("Antibody Lifesteal : ");
             initATBDLifeSteal = s.nextInt();
-            if( initATBDLifeSteal < 0 ){ throw new IOException(); }
+            if( initATBDLifeSteal +dfa_ls<=0){ throw new IOException(); }
             System.out.println(initATBDLifeSteal);
             System.out.println("--------7--------");
             System.out.print("Antibody Move Cost : ");
