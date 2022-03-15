@@ -573,78 +573,6 @@ public class Game {
     Initial ATBD Credit = 150
      */
 
-    //ganster
-    static int dfv1_atk = 40;
-    static int dfv1_ls  = 12;
-    static int dfv1_hp  = 115;
-    static int dfv1_cost = 1;
-    static int dfv1_atkRange = 1;
-
-    //pistoldude
-    static int dfv2_atk = 30;
-    static int dfv2_ls = 30;
-    static int dfv2_hp = 100;
-    static int dfv2_cost = 1;
-    static int dfv2_atkRange =2;
-
-    //sniper
-    static int dfv3_atk = 80;
-    static int dfv3_ls = 5;
-    static int dfv3_hp = 60;
-    static int dfv3_gene;
-    static int dfv3_cost =1;
-    static int dfv3_atkRange=4;
-    static int dfv3_skin;
-
-
-    //merci
-    static int dfm_atk = 60;
-    static int dfm_ls = 20;
-    static int dfm_hp = 140;
-    static int dfm_gene;
-    static int dfm_cost = 90;
-    static int dfm_atkRange = 1;
-    static int dfm_skin;
-    static int dfm_moveCost =25;
-    //ana
-    static int dfa_atk = 40;
-    static int dfa_ls = 15;
-    static int dfa_hp = 10;
-    static int dfa_gene;
-    static int dfa_cost = 300;
-    static int dfa_atkRange = 5;
-    static int dfa_skin;
-    static int dfa_moveCost =45 ;
-    //lucio
-    static int dfl_atk = 40;
-    static int dfl_ls = 45;
-    static int dfl_hp = 450;
-    static int dfl_gene;
-    static int dfl_cost = 200;
-    static int dfl_atkRange =2;
-    static int dfl_skin;
-    static int dfl_moveCost =50;
-    //shop n movecost
-    static int dfShop_cur = 150;
-    //field
-
-    static int dfv1_gain = 40;
-    static int dfv2_gain = 80;
-    static int dfv3_gain = 100;
-
-    static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
-    static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
-    static int[] dfvhp= {dfv1_hp,dfv2_hp,dfv3_hp};
-    static int[] dfvatkR = {dfv1_atkRange,dfv2_atkRange,dfv3_atkRange};
-    static int[] dfvgain = {dfv1_gain,dfv2_gain,dfv3_gain};
-
-    static int[] dfaatk = {dfm_atk,dfa_atk,dfl_atk};
-    static int[] dfals = {dfm_ls,dfa_ls,dfl_ls};
-    static int[] dfahp = {dfm_hp,dfa_hp,dfl_hp};
-    static int[] dfaatkR = {dfm_atkRange,dfa_atkRange,dfl_atkRange};
-    static int[] dfacost = {dfm_cost,dfa_cost,dfl_cost};
-    static int[] dfamoveCost = {dfm_moveCost,dfa_moveCost,dfl_moveCost};
-
     private int m,n;
     private Unit[][] field;
 
@@ -654,115 +582,14 @@ public class Game {
 
 
 
-    static Unit gangster = new Virus(75,50,250,1,4,"atbdLoc = antibody " +
-            "virusLoc = virus " +
-            "if(atbdLoc / 10 - 1) then { " +
-            "    if (atbdLoc % 10 - 7) then move upleft " +
-            "    else if (atbdLoc % 10 - 6) then move left " +
-            "    else if (atbdLoc % 10 - 5) then move downleft " +
-            "    else if (atbdLoc % 10 - 4) then move down " +
-            "    else if (atbdLoc % 10 - 3) then move downright " +
-            "    else if (atbdLoc % 10 - 2) then move right " +
-            "    else if (atbdLoc % 10 - 1) then move upright " +
-            "    else move up " +
-            "} else if(atbdLoc) then { " +
-            "    if (atbdLoc % 10 - 7) then shoot upleft " +
-            "    else if (atbdLoc % 10 - 6) then shoot left " +
-            "    else if (atbdLoc % 10 - 5) then shoot downleft " +
-            "    else if (atbdLoc % 10 - 4) then shoot down " +
-            "    else if (atbdLoc % 10 - 3) then shoot downright " +
-            "    else if (atbdLoc % 10 - 2) then shoot right " +
-            "    else if (atbdLoc % 10 - 1) then shoot upright " +
-            "    else shoot up " +
-            "} else { " +
-            "    if(virusLoc / 10 - 1) then { " +
-            "        if (virusLoc % 10 - 7) then move upleft " +
-            "        else if (virusLoc % 10 - 6) then move left " +
-            "        else if (virusLoc % 10 - 5) then move downleft " +
-            "        else if (virusLoc % 10 - 4) then move down " +
-            "        else if (virusLoc % 10 - 3) then move downright " +
-            "        else if (virusLoc % 10 - 2) then move right " +
-            "        else if (virusLoc % 10 - 1) then move upright " +
-            "        else move up " +
-            "    } else { " +
-            "        dir = random % 8 " +
-            "        if (dir - 6) then move upleft " +
-            "        else if (dir - 5) then move left " +
-            "        else if (dir - 4) then move downleft " +
-            "        else if (dir - 3) then move down " +
-            "        else if (dir - 2) then move downright " +
-            "        else if (dir - 1) then move right " +
-            "        else if (dir) then move upright " +
-            "        else move up " +
-            "    } " +
-            "}");
-    static Unit pistolDude = new Virus(150,100,200,3,5,"timeUnit = timeUnit + 1 " +
-            "if(timeUnit % 4) then {  " +
-            "    atbdLoc = antibody " +
-            "    if(atbdLoc / 10 - 1) then { " +
-            "        if (atbdLoc % 10 - 7) then move upleft " +
-            "        else if (atbdLoc % 10 - 6) then move left " +
-            "        else if (atbdLoc % 10 - 5) then move downleft " +
-            "        else if (atbdLoc % 10 - 4) then move down " +
-            "        else if (atbdLoc % 10 - 3) then move downright " +
-            "        else if (atbdLoc % 10 - 2) then move right " +
-            "        else if (atbdLoc % 10 - 1) then move upright " +
-            "        else move up " +
-            "    } else if(atbdLoc) then { " +
-            "        if (atbdLoc % 10 - 7) then move downright " +
-            "        else if (atbdLoc % 10 - 6) then move right " +
-            "        else if (atbdLoc % 10 - 5) then move upright " +
-            "        else if (atbdLoc % 10 - 4) then move up " +
-            "        else if (atbdLoc % 10 - 3) then move upleft " +
-            "        else if (atbdLoc % 10 - 2) then move left " +
-            "        else if (atbdLoc % 10 - 1) then move downleft " +
-            "        else move down  " +
-            "    } else { " +
-            "        dir = random % 8 " +
-            "        if (dir - 6) then move upleft " +
-            "        else if (dir - 5) then move left " +
-            "        else if (dir - 4) then move downleft " +
-            "        else if (dir - 3) then move down " +
-            "        else if (dir - 2) then move downright " +
-            "        else if (dir - 1) then move right " +
-            "        else if (dir) then move upright " +
-            "        else move up " +
-            "    } " +
-            "} else { " +
-            "    atbdLoc = antibody " +
-            "    if(atbdLoc / 10 - 3) then { " +
-            " " +
-            "    } else if(atbdLoc) then { " +
-            "        if (atbdLoc % 10 - 7) then shoot upleft " +
-            "        else if (atbdLoc % 10 - 6) then shoot left " +
-            "        else if (atbdLoc % 10 - 5) then shoot downleft " +
-            "        else if (atbdLoc % 10 - 4) then shoot down " +
-            "        else if (atbdLoc % 10 - 3) then shoot downright " +
-            "        else if (atbdLoc % 10 - 2) then shoot right " +
-            "        else if (atbdLoc % 10 - 1) then shoot upright " +
-            "        else shoot up " +
-            "    } else { " +
-            "         " +
-            "    } " +
-            "}");
-    static Unit sniper = new Virus(150,20,160,1,6,"move down");
+    static Unit gangster = new Virus(75,50,250,1,4,"{}");
+    static Unit pistolDude = new Virus(150,100,200,3,5,"{}");
+    static Unit sniper = new Virus(150,20,160,1,6,"{}");
     static Unit[] viruses = {gangster,pistolDude,sniper};
 
-    static Unit Merci = new ATBD_(1696969,20,10000,20,1,1,1,"virusLoc =  virus " +
-            "if(virusLoc / 10 - 3) then { " +
-            " " +
-            "} else { " +
-            "    if (virusLoc % 10 - 7) then shoot upleft " +
-            "    else if (virusLoc % 10 - 6) then shoot left " +
-            "    else if (virusLoc % 10 - 5) then shoot downleft " +
-            "    else if (virusLoc % 10 - 4) then shoot down " +
-            "    else if (virusLoc % 10 - 3) then shoot downright " +
-            "    else if (virusLoc % 10 - 2) then shoot right " +
-            "    else if (virusLoc % 10 - 1) then shoot upright " +
-            "    else shoot up " +
-            "}");
-    static Unit Ana = new ATBD_(80,50,600,12,2,2,1,"anaaa");
-    static Unit Lucio = new ATBD_(150,50,1000,18,1,3,1,"lucio");
+    static Unit Merci = new ATBD_(1696969,20,10000,20,1,1,1,"{}");
+    static Unit Ana = new ATBD_(80,50,600,12,2,2,1,"{}");
+    static Unit Lucio = new ATBD_(150,50,1000,18,1,3,1,"{}");
     static Unit[] Atbds = {Merci,Ana,Lucio};
 
     static int virustemplate = viruses.length;
@@ -917,9 +744,9 @@ public class Game {
 
             int periodTime = 0;
             if(speed == 1)
-                periodTime = 1300;
+                periodTime = 1600;
             else
-                periodTime = 650;
+                periodTime = 800;
 
             long curTime = System.currentTimeMillis();
             totalTime += curTime - prevTime;
@@ -1179,99 +1006,6 @@ public class Game {
 
         }
     }
-//        System.out.println(Game.senseClosestVirus(field[2][2])); //13
-//        System.out.println(Game.senseClosestATBD(field[2][1])); //13
-//        System.out.println(Game.senseClosestATBD(field[2][3])); //17
-//        System.out.println(Game.senseClosestATBD(field[4][0])); //22
-//        System.out.println(Game.senseClosestATBD(field[0][4])); // 26
-
-//        addVirus(createNewVirus(0),new Pair<>(2,1));
-//        addVirus(createNewVirus(1),new Pair<>(2,3));
-//        addATBD(createNewATBD(1),new Pair<>(5,2));
-//        addVirus(createNewVirus(1),new Pair<>(2,4));
-//        addVirus(createNewVirus(1),new Pair<>(3,0));
-//        addVirus(createNewVirus(1),new Pair<>(0,4));
-//        addATBD(createNewATBD(1),new Pair<>(2,2));
-
-//        addVirus(createNewVirus(0),randomTile());
-//        addVirus(createNewVirus(1),randomTile());
-//        addATBD(createNewATBD(1),randomTile());
-//        addVirus(createNewVirus(1),randomTile());
-//        addVirus(createNewVirus(1),randomTile());
-//        addVirus(createNewVirus(1),randomTile());
-//        addATBD(createNewATBD(1),randomTile());
-//          addVirus(createNewVirus(1), new Pair<>(1,1));
-//          addATBD(createNewATBD(1),new Pair<>(1,4));
-
-
-
-
-//        Objective = new Objective(0,2);
-//        visualize();
-//        System.out.println(senseNearby(field[0][4],"downleft")); //22
-//        System.out.println(senseNearby(field[5][2],"downright")); // 0
-//        System.out.println(senseNearby(field[2][1],"right")); //12
-//        System.out.println(senseNearby(field[3][0],"upright")); //11
-//        System.out.println(senseNearby(field[2][2],"right")); //11
-//        System.out.println(senseNearby(field[2][2],"left")); //11
-//        System.out.println(senseNearby(field[2][2],"down")); //32
-
-        //corner case :
-        //topleft - left => pass , upleft => pass , up => pass
-        //topright - right => pass , upright => pass , up ==> pass
-        //bottomleft - left => pass , downleft => pass , downright => pass , upleft => pass
-        //bottomright - right => pass , upright => pass , downright => pass , downleft => pass
-        //side case :
-        //left side - left => pass , upleft => pass , downleft => pass
-        //right side - right => pass , upright => pass , downright => pass
-        //upper side - up => pass , upleft => pass , upright => pass
-        //bottom side - down => pass , downleft => pass , downright => pass
-
-
-
-
-
-
-
-
-//            Unit v1 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "kuay");
-//            Pair<Integer,Integer> z = new Pair<>(0,0);
-//            g.addVirus(v1,z);
-//
-//            Unit v2 = new Virus(initVirusATK, initVirusLifeSteal, initVirusHP, "sud");
-//            Pair<Integer,Integer> x = new Pair<>(1,0);
-//            g.addVirus(v2,x);
-//
-//            Unit a1 = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "eiei");
-//            Pair<Integer,Integer> c = new Pair<>(2,2);
-//            g.addATBD(a1,c);
-//
-//            Unit b = new ATBD(initATBDATK, initVirusLifeSteal, initATBDHP, "weebo");
-//            Pair<Integer,Integer> v = new Pair<>(3,3);
-//            g.addATBD(b,v);
-//            Game.visualize();
-//
-//            v1.attack(a1);
-//            v2.attack(b);
-//            b.destruct();
-//            v1.destruct();
-//            Game.visualize();
-//            Pair<Integer,Integer> des1 = new Pair<>(3,3);
-//            Pair<Integer,Integer> des2 = new Pair<>(2,1);
-//            System.out.println("before move");
-//            v1.move(des1);
-//            v1.move(des2);
-//            System.out.println(v1.getGene());
-//            visualize();
-//            v2.move(des1);
-//            v2.move(des2);
-//        System.out.println("after move");
-//            visualize();
-//            field[des1.fst()][des1.snd()].destruct();
-//            visualize();
-
-
-
 
     public void geneticReader(String geneinFile){
         try(FileReader fr = new FileReader(geneinFile);
@@ -1379,5 +1113,77 @@ public class Game {
             System.exit(0);
         }
     }
+
+    //ganster
+    static int dfv1_atk = 30;
+    static int dfv1_ls  = 10;
+    static int dfv1_hp  = 115;
+    static int dfv1_cost = 1;
+    static int dfv1_atkRange = 1;
+
+    //pistoldude
+    static int dfv2_atk = 18;
+    static int dfv2_ls = 10;
+    static int dfv2_hp = 80;
+    static int dfv2_cost = 1;
+    static int dfv2_atkRange =2;
+
+    //sniper
+    static int dfv3_atk = 80;
+    static int dfv3_ls = 5;
+    static int dfv3_hp = 60;
+    static int dfv3_gene;
+    static int dfv3_cost = 1;
+    static int dfv3_atkRange=4;
+    static int dfv3_skin;
+
+
+    //merci
+    static int dfm_atk = 60;
+    static int dfm_ls = 20;
+    static int dfm_hp = 140;
+    static int dfm_gene;
+    static int dfm_cost = 100;
+    static int dfm_atkRange = 1;
+    static int dfm_skin;
+    static int dfm_moveCost =25;
+    //ana
+    static int dfa_atk = 40;
+    static int dfa_ls = 15;
+    static int dfa_hp = 140;
+    static int dfa_gene;
+    static int dfa_cost = 210;
+    static int dfa_atkRange = 5;
+    static int dfa_skin;
+    static int dfa_moveCost =45 ;
+    //lucio
+    static int dfl_atk = 40;
+    static int dfl_ls = 30;
+    static int dfl_hp = 390;
+    static int dfl_gene;
+    static int dfl_cost = 300;
+    static int dfl_atkRange =2;
+    static int dfl_skin;
+    static int dfl_moveCost =50;
+    //shop n movecost
+    static int dfShop_cur = 230;
+    //field
+
+    static int dfv1_gain = 40;
+    static int dfv2_gain = 60;
+    static int dfv3_gain = 80;
+
+    static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
+    static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
+    static int[] dfvhp= {dfv1_hp,dfv2_hp,dfv3_hp};
+    static int[] dfvatkR = {dfv1_atkRange,dfv2_atkRange,dfv3_atkRange};
+    static int[] dfvgain = {dfv1_gain,dfv2_gain,dfv3_gain};
+
+    static int[] dfaatk = {dfm_atk,dfa_atk,dfl_atk};
+    static int[] dfals = {dfm_ls,dfa_ls,dfl_ls};
+    static int[] dfahp = {dfm_hp,dfa_hp,dfl_hp};
+    static int[] dfaatkR = {dfm_atkRange,dfa_atkRange,dfl_atkRange};
+    static int[] dfacost = {dfm_cost,dfa_cost,dfl_cost};
+    static int[] dfamoveCost = {dfm_moveCost,dfa_moveCost,dfl_moveCost};
 
 }

@@ -31,7 +31,7 @@ if(virusLoc / 10 - 5) then {
 }
 -
 virusLoc =  virus
-if(virusLoc / 10 - 1) then {
+if(virusLoc / 10 - 2) then {
 
 } else if(virusLoc) then {
     if (virusLoc % 10 - 7) then shoot upleft
