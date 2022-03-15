@@ -121,7 +121,7 @@ if(atbdLoc / 10 - 2) then {
 }
 -
 atbdLoc = antibody
-if(atbdLoc / 10 - 4) then {
+if(atbdLoc / 10 - 6) then {
     if (atbdLoc % 10 - 7) then move upleft
     else if (atbdLoc % 10 - 6) then move left
     else if (atbdLoc % 10 - 5) then move downleft

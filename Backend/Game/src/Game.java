@@ -607,9 +607,7 @@ public class Game {
             viruses[i].setDf(dfvatk[i],dfvls[i],dfvhp[i],dfvgain[i],dfvatkR[i],1);
             Atbds[i].setDf(dfaatk[i],dfals[i],dfahp[i],dfacost[i],dfaatkR[i],dfamoveCost[i]);
         }
-        shop = Shop.getInstance(cost,highestcost);
-        shop.setdf(dfShop_cur);
-        shop.setCurrency(initialATBDCredits);
+
         for (int i = 0; i < virustemplate; i++) {
             viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP,atbdCreditsDrop, atbdMoveCost,geneVirus[i]);
             Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost,geneATBD[i]);
@@ -619,6 +617,9 @@ public class Game {
             if(lowestcost>cost[i]) lowestcost = cost[i];
             if(highestcost<cost[i]) highestcost = cost[i];
         }
+        shop = Shop.getInstance(cost,highestcost);
+        shop.setdf(dfShop_cur);
+        shop.setCurrency(initialATBDCredits);
         field = new Unit[m][n];
         order = new ArrayList<>();
         virusOrder = new ArrayList<>();
@@ -1124,9 +1125,9 @@ public class Game {
     static int dfv1_atkRange = 1;
 
     //pistoldude
-    static int dfv2_atk = 18;
+    static int dfv2_atk = 45;
     static int dfv2_ls = 10;
-    static int dfv2_hp = 80;
+    static int dfv2_hp = 120;
     static int dfv2_cost = 1;
     static int dfv2_atkRange =2;
 
@@ -1136,7 +1137,7 @@ public class Game {
     static int dfv3_hp = 60;
     static int dfv3_gene;
     static int dfv3_cost = 1;
-    static int dfv3_atkRange=4;
+    static int dfv3_atkRange=6;
     static int dfv3_skin;
 
 
@@ -1145,16 +1146,16 @@ public class Game {
     static int dfm_ls = 20;
     static int dfm_hp = 140;
     static int dfm_gene;
-    static int dfm_cost = 100;
+    static int dfm_cost = 90;
     static int dfm_atkRange = 1;
     static int dfm_skin;
     static int dfm_moveCost =25;
     //ana
-    static int dfa_atk = 40;
+    static int dfa_atk = 45;
     static int dfa_ls = 15;
     static int dfa_hp = 140;
     static int dfa_gene;
-    static int dfa_cost = 210;
+    static int dfa_cost = 240;
     static int dfa_atkRange = 5;
     static int dfa_skin;
     static int dfa_moveCost =45 ;
@@ -1163,7 +1164,7 @@ public class Game {
     static int dfl_ls = 30;
     static int dfl_hp = 390;
     static int dfl_gene;
-    static int dfl_cost = 300;
+    static int dfl_cost = 290;
     static int dfl_atkRange =2;
     static int dfl_skin;
     static int dfl_moveCost =50;
@@ -1171,9 +1172,9 @@ public class Game {
     static int dfShop_cur = 230;
     //field
 
-    static int dfv1_gain = 40;
-    static int dfv2_gain = 60;
-    static int dfv3_gain = 80;
+    static int dfv1_gain = 36;
+    static int dfv2_gain = 54;
+    static int dfv3_gain = 72;
 
     static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
     static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
