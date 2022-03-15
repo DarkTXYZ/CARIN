@@ -35,7 +35,7 @@ public class Shop {
         return Shop.instance;
     }
     public static void updateCost(int[] cost,int max){
-        instance.maxCurrency = max*5;
+        instance.maxCurrency = max*3;
         instance.status = new LinkedHashMap<>();
         for(int i = 0;i<cost.length;i++){
             instance.status.put(cost[i],false);
