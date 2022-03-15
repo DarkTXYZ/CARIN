@@ -1155,7 +1155,7 @@ public class Game {
     static int dfa_ls = 15;
     static int dfa_hp = 140;
     static int dfa_gene;
-    static int dfa_cost = 240-30-10;
+    static int dfa_cost = 200;
     static int dfa_atkRange = 5;
     static int dfa_skin;
     static int dfa_moveCost =45 ;

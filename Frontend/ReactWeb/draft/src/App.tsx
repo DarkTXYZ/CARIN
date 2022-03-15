@@ -29,7 +29,7 @@ class App extends React.Component {
 		type: [], // type of hosts
 		objective: 0, // number of viruses left
 		objectiveMax: 0,
-		sound: require('./lib/blue.mp3')
+		sound: require('./lib/darksoul.mp3')
 	}
 
 	componentDidMount() {
