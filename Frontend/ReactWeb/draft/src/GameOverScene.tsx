@@ -25,7 +25,7 @@ function GameOverScene() {
                 <div className="flex flex-col items-center">
                     <div className="p-3 bg-white skew-y-3 shadow-xl hover:scale-105 duration-300 ease-out">
                         <div className="text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 ">
-                            GAME OVER
+                            YOU DIED
                         </div>
                     </div>
 

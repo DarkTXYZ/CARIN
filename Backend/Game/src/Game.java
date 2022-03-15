@@ -1146,7 +1146,7 @@ public class Game {
     static int dfm_ls = 20;
     static int dfm_hp = 140;
     static int dfm_gene;
-    static int dfm_cost = 90;
+    static int dfm_cost = 70;
     static int dfm_atkRange = 1;
     static int dfm_skin;
     static int dfm_moveCost =25;
@@ -1155,7 +1155,7 @@ public class Game {
     static int dfa_ls = 15;
     static int dfa_hp = 140;
     static int dfa_gene;
-    static int dfa_cost = 240;
+    static int dfa_cost = 240-30-10;
     static int dfa_atkRange = 5;
     static int dfa_skin;
     static int dfa_moveCost =45 ;
@@ -1164,7 +1164,7 @@ public class Game {
     static int dfl_ls = 30;
     static int dfl_hp = 390;
     static int dfl_gene;
-    static int dfl_cost = 290;
+    static int dfl_cost = 250;
     static int dfl_atkRange =2;
     static int dfl_skin;
     static int dfl_moveCost =50;
@@ -1172,9 +1172,9 @@ public class Game {
     static int dfShop_cur = 230;
     //field
 
-    static int dfv1_gain = 36;
+    static int dfv1_gain = 42;
     static int dfv2_gain = 54;
-    static int dfv3_gain = 72;
+    static int dfv3_gain = 80;
 
     static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
     static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
