@@ -31,7 +31,7 @@ public class Game {
     static int dfv2_hp = 120;
     static int dfv2_atkRange = 2;
     //sniper
-    static int dfv3_atk = 80;
+    static int dfv3_atk = 140;
     static int dfv3_ls = 5;
     static int dfv3_hp = 60;
     static int dfv3_atkRange = 6;
@@ -149,7 +149,7 @@ public class Game {
                     skin.add(u.getSkin());
                 }
                 List<Integer> cost = carin.shop.getcostList();
-                Controller.sendGameData(carin.n, carin.m, 3, shopStat, cur, cost, posx, posy, hp, maxHp, skin, obj[0], obj[1]);
+                Controller.sendGameData(carin.m, carin.n, 3, shopStat, cur, cost, posx, posy, hp, maxHp, skin, obj[0], obj[1]);
                 System.out.println(e.getMessage());
 
             } catch (GameWinException e) {
@@ -171,7 +171,7 @@ public class Game {
                     skin.add(u.getSkin());
                 }
                 List<Integer> cost = carin.shop.getcostList();
-                Controller.sendGameData(carin.n, carin.m, 2, shopStat, cur, cost, posx, posy, hp, maxHp, skin, obj[0], obj[1]);
+                Controller.sendGameData(carin.m, carin.n, 2, shopStat, cur, cost, posx, posy, hp, maxHp, skin, obj[0], obj[1]);
                 System.out.println(e.getMessage());
             }
             carin.waitingRestart = false;
@@ -318,6 +318,7 @@ public class Game {
         Pair<Integer, Integer> pos = unit.getPosition();
         remove(pos);
         Unit u = new Virus(spawn);
+        u.setHP(-u.getHp()/2);
         deadList.add(new Pair<>(u, pos));
     }
 
