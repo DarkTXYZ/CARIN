@@ -55,11 +55,11 @@ function ShopTile(props: any) {
     else
         color = 'text-red-400'
 
-    let h = ['■■','■','■■■■■']
-    let a = ['■■■','■■■■','■■']
-    let ls = ['■■','■■■','■']
-    let r = ['■','■■■■■■','■']
-    let m = ['■','■■','■■']
+    let h = ['■','■','■■■']
+    let a = ['■■■','■','■']
+    let ls = ['■','■■','■■■']
+    let r = ['■','■■■■■','■■']
+    let m = ['■','■■■','■■■']
 
     return (
         <div className="flex flex-row items-center space-x-4" onClick={props.onClick}>
