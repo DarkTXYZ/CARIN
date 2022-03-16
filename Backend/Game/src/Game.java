@@ -567,12 +567,10 @@ public class Game {
         virusOrder = new ArrayList<>();
         atbdOrder = new ArrayList<>();
 
-        Shop.updateCost(cost, highestcost);
-
-        System.out.println(shop.getMap().keySet());
-        initObjective(100);
-        virusLimit = gObjective.snd();
-        limitCount = 0;
+        Shop.updateCost(cost,highestcost);
+        initObjective(dfObjective);
+        virusLimit= gObjective.snd();
+        limitCount =0;
         emptySlot = new TreeSet<>(comp);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
