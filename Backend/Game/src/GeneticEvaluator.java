@@ -48,13 +48,16 @@ public class GeneticEvaluator implements Evaluator {
     }
 
     private Executable parseProgram() throws SyntaxErrorException, TokenizeErrorException {
-        Program program = new Program(bindings);
+        try {
 
-        program.addStatement(parseStatement());
-        while (tkz.hasNext())
+            Program program = new Program(bindings);
             program.addStatement(parseStatement());
-
-        return program;
+            while (tkz.hasNext())
+                program.addStatement(parseStatement());
+            return program;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     private Executable parseStatement() throws SyntaxErrorException, TokenizeErrorException {
