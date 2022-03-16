@@ -13,8 +13,9 @@ public class Game {
         return Game.instance;
     }
 
-    protected  final String inFile = "src/configfile.in";
-    protected  final String geneinFile = "src/geneticcodeInput.in";
+    protected final String inFile = "src/configfile.in";
+    protected final String geneinFile = "src/geneticcodeInput.in";
+    protected final String geneDefault = "src/geneticcodeDefault.in";
     private double spawnCount = 0;
     private double virusSpawnRate;
 
@@ -42,6 +43,8 @@ public class Game {
     private Shop shop;
     protected String[] geneATBD = new String[3]; // init genetic code for each ATBD
     protected String[] geneVirus = new String[3]; // init genetic code for each Virus
+    protected String[] defaultGeneATBD = new String[3];
+    protected String[] defaultGeneVirus = new String[3];
     public  void initObjective(int maxElim){
         gObjective = new Objective(0,maxElim);
     }
@@ -605,7 +608,7 @@ public class Game {
     public void Initialize() {
         config(inFile);
         geneticReader(geneinFile);
-
+        geneticDefaultReader(geneDefault);
         for (int i = 0; i < virustemplate; i++) {
             viruses[i].setDf(dfvatk[i],dfvls[i],dfvhp[i],dfvgain[i],dfvatkR[i],1);
             Atbds[i].setDf(dfaatk[i],dfals[i],dfahp[i],dfacost[i],dfaatkR[i],dfamoveCost[i]);
@@ -613,7 +616,13 @@ public class Game {
 
         for (int i = 0; i < virustemplate; i++) {
             viruses[i].configMod(initVirusATK, initVirusLifeSteal, initVirusHP,atbdCreditsDrop, atbdMoveCost,geneVirus[i]);
+            if(Objects.equals(viruses[i].getProgram(), null)){
+                viruses[i].configMod(0, 0, 0,0, 0,defaultGeneVirus[i]);
+            }
             Atbds[i].configMod(initATBDATK, initVirusLifeSteal, initATBDHP, atbdPlacementCost, atbdMoveCost,geneATBD[i]);
+            if(Objects.equals(Atbds[i].getProgram(), null)){
+                Atbds[i].configMod(0, 0, 0,0, 0,defaultGeneATBD[i]);
+            }
         }
         for (int i = 0; i < atbdtemplate; i++) {
             cost[i] = Atbds[i].getCost();
@@ -676,24 +685,6 @@ public class Game {
             System.out.println("SPAWzN");
             // SPAWN ATBD
             addATBD(createNewATBD(skin-1),new Pair<>(posy,posx));
-//            List<Integer> posx2 =new ArrayList<>();
-//            List<Integer> posy2 =new ArrayList<>();
-//            List<Integer> hp =new ArrayList<>();
-//            List<Integer> maxHp =new ArrayList<>();
-//            List<Integer> skin2 =new ArrayList<>();
-//            int cur = shop.getCurrency();
-//            int[] obj = {gObjective.fst(),gObjective.snd()};
-//            shop.updateStatus();
-//            List<Boolean> shopStat = shop.getStatus();
-//            for(Unit u: order){
-//                maxHp.add(u.getMaxHp());
-//                hp.add(u.getHp());
-//                posx2.add(u.getPosition().snd());
-//                posy2.add(u.getPosition().fst());
-//                skin2.add(u.getSkin());
-//            }
-//            List<Integer> cost = shop.getcostList();
-//            Controller.sendGameData(n,m,1,shopStat,cur,cost ,posx2,posy2,hp,maxHp,skin2,obj[0],obj[1]);
         }
 
         if(moveState == 3) {
@@ -775,7 +766,6 @@ public class Game {
                     int[] obj = {gObjective.fst(),gObjective.snd()};
                     shop.updateStatus();
                     List<Boolean> shopStat = shop.getStatus();
-//            System.out.println("shopStat"+ shopStat);
                     for(Unit u: order){
                         maxHp.add(u.getMaxHp());
                         hp.add(u.getHp());
@@ -785,12 +775,6 @@ public class Game {
                     }
                     List<Integer> cost = shop.getcostList();
                     Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-
-//                    try{
-//                        Thread.sleep(100);
-//                    } catch (Exception ignored){
-//
-//                    }
                 }
                 updateDeadlist();
 
@@ -803,7 +787,6 @@ public class Game {
                 int[] obj = {gObjective.fst(),gObjective.snd()};
                 shop.updateStatus();
                 List<Boolean> shopStat = shop.getStatus();
-//            System.out.println("shopStat"+ shopStat);
                 for(Unit u: order){
                     maxHp.add(u.getMaxHp());
                     hp.add(u.getHp());
@@ -817,36 +800,8 @@ public class Game {
                 if(emptySlot.size() == 0 && atbdOrder.isEmpty()) throw new GameOverException("fullfield");
                 if(emptySlot.size() == 0&& virusOrder.isEmpty()) throw new GameWinException("EZ");
                 if(limitCount<virusLimit) {
-
-//                    double period = 1 / virusSpawnRate;
-//                    if (spawnCount >= period) {
-//                        rand = (int) (Math.random() * 3);
-//                        if (rand == 0) {
-//                            addVirus(createNewVirus(0), randomTile());
-//                            spawnCount = spawnCount - rand;
-//                            limitCount++;
-//
-//                        }
-//                        if (rand == 1) {
-//                            addVirus(createNewVirus(1), randomTile());
-//                            spawnCount = spawnCount - 2 * rand;
-//                            limitCount++;
-//                        }
-//                        if (rand == 2) {
-//                            addVirus(createNewVirus(2), randomTile());
-//                            spawnCount = spawnCount - 3 * rand;
-//                            limitCount++;
-//                        }
-//                    } else {
-//                        spawnCount++;
-//                    }
-
-                    // Second Type
-
                     double period = 1 / virusSpawnRate;
-//                    int spawnChance = (int) (1000.0 * virusSpawnRate);
                     Random r = new Random();
-//                    int isSpawn = r.nextInt(1001);
                     if (spawnCount >= period) {
                         int virusType = 1;
                         rand = (int) (Math.random() * 3);
@@ -863,30 +818,24 @@ public class Game {
                         }
                         if (randomVirus == 1) {
                             addVirus(createNewVirus(1), randomTile());
-                            spawnCount = spawnCount - 2 * rand;
+                            spawnCount = spawnCount - 1.5 * rand;
                             limitCount++;
                         }
                         if (randomVirus == 2) {
                             addVirus(createNewVirus(2), randomTile());
-                            spawnCount = spawnCount - 3 * rand;
+                            spawnCount = spawnCount - 2 * rand;
                             limitCount++;
                         }
                     } else {
                         spawnCount++;
                     }
                 }
-
-
                 Game.getInstance().visualize();
                 if(shop.getCurrency()<lowestcost&&atbdOrder.size() == 0){
                     throw new GameOverException("You lose");
                 }
 
             }
-
-
-
-
             List<Integer> posx =new ArrayList<>();
             List<Integer> posy =new ArrayList<>();
             List<Integer> hp =new ArrayList<>();
@@ -896,7 +845,6 @@ public class Game {
             int[] obj = {gObjective.fst(),gObjective.snd()};
             shop.updateStatus();
             List<Boolean> shopStat = shop.getStatus();
-//            System.out.println("shopStat"+ shopStat);
             for(Unit u: order){
                 maxHp.add(u.getMaxHp());
                 hp.add(u.getHp());
@@ -906,20 +854,6 @@ public class Game {
             }
             List<Integer> cost = shop.getcostList();
             Controller.sendGameData(m,n,1,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-
-
-
-
-//            System.out.println(maxHp);
-//            System.out.println(hp);
-//            System.out.println(posx);
-//            System.out.println(posy);
-//            System.out.println(skin);
-
-//            Thread.sleep(1000/speed);
-            //fetch api
-
-
         }
         System.out.println("Ezgaem");
         throw new GameWinException("You win");
@@ -927,86 +861,73 @@ public class Game {
 
     boolean how2Play = false;
     boolean waitingRestart = false;
-
-
     boolean lose = false;
     boolean win = false;
-    public void reset(){
-
-    }
-
 
     public static void main(String[] args) {
         while (true) {
 
 
-            Game gay = Game.getInstance();
-            gay.how2Play = false;
+            Game carin = Game.getInstance();
+            carin.how2Play = false;
             Controller.sendGameState(0);
             Controller.sendPlaceState(0);
 
-            while (!gay.how2Play){
-                gay.GetInput();
+            while (!carin.how2Play){
+                carin.GetInput();
             }
-            gay.Initialize();
+            carin.Initialize();
 
             try {
-                gay.Update();
+                carin.Update();
             } catch (GameOverException e) {
-                gay.lose = true;
                 //tell api
                 List<Integer> posx =new ArrayList<>();
                 List<Integer> posy =new ArrayList<>();
                 List<Integer> hp =new ArrayList<>();
                 List<Integer> maxHp =new ArrayList<>();
                 List<Integer> skin =new ArrayList<>();
-                int cur = gay.shop.getCurrency();
-                int[] obj = {gay.gObjective.fst(),gay.gObjective.snd()};
-                gay.shop.updateStatus();
-                List<Boolean> shopStat = gay.shop.getStatus();
-                for(Unit u: gay.order){
+                int cur = carin.shop.getCurrency();
+                int[] obj = {carin.gObjective.fst(),carin.gObjective.snd()};
+                carin.shop.updateStatus();
+                List<Boolean> shopStat = carin.shop.getStatus();
+                for(Unit u: carin.order){
                     maxHp.add(u.getMaxHp());
                     hp.add(u.getHp());
                     posx.add(u.getPosition().snd());
                     posy.add(u.getPosition().fst());
                     skin.add(u.getSkin());
                 }
-                List<Integer> cost = gay.shop.getcostList();
-                Controller.sendGameData(gay.n,gay.m,3,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-
-
+                List<Integer> cost = carin.shop.getcostList();
+                Controller.sendGameData(carin.n,carin.m,3,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
                 System.out.println(e.getMessage());
 
             }catch (GameWinException e){
-                gay.win = true;
                 //tell api
                 List<Integer> posx =new ArrayList<>();
                 List<Integer> posy =new ArrayList<>();
                 List<Integer> hp =new ArrayList<>();
                 List<Integer> maxHp =new ArrayList<>();
                 List<Integer> skin =new ArrayList<>();
-                int cur = gay.shop.getCurrency();
-                int[] obj = {gay.gObjective.fst(),gay.gObjective.snd()};
-                gay.shop.updateStatus();
-                List<Boolean> shopStat = gay.shop.getStatus();
-                for(Unit u: gay.order){
+                int cur = carin.shop.getCurrency();
+                int[] obj = {carin.gObjective.fst(),carin.gObjective.snd()};
+                carin.shop.updateStatus();
+                List<Boolean> shopStat = carin.shop.getStatus();
+                for(Unit u: carin.order){
                     maxHp.add(u.getMaxHp());
                     hp.add(u.getHp());
                     posx.add(u.getPosition().snd());
                     posy.add(u.getPosition().fst());
                     skin.add(u.getSkin());
                 }
-                List<Integer> cost = gay.shop.getcostList();
-                Controller.sendGameData(gay.n,gay.m,2,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
-
-
+                List<Integer> cost = carin.shop.getcostList();
+                Controller.sendGameData(carin.n,carin.m,2,shopStat,cur,cost ,posx,posy,hp,maxHp,skin,obj[0],obj[1]);
                 System.out.println(e.getMessage());
             }
-            gay.waitingRestart = false;
-
+            carin.waitingRestart = false;
             Controller.sendPlaceState(0);
-            while (!gay.waitingRestart) {
-                gay.GetInput();
+            while (!carin.waitingRestart) {
+                carin.GetInput();
             }
 
         }
@@ -1022,7 +943,6 @@ public class Game {
                 while (true){
                     String lastS = s.nextLine();
                     if( lastS.equals("-")) break;
-//                    System.out.println( temp);
                     temp = temp + " " + lastS;
                 }
                 geneATBD[geneATBDCount] = temp;
@@ -1039,12 +959,38 @@ public class Game {
                 geneVirusCount++;
                 temp = "";
             }
-            System.out.println("ATBD A : " + geneATBD[0] + " end");
-            System.out.println("ATBD B : " + geneATBD[1] + " end");
-            System.out.println("ATBD C : " + geneATBD[2] + " end");
-            System.out.println("Virus A : " + geneVirus[0] + " end");
-            System.out.println("Virus B : " + geneVirus[1] + " end");
-            System.out.println("Virus C : " + geneVirus[2] + " end");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void geneticDefaultReader(String geneinFile){
+        try(FileReader fr = new FileReader(geneinFile);
+            Scanner s = new Scanner(fr)){
+            int geneATBDCount = 0;
+            int geneVirusCount = 0;
+            String temp = "";
+            while( geneATBDCount < 3){
+                while (true){
+                    String lastS = s.nextLine();
+                    if( lastS.equals("-")) break;
+//                    System.out.println( temp);
+                    temp = temp + " " + lastS;
+                }
+                defaultGeneATBD[geneATBDCount] = temp;
+                geneATBDCount++;
+                temp = "";
+            }
+            while ( geneVirusCount < 3){
+                while (true){
+                    String lastS = s.nextLine();
+                    if( lastS.equals("-")) break;
+                    temp = temp + " " + lastS;
+                }
+                defaultGeneVirus[geneVirusCount] = temp;
+                geneVirusCount++;
+                temp = "";
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

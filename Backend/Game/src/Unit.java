@@ -24,7 +24,7 @@ public interface Unit {
     int getAttackRange();
     int getSkin();
     int getMoveCost();
-
+    Executable getProgram();
 
     String getGene();
     Map<String,Integer> getBindings();

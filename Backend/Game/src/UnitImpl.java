@@ -79,7 +79,9 @@ public abstract class UnitImpl implements Unit {
         }
     }
 
-
+    public Executable getProgram(){
+        return program;
+    }
 
     public void setPos(Pair<Integer,Integer> pos){position = pos;}
 
