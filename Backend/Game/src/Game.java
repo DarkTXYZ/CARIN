@@ -61,6 +61,7 @@ public class Game {
     static int dfv1_gain = 42;
     static int dfv2_gain = 54;
     static int dfv3_gain = 80;
+    static int dfObjective =100;
     static int[] dfvatk = {dfv1_atk, dfv2_atk, dfv3_atk};
     static int[] dfvls = {dfv1_ls, dfv2_ls, dfv3_ls};
     static int[] dfvhp = {dfv1_hp, dfv2_hp, dfv3_hp};
