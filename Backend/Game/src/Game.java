@@ -629,9 +629,7 @@ public class Game {
         atbdOrder = new ArrayList<>();
 
         Shop.updateCost(cost,highestcost);
-
-        System.out.println(shop.getMap().keySet());
-        initObjective(100);
+        initObjective(dfObjective);
         virusLimit= gObjective.snd();
         limitCount =0;
         emptySlot = new TreeSet<>(comp);
@@ -1180,6 +1178,8 @@ public class Game {
     static int dfv2_gain = 54;
     static int dfv3_gain = 80;
 
+    static int dfObjective = 100;
+
     static int[] dfvatk= {dfv1_atk,dfv2_atk,dfv3_atk};
     static int[] dfvls= {dfv1_ls,dfv2_ls,dfv3_ls};
     static int[] dfvhp= {dfv1_hp,dfv2_hp,dfv3_hp};
@@ -1192,5 +1192,7 @@ public class Game {
     static int[] dfaatkR = {dfm_atkRange,dfa_atkRange,dfl_atkRange};
     static int[] dfacost = {dfm_cost,dfa_cost,dfl_cost};
     static int[] dfamoveCost = {dfm_moveCost,dfa_moveCost,dfl_moveCost};
+
+
 
 }
