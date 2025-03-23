@@ -6,7 +6,7 @@ CARIN is a simulation game designed to model the interaction between Covid-19 an
 ## Techstacks
 - **Java**: Used for game logic and parser implementation. Java provides a robust and platform-independent environment for developing the core functionalities of the game.
 - **Spring Boot**: Serves as the backend framework. Spring Boot simplifies the development of RESTful web services and provides a solid foundation for the backend infrastructure.
-- **React**: Utilized for the game UI. React allows for the creation of dynamic and responsive user interfaces, enhancing the overall user experience.
+- **React & Typescript**: Utilized for the game UI. React allows for the creation of dynamic and responsive user interfaces, enhancing the overall user experience.
 
 ## Installation
 1. Clone the repository:
